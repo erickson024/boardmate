@@ -1,0 +1,144 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+body {
+    font-family: "Montserrat", sans-serif;
+    background-image: linear-gradient(transparent 99px, #e0e0e0 100px),
+        linear-gradient(90deg, transparent 99px, #e0e0e0 100px);
+    background-size: 100px 100px;
+    
+}
+
+@media (max-width: 991.98px) {
+    body {
+        padding-top: 95px; /* more space when collapsed navbar toggler is visible */
+    }
+}
+
+#circlePreview {
+    width: 200px;
+    height: 200px;
+}
+#previewImage {
+    width: 240px; /* 2x the container */
+    height: 240px;
+    object-fit: cover;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+#circlePreview:hover {
+    animation: pulse 2s infinite;
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-50px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
+    0% {
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.slide-in-up {
+    animation: slideInUp 0.5s ease-out;
+}
+
+
+
+.border-dashed {
+    border-style: dashed !important;
+}
+
+.zoom-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.zoom-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* When open (clicked) */
+.navbar-toggler:not(.collapsed):focus,
+.navbar-toggler:not(.collapsed):active {
+    outline: none;
+    box-shadow: 0 0 0 2px black; /* your lighter outline */
+}
+
+/* When closed (original Bootstrap style) */
+.navbar-toggler.collapsed:focus,
+.navbar-toggler.collapsed:active {
+    outline: none; /* keep or remove outline */
+    box-shadow: 0 0 0 0 gray; /* Bootstrap’s default */
+}
+
+.nav-link.active {
+  color: #212529; /* Bootstrap primary color */
+}
+
+
+/* Profile Dropup */
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+}
+
+.profile-btn img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Main page content */
+.page-content {
+    padding: 1.5rem;
+}
+
+
+.nav-text {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover .nav-text {
+    max-width: 200px; /* enough to fit text */
+    opacity: 1;
+}
+
+
+
+/* Options styling */
+#placeType option {
+    font-size: 0.9rem;
+}
+
