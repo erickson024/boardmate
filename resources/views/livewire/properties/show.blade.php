@@ -227,7 +227,7 @@
 
                     @guest
                     <button
-                        class="btn btn-sm btn-dark"
+                        class="btn btn-sm btn-dark mb-2"
                         data-bs-toggle="modal"
                         data-bs-target="#available-route">
                         avaliable route

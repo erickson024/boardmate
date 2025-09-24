@@ -1,7 +1,6 @@
 <div class="">
-    <div class="row g-3 bg-white p-2 sticky-top justify-content-center" style="top: 56px; z-index: 1020;">
-
-        <div class="col-12 col-md-3">
+    <div class="row g-2 bg-white p-2 sticky-top justify-content-center bg-opacity-75" style="top: 66px; z-index: 1020;">
+        <div class="col-12 col-md-2">
             <div class="form-floating">
                 <input
                     class="form-control form-control-sm border-0 shadow rounded-4 "
@@ -23,7 +22,7 @@
                 <label for="placeCost"><span class="me-2">₱</span> Price Cap</label>
             </div>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
             <div class="form-floating">
                 <input
                     class="form-control form-control-sm border-0 shadow rounded-4"
@@ -46,7 +45,20 @@
                     <option value="Room">Room</option>
                     <option value="Bedspace">Bedspace</option>
                 </select>
-                <label for="placeType"><i class="bi bi-building me-2"></i>Place Type</label>
+                <label for="placeType"><i class="bi bi-justify-right me-2"></i>Place Type</label>
+            </div>
+        </div>
+         <div class="col-12 col-md-2">
+            <div class="form-floating">
+                <select wire:model.live=""
+                    class="form-select form-control-sm border-0 shadow rounded-4"
+                    id="placeType"
+                    aria-label="Place Type">
+                    <option value="" selected>for All</option>
+                    <option value="apartment">for Male</option>
+                    <option value="condo">for Female</option>
+                </select>
+                <label for="placeType"><i class="bi bi-gender-ambiguous me-2"></i>Gender</label>
             </div>
         </div>
     </div>
