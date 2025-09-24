@@ -212,23 +212,57 @@
 
         </div>
 
-          <div class="row my-2">
-        <div class="col-6">
+        <div class="row my-2">
+            <div class="col-6">
 
-        </div>
+            </div>
 
-        <div class="col-6">
-            <div class="w-100">
-                <div id="map" class="rounded" style="height: 100px;"></div>
+            <div class="col-6">
+                <div class="bg-light p-2 rounded">
+                    @auth
+                    <a href="" class="btn btn-sm btn-dark mb-2">
+                        available route
+                    </a>
+                    @endauth
+
+                    @guest
+                    <button
+                        class="btn btn-sm btn-dark"
+                        data-bs-toggle="modal"
+                        data-bs-target="#available-route">
+                        avaliable route
+                    </button>
+
+                      <div class="modal fade" id="available-route" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-body">
+                                        <h6>Route feature is only available for registered user.</h6>
+                                        <small>Please Login or Register first, thank you.</small>
+
+                                        <img
+                                            src="{{asset('images/image6.png')}}"
+                                            class="img-fluid h-100 mt-4"
+                                            alt="..."
+                                            style="object-fit: cover;">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ route('register') }}" class="btn btn-sm btn-outline-dark">Register</a>
+                                        <a href="{{ route('login') }}" class="btn btn-sm btn-dark">Login</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endguest
+                     <!-- Map Section -->
+                    <div class="w-100">
+                        <div id="map" class="rounded" style="height: 200px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-
-  
-
-    <!-- Map Section -->
-
 </div>
 
 <script>
