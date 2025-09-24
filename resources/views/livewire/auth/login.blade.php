@@ -6,7 +6,7 @@
 
                 <div class="row">
                     <div class="col-7">
-                        <p class="fw-semibold fs-4 mb-2">Welcome back!</p>
+                        <p class="fw-semibold fs-5 mb-2">Ready to Login Bordmate</p>
                         <p class="small">
                             Dont have any account?
                             <a href="{{route('register')}}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">

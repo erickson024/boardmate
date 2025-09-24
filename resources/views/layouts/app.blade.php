@@ -18,7 +18,11 @@
 
 <body>
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places"async defer></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places"
+        async
+        defer>
+    </script>
 
     @guest
     {{-- Show top navbar for guests --}}
@@ -47,4 +51,3 @@
 </body>
 
 </html>
-

@@ -1,10 +1,6 @@
 <div>
-    <!-- Map Section -->
-    <div class="w-100">
-        <div id="map" class="rounded" style="height: 250px;"></div>
-    </div>
 
-    <div class="container my-4">
+    <div class="container ">
         <div class="row g-4">
             <!-- Images Carousel -->
             <div class="col-md-6">
@@ -119,9 +115,59 @@
                         <small class="text-muted">Agent</small>
                     </div>
                     <div>
+
+                        @guest
+
+                        <button
+                            class="btn btn-sm btn-dark"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Message
+                        </button>
+
+                        <button
+                            class="btn btn-sm btn-dark"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Inquire
+                        </button>
+
+                        <button
+                            class="btn btn-sm btn-dark"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Contacts
+                        </button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-body">
+                                        <h6>This feature is only available for registered users.</h6>
+                                        <small>Please Login or Register first, thank you.</small>
+
+                                        <img
+                                            src="{{asset('images/image5.png')}}"
+                                            class="img-fluid h-100 mt-4"
+                                            alt="..."
+                                            style="object-fit: cover;">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ route('register') }}" class="btn btn-sm btn-outline-dark">Register</a>
+                                        <a href="{{ route('login') }}" class="btn btn-sm btn-dark">Login</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @endguest
+
+                        @auth
                         <button class="btn btn-sm btn-dark">Message</button>
                         <button class="btn btn-sm btn-dark">Inquire</button>
                         <button class="btn btn-sm btn-dark">Contacts</button>
+                        @endauth
                     </div>
 
                 </div>
@@ -165,7 +211,24 @@
             </div>
 
         </div>
+
+          <div class="row my-2">
+        <div class="col-6">
+
+        </div>
+
+        <div class="col-6">
+            <div class="w-100">
+                <div id="map" class="rounded" style="height: 100px;"></div>
+            </div>
+        </div>
     </div>
+    </div>
+
+  
+
+    <!-- Map Section -->
+
 </div>
 
 <script>
@@ -173,9 +236,11 @@
     let marker;
 
     function initMap(lat = 14.5995, lng = 120.9842, title = 'Property') {
-        const propertyLocation = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        const propertyLocation = {
+            lat: parseFloat(lat),
+            lng: parseFloat(lng)
+        };
 
-        // Create map if not initialized yet
         if (!map) {
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
@@ -185,7 +250,6 @@
             map.setCenter(propertyLocation);
         }
 
-        // Reset marker
         if (marker) {
             marker.setMap(null);
         }
