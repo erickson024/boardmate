@@ -164,6 +164,10 @@
                         @endguest
 
                         @auth
+                        <a href="" class="btn btn-sm btn-outline-dark">
+                            <span>Profile</span>
+                        </a>
+
                         <button class="btn btn-sm btn-dark">Message</button>
                         <button class="btn btn-sm btn-dark">Inquire</button>
                         <button class="btn btn-sm btn-dark">Contacts</button>
@@ -233,29 +237,29 @@
                         avaliable route
                     </button>
 
-                      <div class="modal fade" id="available-route" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+                    <div class="modal fade" id="available-route" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
 
-                                    <div class="modal-body">
-                                        <h6>Route feature is only available for registered user.</h6>
-                                        <small>Please Login or Register first, thank you.</small>
+                                <div class="modal-body">
+                                    <h6>Route feature is only available for registered user.</h6>
+                                    <small>Please Login or Register first, thank you.</small>
 
-                                        <img
-                                            src="{{asset('images/image6.png')}}"
-                                            class="img-fluid h-100 mt-4"
-                                            alt="..."
-                                            style="object-fit: cover;">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="{{ route('register') }}" class="btn btn-sm btn-outline-dark">Register</a>
-                                        <a href="{{ route('login') }}" class="btn btn-sm btn-dark">Login</a>
-                                    </div>
+                                    <img
+                                        src="{{asset('images/image6.png')}}"
+                                        class="img-fluid h-100 mt-4"
+                                        alt="..."
+                                        style="object-fit: cover;">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{{ route('register') }}" class="btn btn-sm btn-outline-dark">Register</a>
+                                    <a href="{{ route('login') }}" class="btn btn-sm btn-dark">Login</a>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     @endguest
-                     <!-- Map Section -->
+                    <!-- Map Section -->
                     <div class="w-100">
                         <div id="map" class="rounded" style="height: 200px;"></div>
                     </div>
