@@ -1,42 +1,44 @@
-<div class="">
-    <div class="row g-2 bg-white p-2 sticky-top justify-content-center bg-opacity-75" style="top: 66px; z-index: 1020;">
-        <div class="col-12 col-md-2">
-            <div class="form-floating">
+<div>
+    <div class="row g-2 bg-white bg-opacity-75 p-2 sticky-top justify-content-center" style="top: 66px; z-index: 1020;">
+        <div class="input-group bg-white shadow rounded-4 justify-content-center w-75">
+
+            <div class="form-floating ">
                 <input
-                    class="form-control form-control-sm border-0 shadow rounded-4 "
+                    class="form-control form-control-sm rounded-4"
+                    style="outline: none;  box-shadow: none; border-color: transparent;"
                     type="text"
                     wire:model.live.debounce.300ms="term"
                     placeholder="Place Name"
                     id="placeName">
                 <label for="placeName"><i class="bi bi-search me-2"></i>Place Name</label>
             </div>
-        </div>
-        <div class="col-12 col-md-2">
+
             <div class="form-floating">
                 <input
-                    class="form-control form-control-sm border-0 shadow rounded-4"
+                    class="form-control form-control-sm "
+                    style="outline: none;  box-shadow: none; border-color: transparent;"
                     type="number"
                     wire:model.live.debounce.300ms="cost"
                     placeholder="Price Cap"
                     id="placeCost">
                 <label for="placeCost"><span class="me-2">₱</span> Price Cap</label>
             </div>
-        </div>
-        <div class="col-12 col-md-2">
+
             <div class="form-floating">
                 <input
-                    class="form-control form-control-sm border-0 shadow rounded-4"
+                    class="form-control form-control-sm"
+                    style="outline: none;  box-shadow: none; border-color: transparent;"
                     type="text"
                     wire:model.live.debounce.300ms="address"
                     placeholder="Location"
                     id="placeLocation">
                 <label for="placeLocation"><i class="bi bi-geo-alt me-2"></i>Location</label>
             </div>
-        </div>
-        <div class="col-12 col-md-2">
+
             <div class="form-floating">
                 <select wire:model.live="type"
-                    class="form-select form-control-sm border-0 shadow rounded-4"
+                    class="form-select form-control-sm"
+                    style="outline: none;  box-shadow: none; border-color: transparent;"
                     id="placeType"
                     aria-label="Place Type">
                     <option value="" selected>All</option>
@@ -47,11 +49,11 @@
                 </select>
                 <label for="placeType"><i class="bi bi-justify-right me-2"></i>Place Type</label>
             </div>
-        </div>
-         <div class="col-12 col-md-2">
+
             <div class="form-floating">
                 <select wire:model.live=""
-                    class="form-select form-control-sm border-0 shadow rounded-4"
+                    class="form-select form-control-sm rounded-4"
+                    style="outline: none;  box-shadow: none; border-color: transparent;"
                     id="placeType"
                     aria-label="Place Type">
                     <option value="" selected>for All</option>
@@ -62,6 +64,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="container">
         <div class="row">
@@ -131,5 +134,4 @@
             <span>{{ $properties->links() }}</span>
         </div>
     </div>
-
 </div>
