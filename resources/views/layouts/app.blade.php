@@ -28,8 +28,8 @@
     {{-- Show top navbar for guests --}}
     @include('layouts.partials.navbar')
     <main class="container-fluid">
-        <div class="row">
-            <div class="col-12" style="margin-top: 6%;">
+        <div class="row" style="margin-top: 6%;">
+            <div class="col-12" >
                 @yield('content')
             </div>
         </div>

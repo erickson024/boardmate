@@ -30,7 +30,7 @@ Route::middleware('auth.custom')->group(function () {
 
     Route::post('/logout', function () {
         Auth::logout();
-        return redirect('/'); // or your home page
+        return redirect('/login'); // or your home page
     })->name('logout');
 
     Route::get('/register-properties', function () {
