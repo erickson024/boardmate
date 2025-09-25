@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\Authenticated;
+use App\Http\Middleware\Guest;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,8 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'auth.custom' => Authenticated::class,
+            'guest.custom' => Guest::class,
+        ]);
     })
+ 
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
