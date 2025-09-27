@@ -9,7 +9,7 @@
                     wire:model.live.debounce.300ms="term"
                     placeholder="Place Name"
                     id="placeName">
-                <label for="placeName"><i class="bi bi-search me-2"></i>Place Name</label>
+                <label for="placeName"><small><i class="bi bi-search me-2"></i>Property Name</small></label>
             </div>
 
             <div class="form-floating">
@@ -20,7 +20,7 @@
                     wire:model.live.debounce.300ms="cost"
                     placeholder="Price Cap"
                     id="placeCost">
-                <label for="placeCost"><span class="me-2">₱</span> Price Cap</label>
+                <label for="placeCost"><small><span class="me-2">₱</span>Price Cap</small></label>
             </div>
 
             <div class="form-floating">
@@ -31,13 +31,13 @@
                     wire:model.live.debounce.300ms="address"
                     placeholder="Location"
                     id="placeLocation">
-                <label for="placeLocation"><i class="bi bi-geo-alt me-2"></i>Location</label>
+                <label for="placeLocation"><small><i class="bi bi-geo-alt me-2"></i>Location</small></label>
             </div>
 
             <div class="form-floating">
                 <select wire:model.live="type"
-                    class="form-select form-control-sm"
-                    style="outline: none;  box-shadow: none; border-color: transparent;"
+                    class="form-select form-control-sm "
+                    style="outline: none;  box-shadow: none; border-color: transparent; font-size: 0.875rem;"
                     id="placeType"
                     aria-label="Place Type">
                     <option value="" selected>All</option>
@@ -46,20 +46,20 @@
                     <option value="Room">Room</option>
                     <option value="Bedspace">Bedspace</option>
                 </select>
-                <label for="placeType"><i class="bi bi-justify-right me-2"></i>Place Type</label>
+                <label for="placeType"><small><i class="bi bi-justify-right me-2"></i>Place Type</small></label>
             </div>
 
             <div class="form-floating">
                 <select wire:model.live=""
                     class="form-select form-control-sm rounded-4"
-                    style="outline: none;  box-shadow: none; border-color: transparent;"
+                    style="outline: none;  box-shadow: none; border-color: transparent; font-size: 0.875rem;"
                     id="placeType"
                     aria-label="Place Type">
                     <option value="" selected>for All</option>
                     <option value="apartment">for Male</option>
                     <option value="condo">for Female</option>
                 </select>
-                <label for="placeType"><i class="bi bi-gender-ambiguous me-2"></i>Gender</label>
+                <label for="placeType"><small><i class="bi bi-gender-ambiguous me-2"></i>Gender</small></label>
             </div>
         </div>
     </div>

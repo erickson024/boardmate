@@ -6,8 +6,7 @@
             <input type="hidden" id="longitude" wire:model="longitude">
 
             {{-- ✅ Map container --}}
-
-            <div id="map" wire:ignore style="height: 250px; width: 100%;" class="shadow rounded"></div>
+            <div wire:ignore id="map" style="height: 250px; width: 100%;" class="shadow rounded"></div>
 
 
             <div class="form-floating mt-3" wire:key="field-address">
@@ -24,32 +23,35 @@
     </div>
 </div>
 
+
 <script>
+    //variables (global references)
     let map, marker, autocomplete, geocoder, streetView;
 
+    //main initializer for your map, maker, autocomplete, geocoder, and streetview
     function initAutocomplete() {
         const input = document.getElementById("address-input");
         if (!input) return;
 
-        // Autocomplete
+        // create a google places autocomplete linked to the input field
         autocomplete = new google.maps.places.Autocomplete(input, {
-            types: ['geocode'],
+            types: ['geocode'], //geographic addresses
             componentRestrictions: {
-                country: "ph"
+                country: "ph" //restricted to philippines
             }
         });
 
-        // Map
+        //create the map centered in Manila
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: 14.5995,
                 lng: 120.9842
-            }, // Manila
-            zoom: 13,
-            streetViewControl: true,
+            }, // Manila coordinates
+            zoom: 6,
+            streetViewControl: true, //enable the streetview pegman
         });
 
-        // Marker
+        // places a dragable marker on the map
         marker = new google.maps.Marker({
             map,
             draggable: true,
@@ -63,7 +65,7 @@
             const place = autocomplete.getPlace();
             if (!place.geometry) return;
 
-            updateMap(
+            updateMap( //Updates the map + marker + address field
                 place.geometry.location.lat(),
                 place.geometry.location.lng(),
                 place.formatted_address,
@@ -71,24 +73,24 @@
             );
         });
 
-        // --- Marker Drag ---
-        google.maps.event.addListener(marker, "dragend", (event) => {
+        // --- Marker Drag Listener---
+        google.maps.event.addListener(marker, "dragend", (event) => { //Gets new coordinates.
             const lat = event.latLng.lat();
             const lng = event.latLng.lng();
 
-            geocoder.geocode({
+            geocoder.geocode({ //Reverse geocodes them → fetches the corresponding address.
                 location: {
                     lat,
                     lng
                 }
             }, (results, status) => {
                 if (status === "OK" && results[0]) {
-                    updateMap(lat, lng, results[0].formatted_address, true);
+                    updateMap(lat, lng, results[0].formatted_address, true); //Updates everything via updateMap().
                 }
             });
         });
 
-        // --- Pegman ---
+        // --- Pegman (Street View Listner) ---
         streetView.addListener("position_changed", () => {
             const pos = streetView.getPosition();
             if (!pos) return;
@@ -102,6 +104,7 @@
             });
         });
     }
+
 
     function updateMap(lat, lng, address, movePegman = false) {
         map.setCenter({
@@ -131,11 +134,17 @@
             lng
         });
     }
-    
-    // ✅ Re-init map after Livewire DOM updates
-    document.addEventListener("livewire:navigated", function() {
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOM");
         initAutocomplete();
     });
 
 
+    // ✅ Re-init map after Livewire DOM updates
+    document.addEventListener('livewire:navigated', () => {
+        console.log("Navigated");
+        initAutocomplete();
+    });
 </script>

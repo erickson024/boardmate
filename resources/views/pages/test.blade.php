@@ -2,187 +2,120 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BoardMate Layout</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Add Map</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-   
-        /* Sidebar */
-        .sidebar {
-            width: 300px;
-            /* original width */
-            min-height: 100vh;
-            background-color: #f8f9fa;
-            border-right: 1px solid #dee2e6;
-            padding: 0.5rem;
-            font-family: 'Montserrat', sans-serif;
-        }
+        /* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+  height: 100%;
+}
 
-        .sidebar .nav-link {
-            color: gray;
-            font-size: 0.90rem;
-            /* smaller text */
-            padding: 0.25rem 0.5rem;
-            display: flex;
-            align-items: center;
-        }
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-        .sidebar .nav-link i {
-            margin-right: 1rem;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #e9ecef;
-            color: black;
-        }
-    
-
-        /* Top Navbar */
-        .top-navbar {
-            height: 50px;
-            background-color: #fff;
-            border-bottom: 1px solid #dee2e6;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 0 1rem;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* Profile Dropup */
-        .profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.2rem 0.4rem;
-            border: none;
-            background: transparent;
-            font-size: 0.9rem;
-        }
-
-        .profile-btn img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Main page content */
-        .page-content {
-            padding: 1.5rem;
-        }
+.custom-map-control-button {
+  background-color: #000;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 0 0.5em;
+  font: 400 18px Roboto, Arial, sans-serif;
+  color: #fff;
+  overflow: hidden;
+  height: 40px;
+  cursor: pointer;
+}
+.custom-map-control-button:hover {
+  background: rgb(235, 235, 235);
+}
     </style>
 </head>
 
 <body>
+   
+    <!--The div element for the map -->
+    <div id="map"></div>
 
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <div class="sidebar d-flex flex-column">
-            <h5 class="mb-3 text-center">BoardMate</h5>
+  
+   
 
-            <!-- Small Platform Label -->
-            <div class="text-muted mt-3 small mb-2 ps-2">
-                Platform
-            </div>
+    <div id="map"></div>
 
-            <ul class="nav nav-pills flex-column fw-medium gap-2">
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link"><i class="bi bi-house-door"></i> Properties</a>
-                </li>
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link"><i class="bi bi-geo-alt"></i> Location</a>
-                </li>
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link"><i class="bi bi-building"></i> Be a Renter</a>
-                </li>
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link"><i class="bi bi-chat-left-text"></i> Messages</a>
-                </li>
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link"><i class="bi bi-bell"></i> Notifications</a>
-                </li>
-            </ul>
-
-
-            <!-- Profile Dropup at Bottom -->
-            <div class="dropup mt-auto">
-                <button class="btn profile-btn dropdown-toggle p-2 w-100 d-flex align-items-center justify-content-between border fw-semibold text-secondary"
-                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="d-flex align-items-center">
-                        <img src="{{ auth()->user()->avatar 
-          ? asset('storage/' . auth()->user()->avatar) 
-          : asset('images/default-avatar.png') }}"
-                            alt="Profile Image" class="me-2 shadow">
-                        <span>{{ auth()->user()->firstname }}</span>
-                    </div>
-                </button>
-
-
-                <ul class="dropdown-menu w-100">
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <img src="{{ auth()->user()->avatar 
-                                      ? asset('storage/' . auth()->user()->avatar) 
-                                      : asset('images/default-avatar.png') }}"
-                                alt="Profile Image"
-                                class="rounded-circle me-2 shadow-sm"
-                                width="36" height="36">
-
-                            <div class="d-flex flex-column">
-                                <span class="fw-semibold">{{ auth()->user()->firstname }}</span>
-                                <small class="text-muted">{{ auth()->user()->email }}</small>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <i class="bi bi-gear me-2"></i> <small>Settings</small>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item  d-flex align-items-center" href="#">
-                            <i class="bi bi-box-arrow-right me-2"></i> <small>Logout</small>
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
-
-        </div>
-
-
-        <!-- Main Content -->
-        <div class="content" style="width: 100%;">
-            <!-- Top Navbar -->
-            <div class="top-navbar">
-                <!-- Profile Dropup -->
-
-            </div>
-
-            <!-- Page Content -->
-            <div class="page-content">
-                <h1>Welcome to BoardMate</h1>
-                <p>This is the main content area.</p>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- prettier-ignore -->
+       <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG4DiIu995i23jFKN0VV1YUzzVYOvsGFk&loading=async&region=JP&language=fil&callback=initMap"
+      defer
+    ></script>
 </body>
+
+<script>
+   // Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see the error "The Geolocation service
+// failed.", it means you probably did not give permission for the browser to
+// locate you.
+let map, infoWindow;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 6,
+  });
+  infoWindow = new google.maps.InfoWindow();
+
+  const locationButton = document.createElement("button");
+
+  locationButton.textContent = "Pan to Current Location";
+  locationButton.classList.add("custom-map-control-button");
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  locationButton.addEventListener("click", () => {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent("Location found.");
+          infoWindow.open(map);
+          map.setCenter(pos);
+        },
+        () => {
+          handleLocationError(true, infoWindow, map.getCenter());
+        },
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  });
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation.",
+  );
+  infoWindow.open(map);
+}
+
+window.initMap = initMap;
+</script>
 
 </html>
