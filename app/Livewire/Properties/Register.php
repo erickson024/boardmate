@@ -165,7 +165,7 @@ class Register extends Component
         if ($this->currentStep < 4) {
             $this->currentStep++;
            
-            $this->dispatch('stepChanged', $this->currentStep);
+            $this->dispatch('stepChanged', step: $this->currentStep);
         }
     }
 
@@ -174,7 +174,7 @@ class Register extends Component
     {
         if ($this->currentStep > 1) {
             $this->currentStep--;
-            $this->dispatch('stepChanged', $this->currentStep);
+            $this->dispatch('stepChanged', step: $this->currentStep);
         }
     }
 

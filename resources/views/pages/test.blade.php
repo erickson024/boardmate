@@ -48,10 +48,6 @@ body {
     <!--The div element for the map -->
     <div id="map"></div>
 
-  
-   
-
-    <div id="map"></div>
 
   <!-- prettier-ignore -->
        <script

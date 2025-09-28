@@ -13,14 +13,14 @@
             <div class="bg-light p-4 shadow rounded " style="height: 470px;">
                 <div class="row">
                     <div class="col-6">
-                        <p class="fw-semibold fs-5 mb-4">Add Your Property</p>
+                        <p class="fw-semibold fs-6 mb-4">Add Your Property</p>
 
                     </div>
 
                     <div class="col-6 d-flex justify-content-end">
                         <div class="gap-2">
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-google"></i></button>
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-hash"></i></button>
+                            <button class="btn btn-sm btn-dark">save</button>
+                            
                         </div>
                     </div>
                 </div>
@@ -36,6 +36,7 @@
                 @include('livewire.properties.steps.step-four')
                 @endif
 
+                <!-- Navigation Buttons -->
                 <div class="mt-2 d-flex justify-content-between">
                     @if ($currentStep > 1)
                     <button wire:click="previousStep" class="btn btn-outline-secondary fade-in">Back
@@ -69,6 +70,8 @@
 
             </div>
         </div>
-
     </div>
 </div>
+
+
+

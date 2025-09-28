@@ -80,8 +80,9 @@
             @auth
             <ul class="navbar-nav ms-auto gap-2">
                 <li class="nav-item ">
-                    <a href="{{route('register-properties')}}" class="text-dark  " style="text-decoration: none">
-                        <small class="fw-semibold">Be a host</small>
+                    <a href="{{route('register-properties')}}" 
+                    class="btn btn-sm btn-outline-dark" >
+                        <small class="fw-medium">Hosting</small>
                     </a>
                 </li>
 

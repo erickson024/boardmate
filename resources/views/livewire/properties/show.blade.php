@@ -1,7 +1,7 @@
-<div>
 
-    <div class="container ">
-        <div class="row g-4">
+
+    <div class="container">
+        <div class="row ">
             <!-- Images Carousel -->
             <div class="col-md-6">
                 @if(!empty($images))
@@ -267,7 +267,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 <script>
     let map;
@@ -283,6 +283,89 @@
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 center: propertyLocation,
+                disableDefaultUI: true,
+
+                styles: [{
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#d9f5d6"
+                    }] // pale cream background
+                },
+                {
+                    elementType: "labels.icon",
+                    stylers: [{
+                        visibility: "off"
+                    }]
+                },
+                {
+                    elementType: "labels.text.fill",
+                    stylers: [{
+                        color: "#666666"
+                    }]
+                },
+                {
+                    featureType: "administrative.land_parcel",
+                    stylers: [{
+                        visibility: "off"
+                    }]
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        color: "#d9f5d6"
+                    }] // pale green parks
+                },
+                {
+                    featureType: "poi.school",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        color: "#ffe6e6"
+                    }] // soft pink schools/universities
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#d9f5d6"
+                    }] // clean white roads
+                },
+                {
+                    featureType: "road.arterial",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#f7e9d7"
+                    }] // pastel beige arterial roads
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        color: "#f8d5a3"
+                    }] // soft orange highways
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [{
+                        color: "#eac086"
+                    }]
+                },
+                {
+                    featureType: "transit.line",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#e6d3f7"
+                    }] // pale purple transit
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry.fill",
+                    stylers: [{
+                        color: "#b5e3f7"
+                    }] // soft blue water
+                }
+            ]
             });
         } else {
             map.setCenter(propertyLocation);
@@ -296,6 +379,7 @@
             position: propertyLocation,
             map: map,
             title: title,
+      
         });
     }
 
