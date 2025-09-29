@@ -51,7 +51,7 @@ body {
 
   <!-- prettier-ignore -->
        <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG4DiIu995i23jFKN0VV1YUzzVYOvsGFk&loading=async&region=JP&language=fil&callback=initMap"
+      src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&loading=async&region=JP&language=fil&callback=initMap"
       defer
     ></script>
 </body>
