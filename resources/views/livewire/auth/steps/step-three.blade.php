@@ -2,7 +2,7 @@
     <p class="text-dark mb-0 fs-6 fw-semibold">Step 3: Email and Privacy Policy.</p>
     <small class="mt-0 mb-2">We respect your privacy. Verify your email and accept the Terms and Privacy Policy to secure your account</small>
 
-    <div class="col-8">
+    <div class="col-12 col-md-8 col-lg-8">
 
         <div class="form-floating">
             <input type="email"

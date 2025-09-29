@@ -1,9 +1,9 @@
 <div>
-    <div class="row ">
+    <div class="row h-100">
         <p class="text-dark fs-6 fw-semibold mb-0">Step 1: Personal Infomation</p>
         <small class="mt-0 mb-3">Let’s get to know you! Fill in your name and where you live.</small>
 
-        <div class="col-4">
+        <div class="col-md-4 col-sm-12">
             {{-- Profile Upload --}}
             <div class="p-3 text-center bg-light d-flex flex-column align-items-center justify-content-center shadow border border-dark rounded">
                 <input type="file" id="avatar" wire:model="avatar" class="d-none">
@@ -56,10 +56,10 @@
 
         </div>
 
-        <div class="col-8">
+        <div class="col-md-8 col-sm-12 mt-3 mt-sm-3 mt-md-0 mt-lg-0">
             <div class="row gx-3">
 
-                <div class="col-6">
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-floating mb-3">
                         <input type="text"
                             class="form-control border-dark text-dark shadow-none"
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-floating mb-3">
                         <input type="text"
                             class="form-control border-dark text-dark shadow-none"

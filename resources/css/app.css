@@ -14,6 +14,33 @@ body {
     }
 }
 
+/* Default (mobile-first) */
+.custom-mt {
+  margin-top: -4%;
+}
+
+/* Tablet (md ≥ 768px) */
+@media (min-width: 768px) {
+  .custom-mt {
+    margin-top: -3%;
+  }
+}
+
+/* Desktop (lg ≥ 992px) */
+@media (min-width: 992px) {
+  .custom-mt {
+    margin-top: 8%;
+  }
+}
+
+/* Extra large desktop (xl ≥ 1200px) */
+@media (min-width: 1200px) {
+  .custom-mt {
+    margin-top: 6%;
+  }
+}
+
+
 #circlePreview {
     width: 200px;
     height: 200px;
