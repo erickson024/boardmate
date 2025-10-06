@@ -25,7 +25,7 @@
 
                 </div>
                 <div id="map-container" class="{{ $currentStep === 1 ? '' : 'd-none' }}">
-                    <div wire:ignore id="map" class=" rounded" style="height: 200px; width: 100%;"></div>
+                    <div wire:ignore id="map" class=" rounded" style="height: 250px; width: 100%;"></div>
                 </div>
                 <!-- Step Content -->
                 @if ($currentStep === 1)
@@ -232,4 +232,3 @@
     });
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG4DiIu995i23jFKN0VV1YUzzVYOvsGFk&libraries=places" async defer></script>

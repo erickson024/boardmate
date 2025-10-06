@@ -13,7 +13,7 @@ class Register extends Component
 {   
     
     use WithFileUploads;        //upload traits
-    public $currentStep = 2;    //starting step
+    public $currentStep = 1;    //starting step
 
 
     //1st step address and mapping
@@ -92,7 +92,7 @@ class Register extends Component
     protected $stepRules = [
         1 => [
 
-             'address' => 'required|string|max:500',
+            'address' => 'required|string|max:500',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ],
