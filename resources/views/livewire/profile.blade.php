@@ -1,77 +1,119 @@
-<div class="container">
-    <div class="row mb-2">
-        <div class="col-md-12">
-            <div class="p-4 bg-white border border-dark rounded">
-                <h6 class="mb-4 ">
-                    <i class="bi bi-grip-vertical"></i> Dashboard
-                </h6>
+<div class="container py-3">
+    <div class="row gx-3">
+        <div class="col-lg-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card bg-light rounded-4 shadow border">
+                        <div class="d-flex justify-content-center mt-3">
+                            <div
+                                style="width:110px; height:110px; border-radius:50%; overflow:hidden;
+                                       border:4px solid #212529; box-shadow:0 .5rem 1rem rgba(0,0,0,.15);
+                                       background-size: cover; background-position:center;
+                                       background-image: url('{{ auth()->user()->avatar
+                                       ? asset('storage/' . auth()->user()->avatar)
+                                       : asset('images/default-avatar.png') }}');">
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h6 class="card-title fw-semibold mb-0">
+                                {{ auth()->user()->firstname }} {{ auth()->user()->lastname }}
+                            </h6>
+                            <small class="text-muted d-block mb-3"><i class="bi bi-geo-alt"></i> {{ auth()->user()->address }}</small>
 
-                <div class="d-flex align-items-center shadow p-2 rounded gap-3"
-                    style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.8), rgba(155, 89, 182, 0.8));">
-                    <img
-                        src="{{ auth()->user()->avatar 
-                            ? asset('storage/' . auth()->user()->avatar) 
-                            : asset('images/default-avatar.png') }}"
-                        alt="Profile"
-                        class="rounded-circle shadow-lg"
-                        style="width: 100px; height: 100px; object-fit: cover;">
-
-                    <div>
-                        <h6 class="mb-1">
-                            {{ auth()->user()->firstname }} {{ auth()->user()->lastname }}
-                        </h6>
-
-                        <a href="{{route('update-profile')}}" class="btn btn-sm btn-dark">
-                            update profile
-                        </a>
+                            <div class="mb-3 mt-0">
+                                <a href="#" class="btn btn-sm btn-dark" title="Meta"><i class="bi bi-meta"></i></a>
+                                <a href="#" class="btn btn-sm btn-dark" title="Discord"><i class="bi bi-discord"></i></a>
+                                <a href="#" class="btn btn-sm btn-dark" title="Linked"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                            <a href="{{ route('update-profile') }}" class="btn btn-dark btn-sm rounded-pill px-4">
+                                Update Profile
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="d-flex align-items-center justify-content-end gap-3 mt-3">
-                    <div class="bg-light border p-3 w-25  shadow rounded">
-                        <span class="fw-semibold">Email</span>
-                        <small class="fw-light d-flex justify-content-end">{{auth()->user()->email}}</small>
-                    </div>
-
-                    <div class="bg-light border p-3 w-25  shadow rounded">
-                        <span class="fw-semibold">Address</span>
-                        <small class="fw-light d-flex justify-content-end">{{auth()->user()->address}}</small>
-                    </div>
-
-                    <div class="bg-light border p-3 w-25  shadow rounded">
-                        <span class="fw-semibold">Joined</span>
-                        <small class="fw-light d-flex justify-content-end">{{auth()->user()->created_at}}</small>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-2">
-        <div class="col-3">
-            <div class="card bg-light shadow rounded-4 mb-3 w-100 overflow-hidden">
-                <div class="row g-0">
-                    <!-- Left Side -->
-                    <div class="col-9 d-flex flex-column justify-content-center p-3">
-                        <h6 class="fw-medium mb-1">Added Property</h6>
-                        <h3 class="fw-bold mb-0">{{ $count }}</h3>
-                    </div>
-                    <!-- Right Side Button -->
-                    <div class="col-3">
-                        <a href="#"
-                            class="btn btn-secondary h-100 w-100 rounded-0 d-flex align-items-center justify-content-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
-                            </svg>
-                        </a>
-                    </div>
+                <div class="col-12">
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3">
+            <div class="row d-flex flex-column gap-3">
+                <div class="col-12">
+                    <button
+                        type="button"
+                        wire:click="openConnections"
+                        class="w-100 text start d-flex align-items-center justify-content-between p-2 rounded-4 bg-light shadow-sm border-1 text-decoration-none"
+                        aria-label="Open connections">
+
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white"
+                                style="width: 56px; height: 56px;">
+                                <i class="bi bi-globe-asia-australia fs-4"></i>
+                            </div>
+
+                            <div class="lh-1">
+                                <small class="fw-medium text-muted text-uppercase">Promoted List</small>
+                                <div class="d-flex align-items-baseline gap-2">
+                                    <span class="fs-6 fw-bold">Coming Soon</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="col-12">
+                <button
+                    type="button"
+                    wire:click="openConnections"
+                    class="w-100 text start d-flex align-items-center justify-content-between p-2 rounded-4 bg-light shadow-sm border-1 text-decoration-none"
+                    aria-label="Open connections">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white"
+                            style="width: 56px; height: 56px;">
+                            <i class="bi bi-bookmark-check-fill fs-4"></i>
+                        </div>
+
+                        <div class="lh-1">
+                            <small class="fw-medium text-muted text-uppercase">Saved Property</small>
+                            <div class="d-flex align-items-baseline gap-2">
+                                <span class="fs-6 fw-bold">Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="col-12">
+                <button
+                    type="button"
+                    wire:click="openConnections"
+                    class="w-100 text start d-flex align-items-center justify-content-between p-2 rounded-4 bg-light shadow-sm border-1 text-decoration-none"
+                    aria-label="Open connections">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white"
+                            style="width: 56px; height: 56px;">
+                            <i class="bi bi-house-door-fill fs-4" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="lh-1">
+                            <small class="fw-medium text-muted text-uppercase">Property Hosted</small>
+                            <div class="d-flex align-items-baseline gap-2">
+                                <span class="fs-5 fw-bold">{{ auth()->user()->properties()->count() }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+
     </div>
-
-
-
 </div>

@@ -1,5 +1,3 @@
-
-
     <div class="container">
         <div class="row ">
             <!-- Images Carousel -->
@@ -69,7 +67,7 @@
                         @php
                         $addressParts = explode(',', $property->address ?? '');
                         // Usually city/town is the second part
-                        $city = $addressParts[2] ?? $property->address;
+                        $city = $addressParts[3] ?? $property->address;
                         @endphp
 
                         <span>{{ trim($city) }}</span>

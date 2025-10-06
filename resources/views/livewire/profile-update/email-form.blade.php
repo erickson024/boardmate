@@ -10,7 +10,10 @@
         </div>
 
         <div class="d-flex align-items-center gap-2">
-            <button type="submit" class="btn btn-sm btn-dark">Update Email</button>
+            <button type="submit" class="btn btn-sm btn-dark">Update Email
+
+            <span class="spinner-border spinner-border-sm" wire:loading wire:target="updateEmail"></span>
+            </button>
 
             @if (session()->has('success'))
                 <div class="alert alert-success mb-0 py-1 px-2">

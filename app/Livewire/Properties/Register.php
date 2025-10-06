@@ -13,7 +13,7 @@ class Register extends Component
 {   
     
     use WithFileUploads;        //upload traits
-    public $currentStep = 1;    //starting step
+    public $currentStep = 2;    //starting step
 
 
     //1st step address and mapping
@@ -91,7 +91,8 @@ class Register extends Component
     //step validation rules properties
     protected $stepRules = [
         1 => [
-            'address' => 'required|string|max:500',
+
+             'address' => 'required|string|max:500',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ],
@@ -103,6 +104,7 @@ class Register extends Component
             'tenant' => 'required|in:student,professional,family,any',
             'cost' => 'required|numeric|min:1',
             'description' => 'required|string|max:3000',
+
         ],
         3 => [
             'amenities' => 'array',

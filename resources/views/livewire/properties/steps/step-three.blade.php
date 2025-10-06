@@ -1,4 +1,4 @@
-<div class="container overflow-auto" style="height: 80%;">
+<div>
     <div class="row">
         <div class="col-6">
             <div class="mb-3" style="position: relative;">

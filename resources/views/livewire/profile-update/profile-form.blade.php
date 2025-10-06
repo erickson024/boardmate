@@ -3,7 +3,7 @@
     <small class="mt-0">Update your name, profile photo and address.</small>
 
     <div class="row mt-3 gx-3">
-        <div class="col-md-3">
+        <div class="col-12 col-lg-3">
             <div class="p-2 text-center bg-light d-flex flex-column align-items-center justify-content-center shadow border border-dark rounded">
                 <input id="avatar-input" type="file" wire:model="avatar" accept="image/*" hidden>
 
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-12 col-lg-9">
             <form wire:submit.prevent="updateProfile">
                 <div class="row gx-3">
                     <div class="col-md-6">
@@ -75,5 +75,6 @@
             </form>
         </div>
     </div>
+  
 </div>
 
