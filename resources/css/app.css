@@ -8,49 +8,6 @@ body {
     
 }
 
-@media (max-width: 991.98px) {
-    body {
-        padding-top: 95px; /* more space when collapsed navbar toggler is visible */
-    }
-}
-
-/* Default (mobile-first) */
-.custom-mt {
-  margin-top: -4%;
-}
-
-/* Tablet (md ≥ 768px) */
-@media (min-width: 768px) {
-  .custom-mt {
-    margin-top: -3%;
-  }
-}
-
-/* Desktop (lg ≥ 992px) */
-@media (min-width: 992px) {
-  .custom-mt {
-    margin-top: 8%;
-  }
-}
-
-/* Extra large desktop (xl ≥ 1200px) */
-@media (min-width: 1200px) {
-  .custom-mt {
-    margin-top: 6%;
-  }
-}
-
-
-#circlePreview {
-    width: 200px;
-    height: 200px;
-}
-#previewImage {
-    width: 240px; /* 2x the container */
-    height: 240px;
-    object-fit: cover;
-}
-
 @keyframes pulse {
     0% {
         transform: scale(1);

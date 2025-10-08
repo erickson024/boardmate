@@ -19,7 +19,7 @@ class Login extends Component
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             session()->regenerate();
-            return redirect()->intended('/index'); // redirect to homepage or dashboard
+            return redirect()->intended('/property-list'); // redirect to homepage or dashboard
         }
 
         $this->addError('email', 'Invalid email or password.');

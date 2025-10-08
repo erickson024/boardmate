@@ -1,5 +1,5 @@
 <div>
-    <div class="row g-2 bg-white bg-opacity-75 p-2 sticky-top justify-content-center" style="top: 66px; z-index: 1020;">
+    <div class="row g-2 bg-white bg-opacity-75 p-2 sticky-top justify-content-center">
         <div class="input-group bg-white shadow rounded-4 justify-content-center w-75">
             <div class="form-floating ">
                 <input

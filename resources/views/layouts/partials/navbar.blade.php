@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top">
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
     <div class="container-fluid px-5">
         <a class="navbar-brand fw-medium fs-6" href="{{route('landing')}}">
             <img src="{{asset('images/logo.png')}}" alt="Bootstrap" width="45" height="40" class="d-inline-block align-text-center ">

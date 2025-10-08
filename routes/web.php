@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Livewire\Properties\PropertyList;
+use App\Livewire\Profile;
 
 Route::middleware('guest.custom')->group(function () {
 
@@ -10,19 +13,13 @@ Route::middleware('guest.custom')->group(function () {
         return view('welcome');
     })->name('landing');
 
-    Route::get('/register', function () {
-        return view('pages.guest.auth.register');
-    })->name('register');
-
-    Route::get('/login', function () {
-        return view('pages.guest.auth.login');
-    })->name('login');
+    Route::get('/register', Register::class)->name('register');
+    Route::get('/login', Login::class )->name('login');
 });
 
 Route::middleware('auth.custom')->group(function () {
-    Route::get('/profile', function () {
-        return view('pages.authenticated.profile');
-    })->name('profile');
+
+    Route::get('/profile', Profile::class)->name('profile');
 
     Route::get('/profile/update', function () {
         return view('pages.authenticated.update-profile');
@@ -38,9 +35,7 @@ Route::middleware('auth.custom')->group(function () {
     })->name('register-properties');
 });
 
-Route::get('/index', function () {
-        return view('index');
-    })->name('index');
+Route::get('/property-list', PropertyList::class)->name('index');
 
 Route::get('/test', function () {
     return view('pages.test');
