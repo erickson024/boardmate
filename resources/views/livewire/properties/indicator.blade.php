@@ -1,7 +1,7 @@
 @php
 $steps = [
-    1 => ['label' => 'Property Location', 'description' => 'Help tenants find your property by setting its exact location.'],
-    2 => ['label' => 'Basic Information', 'description' => 'Provide the key details about your property.'],
+    1 => ['label' => 'Basic Information', 'description' => 'Provide the key details about your property.'],
+    2 => ['label' => 'Property Location', 'description' => 'Help tenants find your property by setting its exact location.'],
     3 => ['label' => 'Amenities & Feature', 'description' => 'Highlight the amenities and features tenants can enjoy.'],
     4 => ['label' => 'Property Photo', 'description' => 'Upload clear photos of your property.'],
    

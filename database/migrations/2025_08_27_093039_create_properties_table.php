@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->enum('type', ['room', 'bedspace', 'apartment', 'condo', 'house']);
+            $table->enum('type', ['room','dormitory', 'bedspace', 'apartment', 'condominium', 'house']);
+            $table->enum('gender', ['male','female', 'all']);
             $table->decimal('cost', 10, 2);
             $table->enum('tenant', ['student', 'professional', 'family', 'any']);
-            $table->string('description');
+            $table->text('description');
             $table->string('address');
             $table->decimal('latitude', 10, 7);   // or double
             $table->decimal('longitude', 10, 7);  // or double

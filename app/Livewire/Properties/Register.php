@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Validator;  //for custom file/image validation
 
 //class
 class Register extends Component
-{   
-    
+{
+
     use WithFileUploads;        //upload traits
     public $currentStep = 1;    //starting step
 
@@ -26,10 +26,10 @@ class Register extends Component
         $this->latitude = $lat;
         $this->longitude = $lng;
     }
-   
+
 
     //2nd step basic info
-    public $name, $type = '', $tenant = '', $cost, $description;  //basic info properties
+    public $name, $type = 'dormitory', $tenant = 'student', $gender = 'male', $cost, $description;  //basic info properties
 
     //3rd step amenities
     public $amenities = [], $newAmenity = '';  //amenity properties
@@ -92,18 +92,19 @@ class Register extends Component
     protected $stepRules = [
         1 => [
 
-            'address' => 'required|string|max:500',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'type' => 'required|string',
+            'tenant' => 'required',
+            'cost' => 'required|numeric|min:1',
+            'gender' => 'required|string',
+            'description' => 'required|string|max:3000',
         ],
 
         2 => [
 
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:room,bedspace,apartment,condo,house',
-            'tenant' => 'required|in:student,professional,family,any',
-            'cost' => 'required|numeric|min:1',
-            'description' => 'required|string|max:3000',
+            'address' => 'required|string|max:500',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
 
         ],
         3 => [
@@ -149,7 +150,7 @@ class Register extends Component
             'longitude'     => $this->longitude,
             'amenities'     => json_encode($this->amenities),
             'images'        => json_encode($storedImages),
-            'captions'      => json_encode($storedCaptions), 
+            'captions'      => json_encode($storedCaptions),
         ]);
 
         // Redirect to index page
@@ -166,7 +167,7 @@ class Register extends Component
 
         if ($this->currentStep < 4) {
             $this->currentStep++;
-           
+
             $this->dispatch('stepChanged', step: $this->currentStep);
         }
     }

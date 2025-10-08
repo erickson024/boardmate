@@ -1,35 +1,104 @@
 <div>
-    <div class="row mt-2">
-        <div class="col-12">
+    <div class="row gx-3">
+        <div class="col-6">
+            <div class="form-floating">
+                <input
+                    type="text"
+                    class="form-control border-dark text-dark shadow-none"
+                    placeholder="Property Name"
+                    wire:model="name">
+                <label class="text-dark">Property Name</label>
+                @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
+        </div>
 
-            <input type="hidden" id="latitude" wire:model="latitude">
-            <input type="hidden" id="longitude" wire:model="longitude">
-           
-                
-                <!-- Input on top of map -->
-                <div wire:key="field-address"
-                    class=""
-                    style="width: 100%; z-index: 10;">
+        <div class="col-3">
+            <div class="form-floating">
+                <select
+                    class="form-select border-dark text-dark shadow-none"
+                    id="type"
+                    aria-label="Floating label select example"
+                    wire:model="type">
+                    <option value="" disabled>Open this select menu</option>
+                    <option value="dormitory">Dormitory</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="condominium">Condominium</option>
+                    <option value="house">House</option>
+                    <option value="room">Room</option>
+                    <option value="bedspace">Bedspace</option>
+                </select>
+                <label for="floatingSelect">Property Type</label>
+                @error('type') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
+        </div>
 
-                    <div class="input-group shadow">
-                        <span class="input-group-text bg-white text-white border-0 px-3">
-                            <i class="bi bi-geo-alt-fill text-dark"></i>
-                        </span>
-                        <input
-                            type="text"
-                            class="form-control text-dark shadow-none fw-semibold border-0 p-3"
-                            placeholder="Enter your address"
-                            id="address-input"
-                            wire:model="address"
-                            style="font-size: 13px;"
-                            autocomplete="off"
-                            aria-describedby="basic-addon1">
-                    </div>
-                    @error('address')
-                    <small class="text-danger d-block mt-1 bg-white p-2 rounded" style="font-size: 13px;">{{ $message }}</small>
-                    @enderror
-                </div>
-       
+          <div class="col-3">
+              <div class="form-floating ">
+                <input
+                    type="number"
+                    class="form-control border-dark text-dark shadow-none"
+                    placeholder="cost"
+                    wire:model="cost">
+                <label class="text-dark">Monthly Cost</label>
+                @error('cost') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
         </div>
     </div>
+
+    <div class="row gx-3 mt-3">
+        <div class="col-6">
+
+        <div class="form-floating">
+                <select
+                    class="form-select border-dark text-dark shadow-none"
+                    id="type"
+                    aria-label="Floating label select example"
+                    wire:model="gender">
+                    <option value="" disabled>Open this select menu</option>
+                    <option value="room">Male</option>
+                    <option value="bedspace">Female</option>
+                    <option value="apartment">All</option>
+                </select>
+                <label for="floatingSelect">Prefer Tenant Gender</label>
+               @error('gender') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-floating">
+                <select
+                    class="form-select border-dark text-dark shadow-none"
+                    id="tenant"
+                    aria-label="Floating label select example"
+                    wire:model="tenant">
+                    <option value="" disabled>Open this select menu</option>
+                    <option value="student">Student</option>
+                    <option value="professional">Professional</option>
+                    <option value="family">Family</option>
+                    <option value="any">Any</option>
+                </select>
+                <label for="floatingSelect">Tenant Type</label>
+                @error('tenant') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="form-floating">
+                <textarea
+                    class="form-control border-dark text-dark shadow-none "
+                    placeholder="Leave a comment here"
+                    id="floatingTextarea2"
+                    style="height: 100px"
+                    wire:model="description"></textarea>
+                <label for="floatingTextarea2" class="text-dark">Property Description</label>
+                @error('description') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+
