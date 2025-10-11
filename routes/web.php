@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
-use App\Livewire\Properties\PropertyList;
 use App\Livewire\Profile;
+use App\Livewire\Properties\PropertyRegistration;
+use Illuminate\Support\Facades\Session;
 
 Route::middleware('guest.custom')->group(function () {
 
@@ -14,7 +15,7 @@ Route::middleware('guest.custom')->group(function () {
     })->name('landing');
 
     Route::get('/register', Register::class)->name('register');
-    Route::get('/login', Login::class )->name('login');
+    Route::get('/login', Login::class)->name('login');
 });
 
 Route::middleware('auth.custom')->group(function () {
@@ -25,17 +26,27 @@ Route::middleware('auth.custom')->group(function () {
         return view('pages.authenticated.update-profile');
     })->name('update-profile');
 
-    Route::post('/logout', function () {
-        Auth::logout();
-        return redirect('/login'); // or your home page
-    })->name('logout');
+    Route::get('property-registration', PropertyRegistration::class)->name('property-registration');
 
-    Route::get('/register-properties', function () {
-        return view('pages.authenticated.property-registration');
-    })->name('register-properties');
+    Route::post('/logout', function () {
+        if (Auth::check()) {
+            $userId = Auth::id();
+
+            // 🧹 Clear the property registration data for that specific user
+            Session::forget("property_reg_{$userId}");
+        }
+
+        Auth::logout();
+
+        // 🔐 Fully invalidate the session
+        Session::invalidate();
+        Session::regenerateToken();
+
+        return redirect('/login');
+    })->name('logout');
 });
 
-Route::get('/property-list', PropertyList::class)->name('index');
+
 
 Route::get('/test', function () {
     return view('pages.test');

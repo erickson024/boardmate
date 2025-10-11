@@ -17,7 +17,7 @@ class Guest
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            return redirect()->route('index'); //redirect authenticated user
+            return redirect()->route('profile'); //redirect authenticated user
         }
 
         return $next($request);

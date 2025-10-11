@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}" href="{{route('index')}}"><small>Properties</small></a>
+                    <a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{route('profile')}}"><small>Properties</small></a>
                 </li>
 
                 <li class="nav-item">
@@ -41,8 +41,8 @@
             <ul class="navbar-nav ms-auto gap-5 fw-medium ">
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('') ? 'active' : '' }}" href="{{route('index')}}" href="{{route('index')}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-globe-asia-australia" viewBox="0 0 16 16">
+                    <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('') ? 'active' : '' }}" href="{{route('profile')}}" href="{{route('profile')}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-globe-asia-australia" viewBox="0 0 16 16">
                             <path d="m10.495 6.92 1.278-.619a.483.483 0 0 0 .126-.782c-.252-.244-.682-.139-.932.107-.23.226-.513.373-.816.53l-.102.054c-.338.178-.264.626.1.736a.48.48 0 0 0 .346-.027ZM7.741 9.808V9.78a.413.413 0 1 1 .783.183l-.22.443a.6.6 0 0 1-.12.167l-.193.185a.36.36 0 1 1-.5-.516l.112-.108a.45.45 0 0 0 .138-.326M5.672 12.5l.482.233A.386.386 0 1 0 6.32 12h-.416a.7.7 0 0 1-.419-.139l-.277-.206a.302.302 0 1 0-.298.52z" />
                             <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1.612 10.867l.756-1.288a1 1 0 0 1 1.545-.225l1.074 1.005a.986.986 0 0 0 1.36-.011l.038-.037a.88.88 0 0 0 .26-.755c-.075-.548.37-1.033.92-1.099.728-.086 1.587-.324 1.728-.957.086-.386-.114-.83-.361-1.2-.207-.312 0-.8.374-.8.123 0 .24-.055.318-.15l.393-.474c.196-.237.491-.368.797-.403.554-.064 1.407-.277 1.583-.973.098-.391-.192-.634-.484-.88-.254-.212-.51-.426-.515-.741a7 7 0 0 1 3.425 7.692 1 1 0 0 0-.087-.063l-.316-.204a1 1 0 0 0-.977-.06l-.169.082a1 1 0 0 1-.741.051l-1.021-.329A1 1 0 0 0 11.205 9h-.165a1 1 0 0 0-.945.674l-.172.499a1 1 0 0 1-.404.514l-.802.518a1 1 0 0 0-.458.84v.455a1 1 0 0 0 1 1h.257a1 1 0 0 1 .542.16l.762.49a1 1 0 0 0 .283.126 7 7 0 0 1-9.49-3.409Z" />
                         </svg>
@@ -51,7 +51,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('index') ? 'active' : '' }}" href="{{route('index')}}" href="{{route('index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{route('profile')}}" href="{{route('profile')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-houses-fill" viewBox="0 0 16 16">
                             <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.5 2.5 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354z" />
                             <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708z" />
@@ -61,7 +61,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('profile')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                             <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
                         </svg>
@@ -70,7 +70,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('profile')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0" />
                         </svg>
@@ -95,7 +95,7 @@
             @auth
             <ul class="navbar-nav ms-auto gap-2">
                 <li class="nav-item ">
-                    <a href="{{route('register-properties')}}"
+                    <a href="{{route('property-registration')}}"
                         class="btn btn-sm btn-outline-dark">
                         <small class="fw-medium">Hosting</small>
                     </a>
@@ -139,7 +139,7 @@
 @auth
 <div
     class="offcanvas offcanvas-end w-25"
-    tabindex="-1"
+    tabprofile="-1"
     id="offcanvasRight"
     aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-body">

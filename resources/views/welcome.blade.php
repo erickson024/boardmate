@@ -8,7 +8,7 @@
 
                 <div class="d-flex gap-2 mt-3">
                     <a href="{{route('register')}}" class="btn btn-sm btn-dark">Get Started</a>
-                    <a href="{{route('index')}}" class="btn btn-sm btn-outline-dark">Explore</a>
+                    <a href="{{route('profile')}}" class="btn btn-sm btn-outline-dark">Explore</a>
                 </div>
 
                 <div class="d-flex gap-2 mt-3">

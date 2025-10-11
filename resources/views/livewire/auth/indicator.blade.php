@@ -19,7 +19,7 @@
                             height: 140%;
                             width: 1px;
                             background-color: {{ $currentStep > $step ? '#fff' : '#999' }};
-                            z-index: 0;
+                            z-profile: 0;
                             transition: background-color 0.3    s ease;
                         " >
             </div>
