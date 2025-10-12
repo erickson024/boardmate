@@ -79,7 +79,7 @@ class Step6 extends Component
 
         // Redirect or show success
         session()->flash('success', 'Property successfully uploaded!');
-        return redirect()->route('profile'); // replace with your route
+        return redirect()->route('user-property-list'); // replace with your route
     }
   
     public function back()

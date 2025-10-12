@@ -7,6 +7,7 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Profile;
 use App\Livewire\Properties\PropertyRegistration;
 use Illuminate\Support\Facades\Session;
+use App\Livewire\UserPropertyList;
 
 Route::middleware('guest.custom')->group(function () {
 
@@ -27,6 +28,7 @@ Route::middleware('auth.custom')->group(function () {
     })->name('update-profile');
 
     Route::get('property-registration', PropertyRegistration::class)->name('property-registration');
+    Route::get('user-property-list', UserPropertyList::class)->name('user-property-list');
 
     Route::post('/logout', function () {
         if (Auth::check()) {

@@ -8,10 +8,11 @@
                     <input 
                     type="text" 
                     wire:model="name"
+                    id="propertyName"
                     class="form-control border-1 shadow-sm font-property" 
                     placeholder="property name" 
                     required>
-                    <label><small>Property Name</small></label>
+                    <label for="propertyName" class="fw-semibold"><small>Property Name</small></label>
                 </div>
             </div>
 
@@ -20,10 +21,11 @@
                     <input 
                     type="number"
                     wire:model="cost" 
+                    id="propertyCost"
                     class="form-control border-1 shadow-sm font-property" 
                     placeholder="property cost" 
                     required>
-                    <label><small>Property Cost</small></label>
+                    <label for="propertyCost" class="fw-semibold"><small>Property Cost</small></label>
                 </div>
             </div>
 
@@ -37,13 +39,14 @@
                     <select
                     wire:model="type"
                     class="form-select shadow-sm font-property" 
-                    id="floatingSelectGrid" 
+                    placeholder="property type"
+                    id="propertyType" 
                     required>
                         @foreach ($propertyTypes as $type)
                         <option value="{{$type}}">{{$type}}</option>
                         @endforeach
                     </select>
-                    <label for="floatingSelectGrid"><small>Property Type</small></label>
+                    <label for="propertyType" class="fw-semibold"><small>Property Type</small></label>
                 </div>
             </div>
 
@@ -52,11 +55,11 @@
                     <textarea 
                     class="form-control border-1 shadow-sm font-property" 
                     wire:model="description"
-                    placeholder="Leave a comment here" 
-                    id="floatingTextarea2" 
+                    placeholder="description" 
+                    id="description" 
                     style="height: 100px" 
                     required></textarea>
-                    <label for="floatingTextarea2"><small>Description</small></label>
+                    <label for="description" class="fw-semibold"><small>Description</small></label>
                 </div>
             </div>
         </div>
