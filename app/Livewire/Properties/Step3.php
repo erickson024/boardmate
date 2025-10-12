@@ -26,8 +26,10 @@ class Step3 extends Component
             $this->feature[] = $label;
         }
 
-        // ✅ Update session immediately when toggling (prevents losing data when navigating)
-        session()->put('property_reg.features', $this->feature);
+        // ✅ Use user-specific session key
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}.features";
+        session()->put($sessionKey, $this->feature);
     }
 
     public function submit()

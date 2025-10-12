@@ -43,9 +43,6 @@ class Step5 extends Component
 
         // Save back to session under unified key
         session()->put($sessionKey, $allData);
-        dd(session());
-
-
         $this->dispatch('goToStep', 6);
     }
 
