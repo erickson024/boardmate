@@ -14,12 +14,17 @@ class Step2 extends Component
         'longitude' =>  'required|numeric',
     ];
 
+    protected $listeners = ['setAddress' => 'updateMapData'];
+
     public function mount()
     {
-        $this->fill(session()->get('property_reg', []));
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Prefill if returning to this step
+        $this->fill(session()->get($sessionKey, []));
     }
 
-    protected $listeners = ['setAddress' => 'updateMapData'];
 
     public function updateMapData($address, $lat, $lng)
     {
@@ -32,15 +37,21 @@ class Step2 extends Component
     public function submit()
     {
         $this->validate();
-        $registrationData = session()->get('property_reg', []);
-        $registrationData = array_merge($registrationData, [
+
+        // ✅ Consistent session key pattern
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Merge Step 2 data with existing session
+        $data = session()->get($sessionKey, []);
+        $data = array_merge($data, [
             'address' => $this->address,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
         ]);
 
-        session()->put('property_reg', $registrationData);
-    
+        // Save back to session
+        session()->put($sessionKey, $data);
 
         $this->dispatch('goToStep', 3);
     }

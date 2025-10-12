@@ -17,10 +17,11 @@ class Step5 extends Component
     public function mount()
     {
         $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
 
         // Load previously saved data from session
         $this->fill(
-            data_get(session("property_reg{$user_id}"), 'tenant', [])
+            data_get(session($sessionKey), 'tenant', [])
         );
     }
 
@@ -29,15 +30,19 @@ class Step5 extends Component
         $this->validate();
 
         $user_id = auth()->id();
-        $allData = array_merge(session()->get("property_reg{$user_id}", []), [
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Merge with all previous session data
+        $allData = array_merge(session()->get($sessionKey, []), [
             'tenant' => [
                 'tenantType' => $this->tenantType,
                 'tenantGender' => $this->tenantGender,
                 'tenantRestriction' => $this->tenantRestriction,
-            ]
+            ],
         ]);
 
-        session()->put("property_reg{$user_id}", $allData);
+        // Save back to session under unified key
+        session()->put($sessionKey, $allData);
         dd(session());
 
 

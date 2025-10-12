@@ -20,18 +20,22 @@ class Step4 extends Component
 
     public function mount()
     {
-        $this->images = session('property_reg.images', []);
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Load previously saved images from session
+        $this->images = session()->get("{$sessionKey}.images", []);
     }
 
     public function updatedNewImages()
-{
-    foreach ($this->newImages as $file) {
-        $path = $file->store('tmp', 'public');
-        $this->images[] = $path;
-    }
+    {
+        foreach ($this->newImages as $file) {
+            $path = $file->store('tmp', 'public');
+            $this->images[] = $path;
+        }
 
-    $this->newImages = [];
-}
+        $this->newImages = [];
+    }
 
     public function removeImage($index)
     {
@@ -51,18 +55,21 @@ class Step4 extends Component
             return;
         }
 
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
         $savedPaths = [];
         foreach ($this->images as $image) {
             if ($image instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
                 $path = $image->store('property_images', 'public');
                 $savedPaths[] = $path;
             } else {
-                // Already saved path
                 $savedPaths[] = $image;
             }
         }
 
-        session()->put('property_reg.images', $savedPaths);
+         // Save images under the unified session key
+        session()->put("{$sessionKey}.images", $savedPaths);
         $this->dispatch('goToStep', 5);
     }
 

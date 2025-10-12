@@ -18,24 +18,31 @@ class Step1 extends Component
     public function mount()
     {
         $user_id = auth()->id();
-        $this->fill(session()->get("property_reg_{$user_id}", []));
+        $sessionKey = "property_reg_{$user_id}";
+        
+         // Prefill fields if data already exists in session
+        $this->fill(session()->get($sessionKey, []));
     }
 
     public function submit()
     {
         $this->validate();
 
-        $user_id = auth()->id(); // or however you identify the current user
+        // ✅ Always start with this pattern
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+        $data = session()->get($sessionKey, []);
 
-        $registrationData = session()->get("property_reg_{$user_id}", []);
-        $registrationData = array_merge($registrationData, [
+         // Merge Step 1 data with previous session data
+        $data = array_merge($data, [
             'name' => $this->name,
             'cost' => $this->cost,
             'type' => $this->type,
             'description' => $this->description,
         ]);
 
-        session()->put("property_reg_{$user_id}", $registrationData);
+        // Save merged data back to session
+        session()->put($sessionKey, $data);
 
         $this->dispatch('goToStep', 2);
     }

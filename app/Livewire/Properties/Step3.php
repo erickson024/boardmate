@@ -10,8 +10,12 @@ class Step3 extends Component
 
     public function mount()
     {
-        // ✅ Load the features from session properly
-        $this->feature = session('property_reg.features', []);
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Load existing data safely
+        $data = session()->get($sessionKey, []);
+        $this->feature = $data['features'] ?? [];
     }
 
     public function toggleFeature($label)
@@ -28,17 +32,27 @@ class Step3 extends Component
 
     public function submit()
     {
-        // ✅ No need for duplicate session key names or array merging
-        session()->put('property_reg.features', $this->feature);
-
+        $this->saveToSession();
         $this->dispatch('goToStep', 4);
     }
 
     public function back()
     {
         // ✅ Save before going back
-        session()->put('property_reg.features', $this->feature);
+        $this->saveToSession();
         $this->dispatch('goToStep', 2);
+    }
+
+    private function saveToSession()
+    {
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Merge existing data with features
+        $data = session()->get($sessionKey, []);
+        $data['features'] = $this->feature;
+
+        session()->put($sessionKey, $data);
     }
 
     public function render()
