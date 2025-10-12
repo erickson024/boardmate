@@ -1,4 +1,4 @@
-<div>
+<div class="w-100">
     <p class="fs-6 fw-semibold">Specify the type of tenants your property is suitable for.</p>
 
     <form wire:submit.prevent="submit">
@@ -53,16 +53,23 @@
                     ></textarea>
                     <label for="floatingTextarea2" class="fw-semibold"><small>Type your restriction</small></label>
                 </div>
+                 @error('tenantRestriction') <div class="text-danger"><small>{{ $message }}</small></div> @enderror
             </div>
         </div>
 
         <div class="mt-4 d-flex justify-content-between">
             <button type="button" class="btn btn-sm btn-outline-dark" wire:click="back">
                 <span>Back</span>
+                <span wire:loading wire:target="back">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </span>
             </button>
 
             <button type="submit" class="btn btn-sm btn-dark">
                 <span>Continue</span>
+                <span wire:loading wire:target="submit">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </span>
             </button>
         </div>
     </form>
