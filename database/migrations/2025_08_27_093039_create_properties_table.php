@@ -29,7 +29,7 @@ return new class extends Migration
             $table->json('images')->nullable();
 
             $table->enum('tenantType', ['Employee', 'Student', 'Family', 'Groups', 'Single', 'Couple', 'Any']);
-            $table->enum('tenantGender', ['Male','Female', 'All']);
+            $table->enum('tenantGender', ['Male','Female', 'Any']);
             $table->text('tenantRestriction')->nullable();
 
             $table->longText('terms')->nullable();
