@@ -7,7 +7,7 @@ use Livewire\Component;
 class PropertyRegistration extends Component
 {
     
-    public $currentStep = 4;
+    public $currentStep = 5;
 
     protected $listeners = [
         'goToStep' => 'setStep'

@@ -14,7 +14,7 @@ class Step4 extends Component
 
     protected $rules = [
         'images' => 'array|max:5',
-        'images.*' => 'image|max:2048',      
+        'images.*' => 'image|max:2048',
         'newImages.*' => 'image|max:2048'
     ];
 
@@ -24,22 +24,14 @@ class Step4 extends Component
     }
 
     public function updatedNewImages()
-    {
-        // Validate new images
-        $this->validate([
-            'newImages.*' => 'image|max:2048',
-        ]);
-
-        // Merge new with existing
-        $this->images = array_merge($this->images, $this->newImages);
-        $this->newImages = [];
-
-        // Enforce limit
-        if (count($this->images) > 5) {
-            $this->images = array_slice($this->images, 0, 5);
-            $this->addError('upload_limit', 'You can upload a maximum of 5 images.');
-        }
+{
+    foreach ($this->newImages as $file) {
+        $path = $file->store('tmp', 'public');
+        $this->images[] = $path;
     }
+
+    $this->newImages = [];
+}
 
     public function removeImage($index)
     {
@@ -49,20 +41,23 @@ class Step4 extends Component
 
     public function submit()
     {
-        $this->validate();
+        // Only validate newImages
+        $this->validate([
+            'newImages.*' => 'image|max:2048',
+        ]);
 
         if (count($this->images) < 1) {
             $this->addError('images', 'Please upload at least one image.');
             return;
         }
 
-          $savedPaths = [];
+        $savedPaths = [];
         foreach ($this->images as $image) {
             if ($image instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                $path = $image->store('public/property_images');
+                $path = $image->store('property_images', 'public');
                 $savedPaths[] = $path;
             } else {
-                // Already a saved path
+                // Already saved path
                 $savedPaths[] = $image;
             }
         }
@@ -71,9 +66,26 @@ class Step4 extends Component
         $this->dispatch('goToStep', 5);
     }
 
-    public function back()  
+
+    public function back()
     {
-        session()->put('property_reg.images', $this->images);
+
+        if (count($this->images) < 1) {
+            $this->addError('images', 'Please upload at least one image.');
+            return;
+        }
+
+        $savedPaths = [];
+        foreach ($this->images as $image) {
+            if ($image instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                $path = $image->store('property_images', 'public');
+                $savedPaths[] = $path;
+            } else {
+                // Already a saved path
+                $savedPaths[] = $image;
+            }
+        }
+        session()->put('property_reg.images', $savedPaths);
         $this->dispatch('goToStep', 3);
     }
 
