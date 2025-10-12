@@ -16,16 +16,20 @@ class Property extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'type',
         'cost',
-        'tenant',
+        'type',
         'description',
         'address',
         'latitude',
         'longitude',
-        'amenities',
+        'feature',
         'images',
-        'captions'
+        'tenantType',
+        'tenantGender',
+        'tenantRestriction',
+        'terms',
+        'payment',
+        'agree'
     ];
 
     protected $casts = [

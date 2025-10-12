@@ -3,6 +3,8 @@
 namespace App\Livewire\Properties;
 
 use Livewire\Component;
+use App\Models\Property; // Make sure this is your Property model
+use Illuminate\Support\Facades\Auth;
 
 class Step6 extends Component
 {
@@ -27,12 +29,12 @@ class Step6 extends Component
 
     public function submit()
     {
-        $this->validate();
+         $this->validate();
 
-        $user_id = auth()->id();
+        $user_id = Auth::id();
         $sessionKey = "property_reg_{$user_id}";
 
-         // Merge with all previous session data
+        // Merge the policies into the session
         $allData = array_merge(session()->get($sessionKey, []), [
             'policies' => [
                 'terms' => $this->terms,
@@ -41,9 +43,43 @@ class Step6 extends Component
             ],
         ]);
 
-        // Save back to session under unified key
         session()->put($sessionKey, $allData);
-        dd(session());
+
+        // ✅ Save to database
+        $property = new Property();
+
+        $property->user_id = $user_id;
+        $property->name = $allData['name'] ?? null;
+        $property->cost = $allData['cost'] ?? null;
+        $property->type = $allData['type'] ?? null;
+        $property->description = $allData['description'] ?? null;
+        $property->address = $allData['address'] ?? null;
+        $property->latitude = $allData['latitude'] ?? null;
+        $property->longitude = $allData['longitude'] ?? null;
+
+        $property->feature = json_encode($allData['features'] ?? []);
+        $property->images = json_encode($allData['images'] ?? []);
+
+        // Tenant info
+        $tenant = $allData['tenant'] ?? [];
+        $property->tenantType = $tenant['tenantType'] ?? null;
+        $property->tenantGender = $tenant['tenantGender'] ?? null;
+        $property->tenantRestriction = $tenant['tenantRestriction'] ?? null;
+
+        // Policies
+        $policies = $allData['policies'] ?? [];
+        $property->terms = $policies['terms'] ?? null;
+        $property->payment = $policies['payment'] ?? null;
+        $property->agree = $policies['agree'] ?? false;
+
+        $property->save();
+
+        // Optionally clear session after saving
+        session()->forget($sessionKey);
+
+        // Redirect or show success
+        session()->flash('success', 'Property successfully uploaded!');
+        return redirect()->route('profile'); // replace with your route
     }
   
     public function back()

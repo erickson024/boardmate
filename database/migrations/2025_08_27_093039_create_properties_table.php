@@ -14,18 +14,29 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->string('name');
-            $table->enum('type', ['room','dormitory', 'bedspace', 'apartment', 'condominium', 'house']);
-            $table->enum('gender', ['male','female', 'all']);
             $table->decimal('cost', 10, 2);
-            $table->enum('tenant', ['student', 'professional', 'family', 'any']);
-            $table->text('description');
-            $table->string('address');
+            $table->enum('type', ['Apartment','Condominium', 'Dormitory', 'Studio', 'Bedspace', 'House']);
+            $table->longText('description');
+
+            $table->string('address');  
             $table->decimal('latitude', 10, 7);   // or double
             $table->decimal('longitude', 10, 7);  // or double
-            $table->json('amenities')->nullable();
+            
+            $table->json('feature')->nullable();
+
             $table->json('images')->nullable();
-            $table->json('captions')->nullable();
+
+            $table->enum('tenantType', ['Employee', 'Student', 'Family', 'Groups', 'Single', 'Couple', 'Any']);
+            $table->enum('tenantGender', ['Male','Female', 'All']);
+            $table->text('tenantRestriction')->nullable();
+
+            $table->longText('terms')->nullable();
+            $table->longText('payment')->nullable();
+            $table->boolean('agree');
+            
+        
 
             $table->timestamps();
         });
