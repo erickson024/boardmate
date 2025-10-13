@@ -25,15 +25,17 @@ class UserPropertyList extends Component
     }
 
 
-    public function deleteProperty($id)
+ public function deleteProperty($id)
 {
     $property = Property::where('user_id', auth()->id())->findOrFail($id);
     $property->delete();
 
-    session()->flash('success', 'Property successfully deleted.');
+    session()->flash('success', 'Property deleted successfully!');
 
-    $this->loadProperties(); // refresh the list
+    // Redirect with Livewire's SPA-style navigation
+    return $this->redirect('/user-property-list', navigate: true);
 }
+
 
     public function render()
     {

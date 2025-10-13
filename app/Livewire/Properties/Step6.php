@@ -45,7 +45,7 @@ class Step6 extends Component
 
         session()->put($sessionKey, $allData);
 
-        // ✅ Save to database
+        // Save to database
         $property = new Property();
 
         $property->user_id = $user_id;
@@ -79,7 +79,7 @@ class Step6 extends Component
 
         // Redirect or show success
         session()->flash('success', 'Property successfully uploaded!');
-        return redirect()->route('user-property-list'); // replace with your route
+        return $this->redirect('/user-property-list', navigate: true);
     }
   
     public function back()
