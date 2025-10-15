@@ -37,83 +37,89 @@
             </div>
         </div>
 
-        <div class="col-lg-3">
-            <div class="row d-flex flex-column gap-3">
-                <div class="col-12">
-                    <button
-                        type="button"
-                        wire:click="openConnections"
-                        class="w-100 text start d-flex align-items-center justify-content-between p-2 rounded-4 bg-light shadow-sm border-1 text-decoration-none"
-                        aria-label="Open connections">
+        <div class="col-12 col-md-12 col-lg-9">
+            <div class="row gx-2">
+                <div class="row ">
+                    <!-- Promoted List -->
+                    <div class="col-12 col-md-12 col-lg-4  mt-3 mt-md-0 mt-lg-0">
+                        <button
+                            type="button"
+                            wire:click="openConnections"
+                            class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm transition-all"
+                            aria-label="Open connections"
+                            style="transition: all 0.2s ease;">
 
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white"
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
                                 style="width: 56px; height: 56px;">
                                 <i class="bi bi-globe-asia-australia fs-4"></i>
                             </div>
 
-                            <div class="lh-1">
-                                <small class="fw-medium text-muted text-uppercase">Promoted List</small>
-                                <div class="d-flex align-items-baseline gap-2">
-                                    <span class="fs-6 fw-bold">Coming Soon</span>
-                                </div>
+                            <div class="flex-grow-1">
+                                <small class="fw-medium text-muted text-uppercase d-block mb-1"><small>Promoted List</small></small>
+                                <span class="fs-6 fw-semibold text-dark">Coming Soon</span>
                             </div>
-                        </div>
-                    </button>
+                        </button>
+                    </div>
+
+                    <!-- Saved Property -->
+                    <div class="col-12 col-md-12 col-lg-4 mt-3 mt-md-0 mt-lg-0">
+                        <button
+                            type="button"
+                            wire:click="openConnections"
+                            class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm transition-all"
+                            aria-label="Open saved properties"
+                            style="transition: all 0.2s ease;">
+
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
+                                style="width: 56px; height: 56px;">
+                                <i class="bi bi-bookmark-check-fill fs-4"></i>
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <small class="fw-medium text-muted text-uppercase d-block mb-1"><small>Saved Properties</small></small>
+                                <span class="fs-6 fw-semibold text-dark">Coming Soon</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Property Hosted -->
+                    <div class="col-12 col-md-12 col-lg-4 mt-3 mt-md-0 mt-lg-0">
+                        <button
+                            type="button"
+                            wire:click="goToPropertyList"
+                            class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm transition-all"
+                            aria-label="Open hosted properties"
+                            style="transition: all 0.2s ease;">
+
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
+                                style="width: 56px; height: 56px;">
+                                <i class="bi bi-house-door-fill fs-4"></i>
+                            </div>
+
+                            <div class="flex-grow-1">
+
+                                <small class="fw-medium text-muted text-uppercase d-block mb-1"><small>Property Hosted</small></small>
+                                <span class="fs-5 fw-bold text-dark">{{ auth()->user()->properties()->count() }}</span>
+
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="my-3 bg-light rounded shadow border">
+                        <livewire:user-property-list col-size="col-lg-4" />
+                    </div>
                 </div>
+
+
             </div>
         </div>
-
-        <div class="col-lg-3">
-            <div class="col-12">
-                <button
-                    type="button"
-                    wire:click="openConnections"
-                    class="w-100 text start d-flex align-items-center justify-content-between p-2 rounded-4 bg-light shadow-sm border-1 text-decoration-none"
-                    aria-label="Open connections">
-
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white"
-                            style="width: 56px; height: 56px;">
-                            <i class="bi bi-bookmark-check-fill fs-4"></i>
-                        </div>
-
-                        <div class="lh-1">
-                            <small class="fw-medium text-muted text-uppercase">Saved Property</small>
-                            <div class="d-flex align-items-baseline gap-2">
-                                <span class="fs-6 fw-bold">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <div class="col-lg-3">
-            <div class="col-12">
-                <button
-                    type="button"
-                    wire:click="openConnections"
-                    class="w-100 text start d-flex align-items-center justify-content-between p-2 rounded-4 bg-light shadow-sm border-1 text-decoration-none"
-                    aria-label="Open connections">
-
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white"
-                            style="width: 56px; height: 56px;">
-                            <i class="bi bi-house-door-fill fs-4" aria-hidden="true"></i>
-                        </div>
-
-                        <div class="lh-1">
-                            <small class="fw-medium text-muted text-uppercase">Property Hosted</small>
-                            <div class="d-flex align-items-baseline gap-2">
-                                <span class="fs-5 fw-bold">{{ auth()->user()->properties()->count() }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-
     </div>
+
+    <style>
+        .hover-shadow-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
+
 </div>

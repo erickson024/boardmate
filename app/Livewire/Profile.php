@@ -17,6 +17,11 @@ class Profile extends Component
         // Count them
         $this->count = $this->properties->count();
     }
+
+    public function goToPropertyList()
+{
+    return $this->redirect(route('user-property-list'), navigate: true);
+}
     
     public function render()
     {

@@ -12,8 +12,9 @@ class UserPropertyList extends Component
     public $propertyToDelete;
 
     // Load properties when the component mounts
-    public function mount()
+    public function mount($colSize = 'col-3')
     {
+        $this->colSize = $colSize;
         $this->loadProperties();
     }
 
@@ -25,16 +26,19 @@ class UserPropertyList extends Component
     }
 
 
- public function deleteProperty($id)
-{
-    $property = Property::where('user_id', auth()->id())->findOrFail($id);
-    $property->delete();
+    public function deleteProperty($id)
+    {
+        $property = Property::where('user_id', auth()->id())->findOrFail($id);
+        $property->delete();
 
-    session()->flash('success', 'Property deleted successfully!');
+        session()->flash('success', 'Property deleted successfully!');
 
-    // Redirect with Livewire's SPA-style navigation
-    return $this->redirect('/user-property-list', navigate: true);
-}
+        // Redirect with Livewire's SPA-style navigation
+        return $this->redirect('/profile', navigate: true);
+    }
+
+    public $colSize = 'col-12';
+
 
 
     public function render()
