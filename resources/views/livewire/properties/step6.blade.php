@@ -55,6 +55,9 @@
 
             <button type="submit" class="btn btn-sm btn-dark">
                 <span>Upload Property</span>
+                <span wire:loading wire:target="submit">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </span>
             </button>
         </div>
     </form>

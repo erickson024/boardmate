@@ -34,7 +34,7 @@ class UserPropertyList extends Component
         session()->flash('success', 'Property deleted successfully!');
 
         // Redirect with Livewire's SPA-style navigation
-        return $this->redirect('/profile', navigate: true);
+        return $this->redirect('/user-property-list', navigate: true);
     }
 
     public $colSize = 'col-12';
