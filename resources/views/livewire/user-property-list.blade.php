@@ -12,7 +12,7 @@
                     <small class="text-muted">Build trust and attract more tenants.</small>
                 </div>
             </div>
-            <button class="btn btn-sm btn-primary rounded-pill px-3">Verify Now</button>
+            <button class="btn btn-sm btn-primary rounded-5 px-3"><small>Verify Now</small></button>
         </div>
 
         @if($properties->isEmpty())

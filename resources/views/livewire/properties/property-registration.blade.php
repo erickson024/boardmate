@@ -61,7 +61,6 @@
             </div>
         </div>
 
-
         <div class="position-fixed bottom-0 start-50 translate-middle-x w-100 bg-white p-2">
             <div class="d-flex justify-content-center gap-2">
                 <div class="progress" style="height: 2px; width: 16%;">
