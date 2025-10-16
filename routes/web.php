@@ -8,6 +8,7 @@ use App\Livewire\Profile;
 use App\Livewire\Properties\PropertyRegistration;
 use Illuminate\Support\Facades\Session;
 use App\Livewire\UserPropertyList;
+use App\Livewire\ProfileUpdate\UpdateProfile;
 
 Route::middleware('guest.custom')->group(function () {
 
@@ -22,11 +23,7 @@ Route::middleware('guest.custom')->group(function () {
 Route::middleware('auth.custom')->group(function () {
 
     Route::get('/profile', Profile::class)->name('profile');
-
-    Route::get('/profile/update', function () {
-        return view('pages.authenticated.update-profile');
-    })->name('update-profile');
-
+    Route::get('profile/update', UpdateProfile::class)->name('update-profile');
     Route::get('property-registration', PropertyRegistration::class)->name('property-registration');
     Route::get('user-property-list', UserPropertyList::class)->name('user-property-list');
 

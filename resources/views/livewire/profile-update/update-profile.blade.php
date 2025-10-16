@@ -1,4 +1,5 @@
-<div class="container-fluid bg-light rounded p-5" style="height: 85vh;">
+<div class="container-fluid p-5">
+    
     <div class="row rounded">
         <div class="col-md-12">
             <h5 class="mb-0 fw-semibold">Profile Information</h5>

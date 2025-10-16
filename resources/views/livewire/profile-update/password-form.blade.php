@@ -4,20 +4,30 @@
 
     <form wire:submit.prevent="updatePassword" class="col-8 mt-3">
         <div class="form-floating mb-3">
-            <input type="password" wire:model="current_password" class="form-control border-dark shadow-none" placeholder="Current Password">
-            <label>Current Password</label>
+            <input 
+            type="password" 
+            wire:model="current_password" 
+            class="form-control border-dark shadow-none" 
+            placeholder="Current Password"
+            required>
+            <label class="text-dark"><small>Current Password</small></label>
             @error('current_password') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
 
         <div class="form-floating mb-3">
-            <input type="password" wire:model="new_password" class="form-control border-dark shadow-none" placeholder="New Password">
-            <label>New Password</label>
+            <input 
+            type="password" 
+            wire:model="new_password" 
+            class="form-control border-dark shadow-none" 
+            placeholder="New Password"
+            required>
+            <label class="text-dark"><small>New Password</small></label>
             @error('new_password') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
 
         <div class="form-floating mb-3">
             <input type="password" wire:model="new_password_confirmation" class="form-control border-dark shadow-none" placeholder="Confirm New Password">
-            <label>Confirm New Password</label>
+           <label class="text-dark"><small>Confirm New Password</small></label>
         </div>
 
         <div class="d-flex align-items-center gap-2">

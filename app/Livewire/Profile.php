@@ -19,10 +19,10 @@ class Profile extends Component
     }
 
     public function goToPropertyList()
-{
-    return $this->redirect(route('user-property-list'), navigate: true);
-}
-    
+    {
+        return $this->redirect(route('user-property-list'), navigate: true);
+    }
+
     public function render()
     {
         return view('livewire.profile', [
