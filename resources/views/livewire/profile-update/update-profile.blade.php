@@ -23,7 +23,7 @@
         <!-- Content area -->
         <div class="col-md-9">
             @if ($active === 'profile')
-            <livewire:profile-update.profile-form />
+            <livewire:profile-update.profile-form/>
             @elseif ($active === 'password')
             <livewire:profile-update.password-form />
             @elseif ($active === 'email')

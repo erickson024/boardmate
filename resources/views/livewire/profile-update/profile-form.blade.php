@@ -1,4 +1,15 @@
 <div>
+    @php
+    $userAvatar = auth()->user()->avatar;
+    if ($userAvatar && !str_starts_with($userAvatar, 'http')) {
+    // it's a local file
+    $userAvatar = asset('storage/' . $userAvatar);
+    } elseif (!$userAvatar) {
+    // fallback to default
+    $userAvatar = asset('images/default-avatar.png');
+    }
+    @endphp
+
     <h6 class="mb-0">Profile</h6>
     <small class="mt-0">Update your name, profile photo and address.</small>
 
@@ -8,15 +19,14 @@
                 <input id="avatar-input" type="file" wire:model="avatar" accept="image/*" hidden>
 
                 <div id="circlePreview"
-                     class="rounded-circle d-flex align-items-center justify-content-center bg-light shadow"
-                     onclick="document.getElementById('avatar-input').click();"
-                     style="width: 120px; height: 120px; overflow: hidden; cursor: pointer;">
+                    class="rounded-circle d-flex align-items-center justify-content-center bg-light shadow"
+                    onclick="document.getElementById('avatar-input').click();"
+                    style="width: 120px; height: 120px; overflow: hidden; cursor: pointer;">
+
                     @if ($avatar)
-                        <img src="{{ $avatar->temporaryUrl() }}" alt="Profile Preview" class="w-100 h-100" style="object-fit: cover;">
-                    @elseif (Auth::user()->avatar)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profile Photo" class="w-100 h-100" style="object-fit: cover;">
+                    <img src="{{ $avatar->temporaryUrl() }}" alt="Profile Preview" class="w-100 h-100" style="object-fit: cover;">
                     @else
-                        <i class="bi bi-person fs-1"></i>
+                    <img src="{{ $userAvatar }}" alt="Profile Photo" class="w-100 h-100" style="object-fit: cover;">
                     @endif
                 </div>
 
@@ -66,15 +76,14 @@
                         </button>
 
                         @if (session()->has('success'))
-                            <div class="alert alert-success mb-0 py-1 px-2">
-                                <small>{{ session('success') }}</small>
-                            </div>
+                        <div class="alert alert-success mb-0 py-1 px-2">
+                            <small>{{ session('success') }}</small>
+                        </div>
                         @endif
                     </div>
                 </div>
             </form>
         </div>
     </div>
-  
-</div>
 
+</div>

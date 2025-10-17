@@ -23,9 +23,12 @@
                     </div>
 
                     <div class="col-4 col-sm-4 col-md-6 mb-2 d-flex justify-content-end">
-                        <div class="gap-2">
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-google"></i></button>
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-hash"></i></button>
+                        <div class="gap-4">
+                            <div class=" text-center">
+                                <a href="{{ route('google.redirect') }}" class="btn btn-dark btn-sm w-100">
+                                    <i class="bi bi-google me-2"></i> Sign in with Google
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,21 +45,21 @@
                 <div class="row mt-2 g-2">
                     <div class="col-6 col-md-6 d-flex justify-content-start">
                         @if ($currentStep > 1)
-                            <button wire:click="previousStep" class="btn btn-outline-secondary fade-in ">
-                                Back
-                                <span class="spinner-border spinner-border-sm" wire:loading wire:target="previousStep"></span>
-                            </button>
+                        <button wire:click="previousStep" class="btn btn-outline-secondary fade-in ">
+                            Back
+                            <span class="spinner-border spinner-border-sm" wire:loading wire:target="previousStep"></span>
+                        </button>
                         @else
-                           
+
                         @endif
                     </div>
                     <div class="col-6 col-md-6 d-flex justify-content-end ">
                         @if ($currentStep < 3)
                             <button wire:click="nextStep" class="btn btn-dark">
-                                Continue
-                                <span class="spinner-border spinner-border-sm" wire:loading wire:target="nextStep"></span>
+                            Continue
+                            <span class="spinner-border spinner-border-sm" wire:loading wire:target="nextStep"></span>
                             </button>
-                        @else
+                            @else
                             <button wire:click="submit"
                                 class="btn btn-dark"
                                 wire:loading.attr="disabled"
@@ -68,7 +71,7 @@
                                     wire:loading
                                     wire:target="submit"></span>
                             </button>
-                        @endif
+                            @endif
                     </div>
                 </div>
 

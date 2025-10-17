@@ -1,4 +1,14 @@
 <div class="container py-3">
+    @php
+    $userAvatar = auth()->user()->avatar;
+    if ($userAvatar && !str_starts_with($userAvatar, 'http')) {
+    // it's a local file
+    $userAvatar = asset('storage/' . $userAvatar);
+    } elseif (!$userAvatar) {
+    // fallback to default
+    $userAvatar = asset('images/default-avatar.png');
+    }
+    @endphp
     <div class="row gx-3">
         <div class="col-lg-3">
             <div class="row gap-3">
@@ -9,15 +19,14 @@
                                 style="width:110px; height:110px; border-radius:50%; overflow:hidden;
                                        border:4px solid #212529; box-shadow:0 .5rem 1rem rgba(0,0,0,.15);
                                        background-size: cover; background-position:center;
-                                       background-image: url('{{ auth()->user()->avatar
-                                       ? asset('storage/' . auth()->user()->avatar)
-                                       : asset('images/default-avatar.png') }}');">
+                                       background-image: url('{{ $userAvatar }}');">
                             </div>
                         </div>
                         <div class="card-body text-center">
                             <h6 class="card-title fw-semibold mb-0">
                                 {{ auth()->user()->firstname }} {{ auth()->user()->lastname }}
                             </h6>
+
                             <small class="text-muted d-block mb-3"><i class="bi bi-geo-alt"></i> {{ auth()->user()->address }}</small>
 
                             <div class="mb-3 mt-0">
@@ -45,67 +54,67 @@
         </div>
 
         <div class="col-12 col-md-12 col-lg-9 mx-auto">
-    <div class="d-flex justify-content-center">
-        <div class="row gx-3 justify-content-center w-100" style="max-width: 1000px;">
-            
-            <!-- Promoted List -->
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
-                <button type="button"
-                    wire:click="openConnections"
-                    class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
-                    aria-label="Open connections">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
-                        style="width: 56px; height: 56px;">
-                        <i class="bi bi-globe-asia-australia fs-4"></i>
-                    </div>
-                    <div class="flex-grow-1">
-                        <small class="fw-medium text-muted text-uppercase d-block mb-1">Promoted List</small>
-                        <span class="fs-6 fw-semibold text-dark">Coming Soon</span>
-                    </div>
-                </button>
-            </div>
+            <div class="d-flex justify-content-center">
+                <div class="row gx-3 justify-content-center w-100" style="max-width: 1000px;">
 
-            <!-- Saved Property -->
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
-                <button type="button"
-                    wire:click="openConnections"
-                    class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
-                    aria-label="Open saved properties">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
-                        style="width: 56px; height: 56px;">
-                        <i class="bi bi-bookmark-check-fill fs-4"></i>
+                    <!-- Promoted List -->
+                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                        <button type="button"
+                            wire:click="openConnections"
+                            class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
+                            aria-label="Open connections">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
+                                style="width: 56px; height: 56px;">
+                                <i class="bi bi-globe-asia-australia fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <small class="fw-medium text-muted text-uppercase d-block mb-1">Promoted List</small>
+                                <span class="fs-6 fw-semibold text-dark">Coming Soon</span>
+                            </div>
+                        </button>
                     </div>
-                    <div class="flex-grow-1">
-                        <small class="fw-medium text-muted text-uppercase d-block mb-1">Saved Properties</small>
-                        <span class="fs-6 fw-semibold text-dark">Coming Soon</span>
-                    </div>
-                </button>
-            </div>
 
-            <!-- Property Hosted -->
-            <div class="col-12 col-md-6 col-lg-4 mt-3">
-                <button type="button"
-                    wire:click="goToPropertyList"
-                    class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
-                    aria-label="Open hosted properties">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
-                        style="width: 56px; height: 56px;">
-                        <i class="bi bi-house-door-fill fs-4"></i>
+                    <!-- Saved Property -->
+                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                        <button type="button"
+                            wire:click="openConnections"
+                            class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
+                            aria-label="Open saved properties">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
+                                style="width: 56px; height: 56px;">
+                                <i class="bi bi-bookmark-check-fill fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <small class="fw-medium text-muted text-uppercase d-block mb-1">Saved Properties</small>
+                                <span class="fs-6 fw-semibold text-dark">Coming Soon</span>
+                            </div>
+                        </button>
                     </div>
-                    <div class="flex-grow-1">
-                        <small class="fw-medium text-muted text-uppercase d-block mb-1">Property Hosted</small>
-                        <span class="fs-5 fw-bold text-dark">{{ auth()->user()->properties()->count() }}</span>
-                    </div>
-                </button>
-            </div>
 
-              <div class="my-3 bg-light rounded shadow border">
-                    <livewire:user-property-list col-size="col-lg-4 gx-3" />
+                    <!-- Property Hosted -->
+                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                        <button type="button"
+                            wire:click="goToPropertyList"
+                            class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
+                            aria-label="Open hosted properties">
+                            <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark text-white flex-shrink-0"
+                                style="width: 56px; height: 56px;">
+                                <i class="bi bi-house-door-fill fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <small class="fw-medium text-muted text-uppercase d-block mb-1">Property Hosted</small>
+                                <span class="fs-5 fw-bold text-dark">{{ auth()->user()->properties()->count() }}</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="my-3 bg-light rounded shadow border">
+                        <livewire:user-property-list col-size="col-lg-4 gx-3" />
+                    </div>
+
                 </div>
-
+            </div>
         </div>
-    </div>
-</div>
 
     </div>
 

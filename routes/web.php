@@ -9,6 +9,7 @@ use App\Livewire\Properties\PropertyRegistration;
 use Illuminate\Support\Facades\Session;
 use App\Livewire\UserPropertyList;
 use App\Livewire\ProfileUpdate\UpdateProfile;
+use App\Http\Controllers\GoogleController;
 
 Route::middleware('guest.custom')->group(function () {
 
@@ -31,21 +32,19 @@ Route::middleware('auth.custom')->group(function () {
         if (Auth::check()) {
             $userId = Auth::id();
 
-            // 🧹 Clear the property registration data for that specific user
+            //  Clear the property registration data for that specific user
             Session::forget("property_reg_{$userId}");
         }
 
         Auth::logout();
 
-        // 🔐 Fully invalidate the session
+        // Fully invalidate the session
         Session::invalidate();
         Session::regenerateToken();
 
         return redirect('/login');
     })->name('logout');
 });
-
-
 
 Route::get('/test', function () {
     return view('pages.test');
@@ -54,3 +53,6 @@ Route::get('/test', function () {
 Route::get('/properties/{id}', function ($id) {
     return view('pages.authenticated.property-show', ['id' => $id]);
 })->name('properties.show');
+
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');

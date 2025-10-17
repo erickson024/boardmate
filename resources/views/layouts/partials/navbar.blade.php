@@ -137,6 +137,21 @@
 </nav>
 
 @auth
+@php
+    $userAvatar = auth()->user()->avatar;
+
+    if ($userAvatar) {
+        // if it's a URL (Google login), leave it as is
+        if (!str_starts_with($userAvatar, 'http')) {
+            // it's a local file in storage
+            $userAvatar = asset('storage/' . $userAvatar);
+        }
+    } else {
+        // fallback to default
+        $userAvatar = asset('images/default-avatar.png');
+    }
+@endphp
+
 <div
     class="offcanvas offcanvas-end w-25"
     tabprofile="-1"
@@ -147,18 +162,16 @@
         <div class="shadow rounded p-2 mb-2">
 
             <a href="{{route('profile')}}" class="btn btn-dark w-100 d-flex align-items-center justify-content-between gap-2 mb-1">
-                <img
-                    src="{{ auth()->user()->avatar 
-                            ? asset('storage/' . auth()->user()->avatar) 
-                            : asset('images/default-avatar.png') }}"
-                    alt="Profile"
-                    class="rounded-circle shadow-lg ouline-dark"
-                    style="width: 30px; height: 30px; object-fit: cover;">
-                <span>
-                    <small>{{auth()->user()->firstname}}</small>
-                    <small>{{auth()->user()->lastname}}</small>
-                </span>
-            </a>
+    <img
+        src="{{ $userAvatar }}"
+        alt="Profile"
+        class="rounded-circle shadow-lg outline-dark"
+        style="width: 30px; height: 30px; object-fit: cover;">
+    <span>
+        <small>{{ auth()->user()->firstname }}</small>
+        <small>{{ auth()->user()->lastname }}</small>
+    </span>
+</a>
 
             <a href class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-between gap-2 mb-1">
                 <small>Saved List</small>
