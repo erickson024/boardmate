@@ -6,20 +6,13 @@
             <div class=" p-4 border border-dark shadow rounded h-100 " style="background-color: #ffffff;">
 
                 <div class="row">
-                    <div class="col-9 col-md-7 col-lg-9">
+                    <div class="col-12">
                         <p class="fw-semibold fs-5 mb-2">Ready to Login Bordmate</p>
                         <p class="small">
                             Dont have any account?
-                            <a href="{{route('register')}}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
+                            <a href="{{route('register')}}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium" wire:navigate>
                                 Register</a>
                         </p>
-                    </div>
-
-                    <div class="col-3  col-md-5 col-lg-3 mb-2 d-flex justify-content-end ">
-                        <div class="gap-2">
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-google"></i></button>
-                            <button class="btn btn-sm btn-dark"><i class="bi bi-phone-fill"></i></button>
-                        </div>
                     </div>
                 </div>
 
@@ -30,8 +23,9 @@
                             class="form-control border-dark text-dark shadow-none"
                             id="emailInput"
                             placeholder="johndoe@gmail.com"
-                            wire:model="email">
-                        <label for="emailInput" class="text-dark">email address</label>
+                            wire:model="email"
+                            required>
+                        <label for="emailInput" class="text-dark"><small>email</small></label>
                         @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
 
@@ -40,8 +34,9 @@
                             class="form-control border-dark text-dark shadow-none"
                             id="passwordInput"
                             placeholder="@test123"
-                            wire:model="password">
-                        <label for="passwordInput" class="text-dark">password</label>
+                            wire:model="password"
+                            required>
+                        <label for="passwordInput" class="text-dark"><small>password</small></label>
 
                     </div>
 
@@ -59,10 +54,34 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-dark w-100 mt-3" wire:loading.attr="disabled">
-                        Login
-                        <span wire:loading wire:target="login" class="spinner-border spinner-border-sm me-1"></span>
-                    </button>
+                  <button 
+    type="submit" 
+    class="btn btn-dark w-100 mt-3" 
+    wire:loading.attr="disabled"
+>
+    <span wire:loading.remove wire:target="login">
+        Login
+    </span>
+    <span wire:loading wire:target="login">
+        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        Logging in...
+    </span>
+</button>
+
+<!-- Divider -->
+<div class="d-flex align-items-center mt-5">
+    <hr class="flex-grow-1 border-secondary opacity-50">
+    <span class="mx-2 text-muted fw-semibold small">OR</span>
+    <hr class="flex-grow-1 border-secondary opacity-50">
+</div>
+
+<!-- Google Sign-in -->
+<div class="text-center">
+    <a href="{{ route('google.redirect') }}" class="btn btn-outline-primary w-100">
+        <i class="bi bi-google me-2"></i> <small>Sign in with Google</small>
+    </a>
+</div>
+
 
                 </form>
             </div>

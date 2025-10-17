@@ -55,10 +55,10 @@
 
         <div class="col-12 col-md-12 col-lg-9 mx-auto">
             <div class="d-flex justify-content-center">
-                <div class="row gx-3 justify-content-center w-100" style="max-width: 1000px;">
+                <div class="row gx-3 justify-content-center w-100">
 
                     <!-- Promoted List -->
-                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <button type="button"
                             wire:click="openConnections"
                             class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
@@ -75,7 +75,7 @@
                     </div>
 
                     <!-- Saved Property -->
-                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <button type="button"
                             wire:click="openConnections"
                             class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
@@ -92,7 +92,7 @@
                     </div>
 
                     <!-- Property Hosted -->
-                    <div class="col-12 col-md-6 col-lg-4 mt-3">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <button type="button"
                             wire:click="goToPropertyList"
                             class="w-100 text-start d-flex align-items-center gap-3 p-3 rounded-4 bg-light border-0 shadow-sm hover-shadow-sm"
