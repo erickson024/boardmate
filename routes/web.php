@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Livewire\Auth\Signup\Signup;
 use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Register;
 use App\Livewire\Profile;
 use App\Livewire\Properties\PropertyRegistration;
 use Illuminate\Support\Facades\Session;
@@ -17,8 +17,9 @@ Route::middleware('guest.custom')->group(function () {
         return view('welcome');
     })->name('landing');
 
-    Route::get('/register', Register::class)->name('register');
+
     Route::get('/login', Login::class)->name('login');
+    Route::get('/signup', Signup::class)->name('signup');
 });
 
 Route::middleware('auth.custom')->group(function () {

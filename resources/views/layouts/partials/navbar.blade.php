@@ -87,7 +87,7 @@
                     <a href="{{route('login')}}" class="btn btn-sm btn-outline-dark">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('register') }}" class="btn btn-sm btn-dark">Register</a>
+                    <a href="" class="btn btn-sm btn-dark">Register</a>
                 </li>
             </ul>
             @endguest
