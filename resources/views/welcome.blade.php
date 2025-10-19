@@ -7,7 +7,7 @@
                 <p class="fw-medium mt-0">Discover more rental homes across our available locations.</p>
 
                 <div class="d-flex gap-2 mt-3">
-                    <a href="{{route('register')}}" class="btn btn-sm btn-dark">Get Started</a>
+                    <a href="" class="btn btn-sm btn-dark">Get Started</a>
                     <a href="{{route('profile')}}" class="btn btn-sm btn-outline-dark">Explore</a>
                 </div>
 

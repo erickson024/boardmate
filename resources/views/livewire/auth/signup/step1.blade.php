@@ -1,7 +1,7 @@
 <div>
     <span class="fs-6 fw-medium">Personal Information</span>
 
-    <form autocomplete="off">
+    <form autocomplete="off" wire:submit.prevent="submit">
         <div class="row mt-3 gx-3">
             <div class="col-6">
                 <div class="form-floating">
@@ -15,6 +15,7 @@
                         autocomplete="new-password"
                         required>
                     <label for="firstname" class="fw-medium"><small>Firstname</small></label>
+                    @error('firstname') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>
 
@@ -30,6 +31,7 @@
                         autocomplete="new-password"
                         required>
                     <label for="lastname" class="fw-medium"><small>Lastname</small></label>
+                    @error('lastname') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>
 
@@ -45,8 +47,17 @@
                         autocomplete="off"
                         required>
                     <label for="address" class="fw-medium"><small>Current Address</small></label>
+                    @error('address') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>
         </div>
+
+        <button type="submit" class="btn btn-sm btn-dark mt-3">
+            <span>Continue</span>
+
+            <span wire:loading wire:target="submit">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </span>
+        </button>
     </form>
 </div>

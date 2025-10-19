@@ -10,7 +10,7 @@
                         <p class="fw-semibold fs-5 mb-2">Ready to Login Bordmate</p>
                         <p class="small">
                             Dont have any account?
-                            <a href="{{route('register')}}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium" wire:navigate>
+                            <a href="" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium" wire:navigate>
                                 Register</a>
                         </p>
                     </div>
@@ -46,7 +46,7 @@
                                 @error('password') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6 d-flex justify-content-end">
-                                <a href="{{route('register')}}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
+                                <a href="" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
                                     <small>Forget Password?</small>
                                 </a>
                             </div>
