@@ -10,7 +10,7 @@
                         wire:model="firstname"
                         id="firstname"
                         name="firstname"
-                        class="form-control border-1 shadow-sm"
+                        class="form-control border-1 shadow-sm font-property"
                         placeholder="firstname"
                         autocomplete="new-password"
                         required>
@@ -26,7 +26,7 @@
                         wire:model="lastname"
                         id="lastname"
                         name="lastname"
-                        class="form-control border-1 shadow-sm"
+                        class="form-control border-1 shadow-sm font-property"
                         placeholder="lastname"
                         autocomplete="new-password"
                         required>
@@ -42,7 +42,7 @@
                         wire:model="address"
                         id="address"
                         name="address"
-                        class="form-control border-1 shadow-sm"
+                        class="form-control border-1 shadow-sm font-property"
                         placeholder="address"
                         autocomplete="off"
                         required>

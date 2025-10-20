@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Signup extends Component
 {
-    public $currentStep = 3;
+    public $currentStep = 1;
     
     protected $listeners = [
         'goToStep' => 'setStep',

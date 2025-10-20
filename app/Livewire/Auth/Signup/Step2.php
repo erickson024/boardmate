@@ -54,8 +54,9 @@ class Step2 extends Component
             'password' => $this->password,
             'confirmPassword' => $this->confirmPassword,
         ]);
-
-         session()->put('signup', $signupData);
+        
+        
+        session()->put('signup', $signupData);
         $this->dispatch('goToStep', 3);
     }
 
