@@ -1,5 +1,5 @@
 <div>
-    <span class="fs-6 fw-medium">Upload your Profile Picture.</span>
+    <span class="fs-6 fw-medium">Upload your Profile Picture. <small class="text-muted">(not required)</small></span>
     <p><small>Click the camera icon below to upload your profile picture</small></p>
 
     <div class="d-flex flex-column align-items-center my-4">

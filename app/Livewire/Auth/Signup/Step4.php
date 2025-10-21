@@ -35,7 +35,7 @@ class Step4 extends Component
        $this->validate();
        $this->saveData();
        $signupData = session()->get('signup', []);
- 
+       
        $user = User::create([
            'firstname' => $signupData['firstname'] ?? null,
             'lastname'  => $signupData['lastname'] ?? null,
@@ -46,7 +46,7 @@ class Step4 extends Component
             'profile_photo'  => $signupData['profile_photo'] ?? null,
        ]);
         
-       dd(session());
+
         session()->forget('signup');
         auth()->login($user);
         return $this->redirect('/profile', navigate: true);
