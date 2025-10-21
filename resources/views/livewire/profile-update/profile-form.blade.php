@@ -1,6 +1,6 @@
 <div>
     @php
-    $userAvatar = auth()->user()->avatar;
+    $userAvatar = auth()->user()->profile_photo;
     if ($userAvatar && !str_starts_with($userAvatar, 'http')) {
     // it's a local file
     $userAvatar = asset('storage/' . $userAvatar);
