@@ -30,7 +30,7 @@ class Step2 extends Component
         $this->strengthScore = $score;
     }
 
-     public function mount()
+    public function mount()
     {
         $this->fill(session()->get('signup', []));
 
@@ -38,6 +38,16 @@ class Step2 extends Component
         if (!empty($this->password)) {
             $this->checkStrength($this->password);
         }
+    }
+
+    public function savePassword()
+    {
+        $signupData = session()->get('signup', []);
+        $signupData = array_merge($signupData, [
+            'password' => $this->password,
+            'confirmPassword' => $this->confirmPassword,
+        ]);
+        session()->put('signup', $signupData);
     }
 
     public function submit()
@@ -49,19 +59,14 @@ class Step2 extends Component
             return;
         }
 
-        $signupData = session()->get('signup', []);
-        $signupData = array_merge($signupData, [
-            'password' => $this->password,
-            'confirmPassword' => $this->confirmPassword,
-        ]);
-        
-        
-        session()->put('signup', $signupData);
+        $this->savePassword();
         $this->dispatch('goToStep', 3);
     }
 
     public function back()
     {
+
+        $this->savePassword();
         $this->dispatch('goToStep', 1);
     }
 
