@@ -14,7 +14,7 @@
                         class="form-control border-1 shadow-sm font-property"
                         placeholder="firstname"
                         required>
-                    <label for="firstname" class="fw-medium"><small>Firstname</small></label>
+                    <label for="firstname" class="fw-medium"><small>First name</small></label>
                     @error('firstname') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         class="form-control border-1 shadow-sm font-property"
                         placeholder="lastname"
                         required>
-                    <label for="lastname" class="fw-medium"><small>Lastname</small></label>
+                    <label for="lastname" class="fw-medium"><small>Last name</small></label>
                     @error('lastname') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>

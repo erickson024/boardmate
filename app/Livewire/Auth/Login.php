@@ -25,8 +25,15 @@ class Login extends Component
         $this->addError('email', 'Invalid email or password.');
     }
 
+        public function goToDashboard()
+    {
+
+        return redirect()->route('landing'); // or 'explore'
+    }
+
     public function render()
     {
+        session()->forget('signup'); // remove signup progress data
         return view('livewire.auth.login');
     }
 }

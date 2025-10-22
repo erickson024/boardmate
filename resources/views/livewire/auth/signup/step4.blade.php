@@ -15,6 +15,7 @@
                         placeholder="email"
                         required>
                     <label for="email" class="fw-medium"><small>email</small></label>
+                     @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>
 
