@@ -31,7 +31,7 @@ class GoogleController extends Controller
                     'google_id' => $googleUser->getId(),
                     'firstname' => $raw['given_name'] ?? $googleUser->getName(),
                     'lastname' => $raw['family_name'] ?? '',
-                    'avatar' => $googleUser->getAvatar(),
+                    'profile_photo' => $googleUser->getAvatar(),
                     'address' => $raw['locale'] ?? 'Unknown',
                     'terms' => 'accepted',
                     'email_verified_at' => now(),

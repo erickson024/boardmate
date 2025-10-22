@@ -138,7 +138,7 @@
 
 @auth
 @php
-    $userAvatar = auth()->user()->avatar;
+    $userAvatar = auth()->user()->profile_photo;
 
     if ($userAvatar) {
         // if it's a URL (Google login), leave it as is
@@ -166,7 +166,7 @@
         src="{{ $userAvatar }}"
         alt="Profile"
         class="rounded-circle shadow-lg outline-dark"
-        style="width: 30px; height: 30px; object-fit: cover;">
+        style="width: 30px; height: 30px; object-fit: cover;  background-image: url('{{ $userAvatar }}');"">
     <span>
         <small>{{ auth()->user()->firstname }}</small>
         <small>{{ auth()->user()->lastname }}</small>
