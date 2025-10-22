@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Session;
 use App\Livewire\UserPropertyList;
 use App\Livewire\ProfileUpdate\UpdateProfile;
 use App\Http\Controllers\GoogleController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::middleware('guest.custom')->group(function () {
 
@@ -57,3 +59,20 @@ Route::get('/properties/{id}', function ($id) {
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
+
+//email
+Route::get('/email/verify', function () {
+    return view('livewire.auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function(EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/profile');
+})->middleware(['auth','signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

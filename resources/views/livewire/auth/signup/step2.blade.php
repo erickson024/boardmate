@@ -1,7 +1,7 @@
 <div>
     <span class="fs-6 fw-medium">Set-Up your password.</span>
-    <p><small>Please make your password strong by adding special characters.</small></p>
-
+    <small class="d-block">Please make your password strong by adding special characters.</small>
+     
     <form wire:submit.prevent="submit">
         <div class="row gap-3 mb-3 mt-3">
             <div class="col-12">
@@ -23,8 +23,10 @@
                         tabindex="-1">
                         <i class="bi bi-eye"></i>
                     </button>
+                    @error('password') <small class="text-danger">{{ $message }}</small> @enderror
+                </div>
 
-                    <div class="progress rounded mt-2" style="height: 3px;">
+                   <div class="progress rounded mt-2" style="height: 3px;">
                         <div class="progress-bar 
                                     @if($strengthScore < 2) bg-danger 
                                     @elseif($strengthScore < 4) bg-warning 
@@ -34,8 +36,6 @@
                             style="width: {{ ($strengthScore/5) * 100 }}%">
                         </div>
                     </div>
-                    @error('password') <small class="text-danger">{{ $message }}</small> @enderror
-                </div>
             </div>
 
             <div class="col-12">
@@ -48,7 +48,7 @@
                         class="form-control border-1 shadow-sm"
                         placeholder="firstname"
                         required>
-                    <label for="password" class="fw-medium"><small>confirm password</small></label>
+                    <label for="confirmPassword" class="fw-medium"><small>confirm password</small></label>
 
                     <button
                         type="button"
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mb-5">
             <button type="button" class="btn btn-sm btn-outline-dark" wire:click="back">
                 <span>Back</span>
                 <span wire:loading wire:target="back">

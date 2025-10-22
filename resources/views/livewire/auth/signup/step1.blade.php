@@ -1,5 +1,7 @@
 <div>
     <span class="fs-6 fw-medium">Personal Information</span>
+    <small class="d-block">We’ll use this information to personalize your experience.</small>
+
      <form   wire:submit.prevent="submit">
         <div class="row mt-3 gx-3">
             <div class="col-6">

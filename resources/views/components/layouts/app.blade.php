@@ -23,7 +23,9 @@
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places" >
     </script>
     
-    @include('layouts.partials.navbar')
+     @if (!request()->routeIs('signup'))
+        @include('layouts.partials.navbar')
+    @endif
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">

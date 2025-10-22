@@ -7,7 +7,7 @@ use Livewire\Component;
 class Signup extends Component
 {
     public $currentStep = 1;
-    
+
     protected $listeners = [
         'goToStep' => 'setStep',
     ];
@@ -15,6 +15,12 @@ class Signup extends Component
     public function setStep($step)
     {
         $this->currentStep = $step;
+    }
+
+    public function goToDashboard()
+    {
+        session()->forget('signup'); // remove signup progress data
+        return redirect()->route('landing'); // or 'explore'
     }
 
     public function render()

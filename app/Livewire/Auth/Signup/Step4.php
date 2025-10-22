@@ -4,6 +4,7 @@ namespace App\Livewire\Auth\Signup;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use App\Models\User;
 
 class Step4 extends Component
@@ -46,10 +47,10 @@ class Step4 extends Component
             'profile_photo'  => $signupData['profile_photo'] ?? null,
        ]);
         
-
         session()->forget('signup');
         auth()->login($user);
-        return $this->redirect('/profile', navigate: true);
+        event(new Registered($user));
+        return redirect()->route('verification.notice');
     }
 
     public function back()

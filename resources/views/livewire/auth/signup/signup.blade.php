@@ -1,19 +1,39 @@
 <div>
     <div class="container-fluid flex-grow-1 d-flex align-items-center justify-content-center">
         <div class="row w-100 justify-content-center mt-3">
-            <!-- Left side: Form -->
             <div class="col-12 col-md-5">
                 <!-- Header -->
                 <div>
-                    <h5 class="fw-medium mb-1">Get started</h5>
-                    <p class="text-dark mb-0">
-                        <small>Welcome to BoardMate — Let's create your account.</small>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div>
+                            <button wire:click="goToDashboard" class="btn btn-dark btn-sm">
+                                <i class="bi bi-arrow-left-short"></i>
+                                <small>Boardmate Home</small>
+                            </button>
+                        </div>
+
+                        <div>
+                            <a href="{{route('login')}}"
+                                class="btn btn-sm btn-dark"
+                                wire:navigate><small>Log in</small></a>
+                        </div>
+
+                    </div>
+                    <div class="d-flex align-items-end text-start mb-1">
+                        <a class="navbar-brand fw-medium fs-6 me-1" href="">
+                            <img src="{{ asset('images/logo.png') }}" alt="Bootstrap" width="45" height="40" class="d-inline-block align-text-center">
+                        </a>
+                        <h5 class="fw-semibold mb-0">Create an Account</h5>
+                    </div>
+
+                    <p class="text-dark mb-3">
+                       <small class="text-muted">Choose Google sign up or continue with manual registration.</small>
                     </p>
 
                     <!-- Google Sign-in -->
-                    <div class="text-center mt-2">
+                    <div class="text-center">
                         <a href="{{ route('google.redirect') }}" class="btn btn-sm btn-dark w-100">
-                            <i class="bi bi-google me-2"></i> <small>Sign up with Google</small>
+                            <i class="bi bi-google me-2"></i> Sign up with Google
                         </a>
                     </div>
 
@@ -25,7 +45,7 @@
                 </div>
 
                 <!-- Step Content -->
-                <div>
+                <div class="mb-3">
                     @if ($currentStep === 1)
                     <livewire:auth.signup.step1 />
                     @elseif ($currentStep === 2)
@@ -36,6 +56,8 @@
                     <livewire:auth.signup.step4 />
                     @endif
                 </div>
+
+
             </div>
         </div>
     </div>
