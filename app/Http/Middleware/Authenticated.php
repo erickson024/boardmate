@@ -16,8 +16,17 @@ class Authenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::check()){
-            return redirect()->route('login'); //redirect authenticated user
+        // Check if the user is not logged in
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        // Check if the user is logged in but not verified
+        if (!Auth::user()->hasVerifiedEmail()) {
+            // Avoid redirect loop if already on verification routes
+            if (!$request->is('email/verify', 'email/verification-notification')) {
+                return redirect()->route('verification.notice');
+            }
         }
 
         return $next($request);

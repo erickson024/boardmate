@@ -13,25 +13,33 @@ use App\Http\Controllers\GoogleController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
+// Routes for guest users
 Route::middleware('guest.custom')->group(function () {
 
     Route::get('/', function () {
         return view('welcome');
     })->name('landing');
 
-
+    // Authentication Routes
     Route::get('/login', Login::class)->name('login');
     Route::get('/signup', Signup::class)->name('signup');
+
+    // Google OAuth Routes
+    Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
-Route::middleware('auth.custom')->group(function () {
+// Routes for authenticated and verified users
+Route::middleware(['auth.custom'])->group(function () {
 
     Route::get('/profile', Profile::class)->name('profile');
     Route::get('profile/update', UpdateProfile::class)->name('update-profile');
     Route::get('property-registration', PropertyRegistration::class)->name('property-registration');
     Route::get('user-property-list', UserPropertyList::class)->name('user-property-list');
 
-    Route::post('/logout', function () {
+});
+
+   Route::post('/logout', function () {
         if (Auth::check()) {
             $userId = Auth::id();
 
@@ -47,7 +55,16 @@ Route::middleware('auth.custom')->group(function () {
 
         return redirect('/login');
     })->name('logout');
+    
+//mispled fallback route
+Route::fallback(function () {
+    if (Auth::check()) {
+        return redirect()->route('profile');
+    }
+
+    return redirect()->route('landing');
 });
+
 
 Route::get('/test', function () {
     return view('pages.test');
@@ -57,22 +74,22 @@ Route::get('/properties/{id}', function ($id) {
     return view('pages.authenticated.property-show', ['id' => $id]);
 })->name('properties.show');
 
-Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
 
-//email
-Route::get('/email/verify', function () {
-    return view('livewire.auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+// Email Verification Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', function () {
+        return view('livewire.auth.verify-email');
+    })->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function(EmailVerificationRequest $request) {
-    $request->fulfill();
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
 
-    return redirect('/profile');
-})->middleware(['auth','signed'])->name('verification.verify');
+        return redirect('/profile');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
- 
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+});
