@@ -9,6 +9,7 @@ class Login extends Component
 {
     public $email;
     public $password;
+    public $remember = false;
 
     public function login()
     {
@@ -17,7 +18,7 @@ class Login extends Component
             'password' => 'required|min:6',
         ]);
 
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             session()->regenerate();
             return redirect()->intended('/profile'); // redirect to homepage or dashboard
         }
@@ -28,7 +29,7 @@ class Login extends Component
         public function goToDashboard()
     {
 
-        return redirect()->route('landing'); // or 'explore'
+        return redirect()->route('landing'); 
     }
 
     public function render()

@@ -36,26 +36,31 @@ Route::middleware(['auth.custom'])->group(function () {
     Route::get('profile/update', UpdateProfile::class)->name('update-profile');
     Route::get('property-registration', PropertyRegistration::class)->name('property-registration');
     Route::get('user-property-list', UserPropertyList::class)->name('user-property-list');
-
 });
 
-   Route::post('/logout', function () {
-        if (Auth::check()) {
-            $userId = Auth::id();
+Route::post('/logout', function (Request $request) {
+    if (Auth::check()) {
+        $user = Auth::user();
 
-            //  Clear the property registration data for that specific user
-            Session::forget("property_reg_{$userId}");
-        }
+        //  Clear the property registration data for that specific user
+        Session::forget("property_reg_{$user->id}");
 
-        Auth::logout();
+        // Force clear the remember_token
+        $user->remember_token = null;
+        $user->save();
+    }
 
-        // Fully invalidate the session
-        Session::invalidate();
-        Session::regenerateToken();
+    Auth::logout();
 
-        return redirect('/login');
-    })->name('logout');
-    
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // explicitly forget the remember-me cookie
+    $cookie = cookie()->forget(Auth::getRecallerName());
+
+    return redirect('/login')->withCookie($cookie);
+})->name('logout');
+
 //mispled fallback route
 Route::fallback(function () {
     if (Auth::check()) {

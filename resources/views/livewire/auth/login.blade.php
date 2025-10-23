@@ -43,6 +43,7 @@
                         <hr class="flex-grow-1">
                     </div>
                 </div>
+
                 <div>
                     <form wire:submit.prevent="login">
                         <div class="form-floating mb-3">
@@ -75,10 +76,24 @@
 
                         </div>
 
+                        <div>
+                            @error('password') <small class="text-danger">{{ $message }}</small> @enderror
+                        </div>
+
                         <div class="">
                             <div class="row mt-1">
                                 <div class="col-6 d-flex justify-content-start">
-                                    @error('password') <small class="text-danger">{{ $message }}</small> @enderror
+                                    <div class="form-check">
+                                        <input 
+                                        class="form-check-input shadow-none border-dark" 
+                                        type="checkbox" 
+                                        value="" 
+                                        id="checkDefault"
+                                        wire:model="remember">
+                                        <label class="form-check-label" for="checkDefault">
+                                            <small>Remember me</small>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-6 d-flex justify-content-end">
                                     <a href="" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
@@ -111,6 +126,11 @@
         input[type="password"]::-ms-reveal,
         input[type="password"]::-ms-clear {
             display: none;
+        }
+
+        .form-check-input:checked {
+            background-color: #000 !important;
+            border-color: #000 !important;
         }
     </style>
 
