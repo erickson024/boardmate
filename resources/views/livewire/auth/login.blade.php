@@ -96,8 +96,8 @@
                                     </div>
                                 </div>
                                 <div class="col-6 d-flex justify-content-end">
-                                    <a href="" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
-                                        <small>Forget Password?</small>
+                                    <a href="{{ route('password.request') }}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
+                                        <small>Forgot your Password?</small>
                                     </a>
                                 </div>
                             </div>

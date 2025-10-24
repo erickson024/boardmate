@@ -12,6 +12,9 @@ use App\Livewire\ProfileUpdate\UpdateProfile;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Livewire\Auth\ForgotPassword;
+use App\Livewire\Auth\ResetPassword;
+
 
 // Routes for guest users
 Route::middleware('guest.custom')->group(function () {
@@ -98,3 +101,6 @@ Route::middleware('auth')->group(function () {
         return back()->with('message', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 });
+
+Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
+Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
