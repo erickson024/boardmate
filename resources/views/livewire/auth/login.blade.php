@@ -46,6 +46,14 @@
 
                 <div>
                     <form wire:submit.prevent="login">
+                        @if (session('message'))
+                        <div id="successAlert" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                            <i class="bi bi-check-circle me-1"></i>
+                            <small>{{ session('message') }}</small>
+                            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" ></button>
+                        </div>
+                        @endif
+
                         <div class="form-floating mb-3">
                             <input type="email"
                                 class="form-control border-dark text-dark shadow-none"
@@ -84,19 +92,19 @@
                             <div class="row mt-1">
                                 <div class="col-6 d-flex justify-content-start">
                                     <div class="form-check">
-                                        <input 
-                                        class="form-check-input shadow-none border-dark" 
-                                        type="checkbox" 
-                                        value="" 
-                                        id="checkDefault"
-                                        wire:model="remember">
+                                        <input
+                                            class="form-check-input shadow-none border-dark"
+                                            type="checkbox"
+                                            value=""
+                                            id="checkDefault"
+                                            wire:model="remember">
                                         <label class="form-check-label" for="checkDefault">
                                             <small>Remember me</small>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-6 d-flex justify-content-end">
-                                    <a href="{{ route('password.request') }}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium">
+                                    <a href="{{ route('password.request') }}" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium" wire:navigate>
                                         <small>Forgot your Password?</small>
                                     </a>
                                 </div>
