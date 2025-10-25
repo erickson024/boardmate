@@ -36,6 +36,7 @@ class GoogleController extends Controller
                     'terms' => 'accepted',
                     'email_verified_at' => now(),
                     'password' => Hash::make(Str::random(16)),
+                    'type' => 'tenant',
                 ]
             );
 
