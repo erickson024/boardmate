@@ -71,7 +71,7 @@ class ResetPassword extends Component
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('message', 'Password has been reset successfully.');
+            return redirect()->route('login')->with('message', 'You may now login your new creadentials');
         }
 
         session()->flash('error', __($status));
