@@ -14,6 +14,13 @@
 </head>
 
 <body>
+    <!--update the page if the user successfully verified his account-->
+    @if (auth()->user()->hasVerifiedEmail())
+    <script>
+        window.location.href = "{{ route('profile') }}";
+    </script>
+    @endif
+
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="col-11 col-md-8 col-lg-5">
             <div class="p-4 rounded-4 shadow-sm border bg-white text-center">
