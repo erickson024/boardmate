@@ -138,18 +138,18 @@
 
 @auth
 @php
-    $userAvatar = auth()->user()->profile_photo;
+$user = auth()->user();
+$userAvatar = $user->profile_photo;
 
-    if ($userAvatar) {
-        // if it's a URL (Google login), leave it as is
-        if (!str_starts_with($userAvatar, 'http')) {
-            // it's a local file in storage
-            $userAvatar = asset('storage/' . $userAvatar);
-        }
-    } else {
-        // fallback to default
-        $userAvatar = asset('images/default-avatar.png');
-    }
+// Determine if avatar exists and is local or external
+if ($userAvatar && !str_starts_with($userAvatar, 'http')) {
+$userAvatar = asset('storage/' . $userAvatar);
+} elseif (!$userAvatar) {
+$userAvatar = null; // No avatar
+}
+
+// Get the first letter of user's first name
+$firstLetter = strtoupper(substr($user->firstname, 0, 1));
 @endphp
 
 <div
@@ -162,16 +162,28 @@
         <div class="shadow rounded p-2 mb-2">
 
             <a href="{{route('profile')}}" class="btn btn-dark w-100 d-flex align-items-center justify-content-between gap-2 mb-1">
-    <img
-        src="{{ $userAvatar }}"
-        alt="Profile"
-        class="rounded-circle shadow-lg outline-dark"
-        style="width: 30px; height: 30px; object-fit: cover;  background-image: url('{{ $userAvatar }}');"">
-    <span>
-        <small>{{ auth()->user()->firstname }}</small>
-        <small>{{ auth()->user()->lastname }}</small>
-    </span>
-</a>
+                @if ($userAvatar)
+                <div
+                    style="width:30px; height:30px; border-radius:50%; overflow:hidden;
+                            border: none; box-shadow:0 .5rem 1rem rgba(0,0,0,.15);
+                            background-size: cover; background-position:center;
+                            background-image: url('{{ $userAvatar }}');">
+                </div>
+                @else
+                <div
+                    style="width:30px; height:30px; border-radius:50%;
+                            border:4px solid black;
+                            background-color:black; color:white;
+                            display:flex; align-items:center; justify-content:center;
+                            font-size:15px; font-weight:500;">
+                    {{ $firstLetter }}
+                </div>
+                @endif
+                <span>
+                    <small>{{ auth()->user()->firstname }}</small>
+                    <small>{{ auth()->user()->lastname }}</small>
+                </span>
+            </a>
 
             <a href class="btn btn-outline-dark w-100 d-flex align-items-center justify-content-between gap-2 mb-1">
                 <small>Saved List</small>

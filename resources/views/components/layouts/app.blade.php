@@ -27,9 +27,7 @@
     !request()->routeIs('signup') &&
     !request()->routeIs('login') &&
     !request()->routeIs('password.request') &&
-    !request()->routeIs('password.reset') &&
-    auth()->check() &&
-    auth()->user()->type === 'tenant'
+    !request()->routeIs('password.reset') 
 )
      @include('layouts.partials.navbar')
 @endif

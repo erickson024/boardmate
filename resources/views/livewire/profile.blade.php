@@ -1,13 +1,17 @@
 <div class="container py-3">
     @php
-    $userAvatar = auth()->user()->profile_photo;
+    $user = auth()->user();
+    $userAvatar = $user->profile_photo;
+
+    // Determine if avatar exists and is local or external
     if ($userAvatar && !str_starts_with($userAvatar, 'http')) {
-    // it's a local file
     $userAvatar = asset('storage/' . $userAvatar);
     } elseif (!$userAvatar) {
-    // fallback to default
-    $userAvatar = asset('images/default-avatar.png');
+    $userAvatar = null; // No avatar
     }
+
+    // Get the first letter of user's first name
+    $firstLetter = strtoupper(substr($user->firstname, 0, 1));
     @endphp
     <div class="row gx-3">
         <div class="col-lg-3">
@@ -15,12 +19,23 @@
                 <div class="col-12">
                     <div class="card bg-light rounded-4 shadow border">
                         <div class="d-flex justify-content-center mt-3">
+                            @if ($userAvatar)
                             <div
                                 style="width:110px; height:110px; border-radius:50%; overflow:hidden;
                                        border:4px solid #212529; box-shadow:0 .5rem 1rem rgba(0,0,0,.15);
                                        background-size: cover; background-position:center;
                                        background-image: url('{{ $userAvatar }}');">
                             </div>
+                            @else
+                            <div
+                                style="width:110px; height:110px; border-radius:50%;
+                                       border:4px solid #212529; box-shadow:0 .5rem 1rem rgba(0,0,0,.15);
+                                       background-color:#212529; color:white;
+                                       display:flex; align-items:center; justify-content:center;
+                                       font-size:48px; font-weight:600;">
+                                {{ $firstLetter }}
+                            </div>
+                            @endif
                         </div>
                         <div class="card-body text-center">
                             <h6 class="card-title fw-semibold mb-0">
