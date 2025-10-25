@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Admin\Dashboard;
 
 
 // Routes for guest users
@@ -63,6 +64,12 @@ Route::post('/logout', function (Request $request) {
 
     return redirect('/login')->withCookie($cookie);
 })->name('logout');
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+   Route::get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
+});
+
 
 //mispled fallback route
 Route::fallback(function () {

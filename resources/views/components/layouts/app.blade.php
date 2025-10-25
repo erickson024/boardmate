@@ -22,10 +22,18 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places" >
     </script>
-    
-     @if (!request()->routeIs('signup') && !request()->routeIs('login') && !request()->routeIs('password.request') && !request()->routeIs('password.reset'))
-        @include('layouts.partials.navbar')
-    @endif
+
+    @if (
+    !request()->routeIs('signup') &&
+    !request()->routeIs('login') &&
+    !request()->routeIs('password.request') &&
+    !request()->routeIs('password.reset') &&
+    auth()->check() &&
+    auth()->user()->type === 'tenant'
+)
+     @include('layouts.partials.navbar')
+@endif
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">

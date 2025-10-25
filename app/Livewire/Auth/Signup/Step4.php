@@ -45,6 +45,7 @@ class Step4 extends Component
             'password'   => Hash::make($signupData['password']),
             'terms'      => $signupData['terms'] ?? false,
             'profile_photo'  => $signupData['profile_photo'] ?? null,
+            'type'       => 'tenant',
        ]);
         
         session()->forget('signup');
