@@ -2,7 +2,15 @@
     <div class="container-fluid px-5">
         <a class="navbar-brand fw-medium fs-6" href="{{route('landing')}}">
             <img src="{{asset('images/logo.png')}}" alt="Bootstrap" width="45" height="40" class="d-inline-block align-text-center ">
+            @auth
+            @if(auth()->user()->type === 'admin')
+            Admin
+            @else
             Boardmate
+            @endif
+            @else
+            Boardmate
+            @endauth
         </a>
         <button
             class="navbar-toggler"
@@ -16,29 +24,10 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            @guest
-            <ul class="navbar-nav ms-auto gap-3 fw-medium ">
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href=""><small>Promote</small></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{route('profile')}}"><small>Properties</small></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="#"><small>How It Works?</small></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="#"><small>About</small></a>
-                </li>
-
-            </ul>
-            @endguest
-
             @auth
-            <ul class="navbar-nav ms-auto gap-5 fw-medium ">
+            @if(auth()->user()->type === 'admin')
+            @else
+             <ul class="navbar-nav ms-auto gap-5 fw-medium ">
 
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('') ? 'active' : '' }}" href="{{route('profile')}}" href="{{route('profile')}}">
@@ -51,7 +40,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{route('profile')}}" href="{{route('profile')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs('properties') ? 'active' : '' }}" href="{{route('properties')}}" href="{{route('properties')}}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-houses-fill" viewBox="0 0 16 16">
                             <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.5 2.5 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354z" />
                             <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708z" />
@@ -78,21 +67,49 @@
                     </a>
                 </li>
             </ul>
+            @endif
+            @else
+            <ul class="navbar-nav ms-auto gap-3 fw-medium ">
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href=""><small>Promote</small></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('properties') ? 'active' : 'properties' }}" href="{{route('properties')}}"><small>Properties</small></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="#"><small>How It Works?</small></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="#"><small>About</small></a>
+                </li>
+
+            </ul>
             @endauth
 
-            @guest
+            @auth
+            @if(auth()->user()->type === 'admin')
             <ul class="navbar-nav ms-auto gap-2">
-                <!-- Guest sees Login + Register -->
                 <li class="nav-item">
-                    <a href="{{route('login')}}" class="btn btn-sm btn-outline-dark">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('signup')}}" class="btn btn-sm btn-dark">Register</a>
+                   <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                        <a href="{{route('profile')}}" class="btn btn-sm btn-dark">
+                            <i class="bi bi-person-fill"></i>
+                            {{auth()->user()->firstname}}
+                        </a>
+
+                        <button
+                            class="btn btn-sm btn-dark"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasRight">
+                            <i class="bi bi-justify"></i>
+                        </button>
+                    </div>
                 </li>
             </ul>
-            @endguest
-
-            @auth
+            @else
             <ul class="navbar-nav ms-auto gap-2">
                 <li class="nav-item ">
                     <a href="{{route('property-registration')}}"
@@ -129,7 +146,17 @@
                         </button>
                     </div>
                 </li>
-
+            </ul>
+            @endif
+            @else
+            <ul class="navbar-nav ms-auto gap-2">
+                <!-- Guest sees Login + Register -->
+                <li class="nav-item">
+                    <a href="{{route('login')}}" class="btn btn-sm btn-outline-dark">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('signup')}}" class="btn btn-sm btn-dark">Register</a>
+                </li>
             </ul>
             @endauth
         </div>

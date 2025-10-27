@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Properties;
 
 
 // Routes for guest users
@@ -111,3 +112,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
 Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
+
+Route::get('/properties', Properties::class)->name('properties');

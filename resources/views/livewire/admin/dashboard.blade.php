@@ -1,12 +1,6 @@
 <div>
     <div class="container mt-4">
-        <div class="bg-white shadow-sm border rounded p-3">
-            <div class="d-flex flex-column">
-                <small>{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</small>
-                <small class="text-muted">admin</small>
-            </div>
-        </div>
-        <h4 class="fw-bold mb-3 mt-3">Admin Dashboard</h4>
+        <span class="fw-semibold fs-5">List of Users</span>
 
         <table class="table table-hover align-middle">
             <thead>
