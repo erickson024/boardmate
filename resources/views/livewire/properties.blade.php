@@ -14,6 +14,7 @@
         @endphp
 
         <div class="col-md-3">
+            <a href="{{route('property.details', $property->id)}}" class="text-decoration-none text-dark">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 transition-all hover-shadow">
                 {{-- Image Carousel --}}
                 <div class="position-relative">
@@ -89,6 +90,7 @@
                     
                 </div>
             </div>
+            </a>
         </div>
         @endforeach
     </div>

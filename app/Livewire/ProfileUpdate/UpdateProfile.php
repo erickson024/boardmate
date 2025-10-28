@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class UpdateProfile extends Component
 {
-    public $active = 'profiles';
+    public $active = 'profile';
 
     public function setTab($tab)
     {
