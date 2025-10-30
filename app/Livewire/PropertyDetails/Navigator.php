@@ -22,6 +22,7 @@ class Navigator extends Component
         $this->active = $tab;
         $this->dispatch('tab-changed');
     }
+    
 
     public function render()
     {
