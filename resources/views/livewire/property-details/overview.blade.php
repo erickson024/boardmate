@@ -1,25 +1,4 @@
 <div>
-    <div class="row">
-        <div class="col-6">
-            <div class="d-flex flex-column justify-content-start">
-                <h5 class="mb-0 fw-semibold">{{ $property->name }}</h5>
-                <small class="text-muted">{{ $property->address }} | {{ $property->type }}</small>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="d-flex justify-content-end gap-2">
-                <a href="" class="btn btn-dark btn-sm">
-                    Inquire
-                </a>
-
-                <a href="" class="btn btn-outline-dark btn-sm">
-                    Save
-                </a>
-            </div>
-        </div>
-    </div>
-
-
     <div class="row mt-2 gx-3">
         <div class="col-3">
             <div class="rounded border border-dark p-2">
@@ -38,13 +17,14 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             @php
             $features = json_decode($property->feature, true) ?? [];
             @endphp
             @if(!empty($features))
-            <div class="mt-4">
+            <div class="mt-3">
                 <h6 class="fw-medium mb-3">Features & Amenities</h6>
                 <div class="row g-3">
                     @foreach($features as $feature)
@@ -60,7 +40,7 @@
             @endif
         </div>
 
-        <div class="col-6 mt-4">
+        <div class="col-12 mt-3">
             <h6 class="fw-medium mb-3">Description</h6>
             <div class="p-3 rounded bg-light shadow-sm">
                 @if(!empty($property->description))
@@ -68,44 +48,19 @@
                 @else
                 <p class="text-muted small">No description available for this property.</p>
                 @endif
-
             </div>
         </div>
+    </div>
 
-        <div class="col-6 mt-4">
-            <h6 class="fw-medium mb-3">Restriction</h6>
-            <div class="p-3 rounded bg-light shadow-sm">
-                @if(!empty($property->restriction))
-                <p class="small">{{ $property->restriction }}</p>
-                @else
-                <p class="text-muted small">No restriction available for this property.</p>
-                @endif
-
-            </div>
+    <div class="row mt-3">
+        <div class="col-4">
+            <div class="btn btn-sm btn-dark w-100"><small>Restriction</small></div>
         </div>
-
-        <div class="col-6 mt-4">
-            <h6 class="fw-medium mb-3">Terms and Condition</h6>
-            <div class="p-3 rounded bg-light shadow-sm">
-                @if(!empty($property->terms))
-                <p class="small">{{ $property->terms }}</p>
-                @else
-                <p class="text-muted small">No terms for this property.</p>
-                @endif
-
-            </div>
+        <div class="col-4">
+            <div class="btn btn-sm btn-dark w-100"><small>Terms and Condition</small></div>
         </div>
-
-        <div class="col-6 mt-4">
-            <h6 class="fw-medium mb-3">Payment Agreement</h6>
-            <div class="p-3 rounded bg-light shadow-sm">
-                @if(!empty($property->payment))
-                <p class="small">{{ $property->payment }}</p>
-                @else
-                <p class="text-muted small">No payment agreement for this property.</p>
-                @endif
-
-            </div>
+        <div class="col-4">
+            <div class="btn btn-sm btn-dark w-100"><small>Payment Agreement</small></div>
         </div>
     </div>
 
@@ -125,4 +80,6 @@
             }
         }
     </style>
+
+    
 </div>
