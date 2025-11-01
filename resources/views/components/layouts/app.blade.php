@@ -18,7 +18,7 @@
     <title>{{ $title ?? 'Page Title' }}</title>
 </head>
 
-<body class="vh-100">
+<body>
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places" >
     </script>
