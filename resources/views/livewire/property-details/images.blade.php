@@ -10,7 +10,6 @@
                     <div class="zoom-container">
                         <img src="{{ asset('storage/' . $img) }}"
                             class="d-block w-100 zoomable"
-                            style="height: 385px; object-fit: cover;"
                             alt="Property Image {{ $index + 1 }}"
                             data-index="{{ $index }}">
                     </div>
@@ -109,10 +108,20 @@
             position: relative;
         }
 
+        .zoom-container img.zoomable {
+            width: 100%;
+            height: 385px;
+            /* desktop default */
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            cursor: default;
+        }
+
         /* Simplified zoom without zoom cursor */
         .zoomable {
             transition: transform 0.4s ease;
-            cursor: default; /* Normal cursor */
+            cursor: default;
+            /* Normal cursor */
         }
 
         .zoomable:hover {
@@ -138,6 +147,8 @@
         .thumbnail.active {
             opacity: 1;
             border-color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
         }
 
         .overflow-auto {

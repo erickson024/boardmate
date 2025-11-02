@@ -1,44 +1,38 @@
-<div class="container-fluid py-3">
+<div class="property-navigator container-fluid py-3">
     <div class="row g-4">
         <!-- Sidebar Navigation -->
         <div class="col-12 col-md-3">
             @php
-            $tabs = [
-            'overview' => ['title' => 'Overview', 'desc' => 'Key details about this property.'],
-            'images' => ['title' => 'Gallery', 'desc' => 'Browse property photos.'],
-            'map' => ['title' => 'Location', 'desc' => 'View on the map and nearby areas.'],
-            'host' => ['title' => 'Host', 'desc' => 'Contact information of the host.'],
-            ];
+                $tabs = [
+                    'overview' => ['title' => 'Overview', 'desc' => 'Key details about this property.'],
+                    'images'   => ['title' => 'Gallery', 'desc' => 'Browse property photos.'],
+                    'map'      => ['title' => 'Location', 'desc' => 'View on the map and nearby areas.'],
+                    'host'     => ['title' => 'Host', 'desc' => 'Contact information of the host.'],
+                ];
             @endphp
 
-            <div class="sticky-top " style="top: 90px;">
+            <div class="sticky-top" style="top: 90px;">
                 @foreach($tabs as $tab => $info)
-                @php
-                $isActive = $active === $tab;
-                $btnClass = 'btn text-start p-3 rounded-3 w-100 bg-transparent border-0';
-                if ($isActive) {
-                // active styling: light bg + left indicator + subtle shadow
-                $btnClass .= ' active-tab';
-                }
-                @endphp
+                    @php
+                        $isActive = $active === $tab;
+                        $btnClass = 'nav-btn btn text-start p-3 rounded-3 w-100 bg-transparent border-0';
+                        if ($isActive) $btnClass .= ' active-tab';
+                    @endphp
 
-                <button type="button"
-                    wire:click="setTab('{{ $tab }}')"
-                    class="{{ $btnClass }} d-flex justify-content-start"
-                    wire:loading.class="loading">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <div class="fw-medium mb-1">{{ $info['title'] }}</div>
-                            <small class="text-secondary d-none d-md-block">{{ $info['desc'] }}</small>
+                    <button type="button"
+                            wire:click="setTab('{{ $tab }}')"
+                            class="{{ $btnClass }} d-flex justify-content-start"
+                            wire:loading.class="loading">
+                        <div class="d-flex align-items-center w-100 position-relative">
+                            <div class="flex-grow-1">
+                                <div class="fw-medium mb-1">{{ $info['title'] }}</div>
+                                <small class="text-secondary d-none d-md-block">{{ $info['desc'] }}</small>
+                            </div>
+                            <div wire:loading wire:target="setTab('{{ $tab }}')" class="spinner-wrapper">
+                                <span class="spinner-border spinner-border-sm"></span>
+                            </div>
                         </div>
-
-                        {{-- Spinner that shows only when this specific tab is loading --}}
-                        <div wire:loading wire:target="setTab('{{ $tab }}')"
-                            class="spinner-wrapper">
-                            <span class="spinner-border spinner-border-sm"></span>
-                        </div>
-                    </div>
-                </button>
+                    </button>
                 @endforeach
             </div>
         </div>
@@ -91,37 +85,50 @@
                     </div>
                 </div>
             </div>
+
+
+            {{-- Tab Content --}}
             @if ($active === 'overview')
-            <livewire:property-details.overview :propertyId="$propertyId" />
+                <livewire:property-details.overview :propertyId="$propertyId" />
             @elseif ($active === 'images')
-            <livewire:property-details.images :propertyId="$propertyId" />
+                <livewire:property-details.images :propertyId="$propertyId" />
             @elseif ($active === 'map')
-            @livewire('property-details.mappings', [
-            'lat' => $this->property->latitude,
-            'lng' => $this->property->longitude,
-            'destination' => $this->property->name
-            ])
+                @livewire('property-details.mappings', [
+                    'lat' => $this->property->latitude,
+                    'lng' => $this->property->longitude,
+                    'destination' => $this->property->name
+                ])
             @elseif ($active === 'host')
-            <livewire:property-details.host :propertyId="$propertyId" />
+                <livewire:property-details.host :propertyId="$propertyId" />
             @endif
         </div>
     </div>
 
     <style>
-        /* remove default focus flash but keep keyboard accessibility */
-        button:focus {
+        /* =========================================
+           SCOPED STYLES – ONLY FOR PROPERTY NAVIGATOR
+        ========================================== */
+        .property-navigator .nav-btn:focus {
             outline: none !important;
+            box-shadow: none !important;
         }
 
-        /* Active tab visual */
-        .active-tab {
-            background-color: #f8f9fa;
-            /* subtle light background */
+        .property-navigator .nav-btn {
             position: relative;
+            transition: background-color 0.2s ease, transform 0.15s ease;
         }
 
-        /* left colored indicator */
-        .active-tab::before {
+        /* Active Tab */
+        .property-navigator .nav-btn.active-tab {
+            background-color: #f8f9fa;
+            position: relative;
+            box-shadow: inset 0 0 0 1px #e9ecef,
+                        0 2px 6px rgba(0, 0, 0, 0.05);
+            transform: translateX(2px);
+            animation: tabFadeIn 0.25s ease-in-out;
+        }
+
+        .property-navigator .nav-btn.active-tab::before {
             content: "";
             position: absolute;
             left: 0;
@@ -129,50 +136,71 @@
             bottom: 8px;
             width: 4px;
             background: #212529;
-            /* Laravel dark color */
             border-radius: 2px;
         }
 
-        /* Hover effect for non-active items */
-        button:not(.active-tab):hover {
-            background-color: ;
+        /* Hover effect ONLY inside property-navigator */
+        .property-navigator .nav-btn:not(.active-tab):hover {
+            background-color: #f8f9fa;
+            transform: translateX(3px);
         }
 
-        /* Keep the spinner aligned nicely */
-        .spinner-border-sm {
-            width: 1rem;
-            height: 1rem;
+        .property-navigator .nav-btn:not(.active-tab):hover::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            background: #dee2e6;
+            border-radius: 2px;
         }
 
-        /* If your container has overflow clipping, show left indicator above */
-        .col-md-3 {
-            overflow: visible;
-        }
-
-        .loading {
-            opacity: 0.7;
-            cursor: wait;
-        }
-
-        .spinner-wrapper {
+        /* Spinner styling */
+        .property-navigator .spinner-wrapper {
             position: absolute;
             right: 1rem;
         }
 
-        .spinner-border-sm {
+        .property-navigator .spinner-border-sm {
             width: 1rem;
             height: 1rem;
             border-width: 2px;
             color: #6c757d;
         }
 
-        /* Make button position relative for absolute spinner positioning */
-        .btn {
-            position: relative;
+        /* Text sizing */
+        .property-navigator .fw-medium {
+            font-size: 0.95rem;
+        }
+
+        .property-navigator small {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        /* Loading State */
+        .property-navigator .loading {
+            opacity: 0.7;
+        }
+
+        .property-navigator .col-md-3 {
+            overflow: visible;
+        }
+
+        @keyframes tabFadeIn {
+            from {
+                opacity: 0.5;
+                transform: translateX(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
     </style>
 
-    <script>
+     <script>
         let map, directionsService, directionsRenderer;
 
         function initMap() {
@@ -292,5 +320,4 @@
         document.addEventListener("livewire:navigated", safeInitMap);
         Livewire.hook("message.processed", safeInitMap);
     </script>
-
 </div>

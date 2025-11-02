@@ -1,56 +1,32 @@
 <div>
-   <div  
-     class="row overflow-hidden p-3 sticky-top d-flex justify-content-center "
-     style="background-color: rgba(248, 249, 250, 0.75); top: 66px; z-index: 1020;">
-        <div class="col-8">
-            <div class="container">
-                <form class="input-group fw-medium shadow-sm border border-dark rounded-3 overflow-hidden bg-white">
-                    <!-- Property Name -->
-                    <div class="form-floating flex-fill">
-                        <input type="text" class="form-control shadow-none border-0" id="propertyName" placeholder="Property Name">
-                        <label for="propertyName" class="small">Property Name</label>
-                    </div>
+    <div
+        class="row overflow-hidden p-3 sticky-top d-flex justify-content-center "
+        style="background-color: rgba(248, 249, 250, 0.75); top: 66px; z-index: 1020;">
+        <div class="col-10">
+           <livewire:property-search-bar />
+        </div>
+    </div>
 
-                    <!-- Cost Cap -->
-                    <div class="form-floating flex-fill">
-                        <input type="number" class="form-control shadow-none border-0" id="costCap" placeholder="Cost Cap">
-                        <label for="costCap" class="small">Max Cost</label>
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="sort" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
 
-                    <!-- Location -->
-                    <div class="form-floating flex-fill">
-                        <input type="text" class="form-control shadow-none border-0" id="location" placeholder="Location">
-                        <label for="location" class="small">Location</label>
-                    </div>
-                    <!-- Property Type -->
-                    @php
-                    $propertyTypes = ['Apartment', 'Room', 'Bedspace', 'Studio', 'Condo'];
-                    @endphp
-                    <div class="form-floating flex-fill">
-                        <select class="form-select shadow-none border-0" id="propertyType" name="property_type">
-                            <option value="" selected disabled>Any</option>
-                            @foreach($propertyTypes as $type)
-                            <option value="{{ $type }}" class="small">{{ $type }}</option>
-                            @endforeach
-                        </select>
-                        <label for="propertyType" class="small">Type</label>
-                    </div>
-
-                    <!-- Filter Button -->
-                    <button class="btn btn-dark px-4" type="submit">
-                        <i class="bi bi-sliders2"></i>
-                    </button>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark btn-sm"><small>Search</small></button>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="container py-3">
         @if($properties->isEmpty())
-        <div class="alert alert-light text-center border shadow-sm rounded-4 p-5 ">
-            <i class="bi bi-houses fs-1 text-secondary mb-3 d-block"></i>
-            <h5 class="fw-medium mb-0">No Properties Available</h5>
-            <p class="text-muted mb-0"><small>Check back later for new listings</small></p>
+        <div class=" text-center p-5 ">
+            <i class="bi bi-house-exclamation fs-1"></i>
+            <h5 class="fw-medium mb-0 fs-6">No Properties Available</h5>
+            <p class="text-muted mb-0 small">Check back later for new listings</p>
         </div>
         @else
         <div class="row g-4">
@@ -164,13 +140,19 @@
                                     <i class="bi bi-geo-alt-fill"></i>
                                 </p>
                             </div>
-
                         </div>
                     </div>
                 </a>
             </div>
             @endforeach
         </div>
+
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination pagination-dark justify-content-center">
+                {{ $properties->onEachSide(1)->links('components.simple-pagination') }}
+            </ul>
+        </nav>
+
         @endif
 
         <style>
@@ -182,8 +164,6 @@
                 transform: translateY(-5px);
                 box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
             }
-
- 
         </style>
     </div>
 </div>
