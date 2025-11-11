@@ -1,47 +1,29 @@
-<div class="property-navigator container-fluid py-3">
-    <div class="row g-4">
-        <!-- Sidebar Navigation -->
-        <div class="col-12 col-md-3">
-            @php
-                $tabs = [
-                    'overview' => ['title' => 'Overview', 'desc' => 'Key details about this property.'],
-                    'images'   => ['title' => 'Gallery', 'desc' => 'Browse property photos.'],
-                    'map'      => ['title' => 'Location', 'desc' => 'View on the map and nearby areas.'],
-                    'host'     => ['title' => 'Host', 'desc' => 'Contact information of the host.'],
-                ];
-            @endphp
-
-            <div class="sticky-top" style="top: 90px;">
-                @foreach($tabs as $tab => $info)
-                    @php
-                        $isActive = $active === $tab;
-                        $btnClass = 'nav-btn btn text-start p-3 rounded-3 w-100 bg-transparent border-0';
-                        if ($isActive) $btnClass .= ' active-tab';
-                    @endphp
-
-                    <button type="button"
-                            wire:click="setTab('{{ $tab }}')"
-                            class="{{ $btnClass }} d-flex justify-content-start"
-                            wire:loading.class="loading">
-                        <div class="d-flex align-items-center w-100 position-relative">
-                            <div class="flex-grow-1">
-                                <div class="fw-medium mb-1">{{ $info['title'] }}</div>
-                                <small class="text-secondary d-none d-md-block">{{ $info['desc'] }}</small>
-                            </div>
-                            <div wire:loading wire:target="setTab('{{ $tab }}')" class="spinner-wrapper">
-                                <span class="spinner-border spinner-border-sm"></span>
-                            </div>
-                        </div>
-                    </button>
-                @endforeach
-            </div>
-        </div>
-
+<div class="property-navigator container py-3">
+    <div class="row g-4 d-flex justify-content-center">
         <!-- Content Area -->
-        <div class="col-md-9">
-            <div class="d-flex flex-column justify-content-start mb-3">
-                <h5 class="mb-0 fw-semibold">{{ $property->name }}</h5>
-                <small class="text-muted">{{ $property->address }} | {{ $property->type }}</small>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-8">
+                    <div class="d-flex flex-column justify-content-start mb-3">
+                        <h5 class="mb-0 fw-semibold">{{ $property->name }}</h5>
+                        <small class="text-muted">{{ $property->address }} | {{ $property->type }}</small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-end gap-1">
+                        <div class="btn btn-sm btn-dark">
+                            <small>Inquire</small>
+                        </div>
+
+                         <div class="btn btn-sm btn-outline-dark">
+                            <small>Contacts</small>
+                        </div>
+
+                        <div class="btn btn-sm btn-outline-dark">
+                            <small>Save in list</small>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="map-container" class="{{ $active === 'map' ? '' : 'd-none' }}">
@@ -71,8 +53,6 @@
                             </div>
                         </div>
 
-                        
-
                         <!-- Route Info (distance + duration) -->
                         <div id="route-info"
                             class="position-absolute bottom-0 start-50 translate-middle-x bg-white shadow-sm rounded-3 px-3 py-2 text-center small fw-semibold text-secondary"
@@ -89,42 +69,52 @@
 
             {{-- Tab Content --}}
             @if ($active === 'overview')
-                <livewire:property-details.overview :propertyId="$propertyId" />
+            <livewire:property-details.overview :propertyId="$propertyId" />
             @elseif ($active === 'images')
-                <livewire:property-details.images :propertyId="$propertyId" />
+            <livewire:property-details.images :propertyId="$propertyId" />
             @elseif ($active === 'map')
-                @livewire('property-details.mappings', [
-                    'lat' => $this->property->latitude,
-                    'lng' => $this->property->longitude,
-                    'destination' => $this->property->name
-                ])
+            @livewire('property-details.mappings', [
+            'lat' => $this->property->latitude,
+            'lng' => $this->property->longitude,
+            'destination' => $this->property->name
+            ])
             @elseif ($active === 'host')
-                <livewire:property-details.host :propertyId="$propertyId" />
+            <livewire:property-details.host :propertyId="$propertyId" />
             @endif
         </div>
     </div>
 
     <style>
-        /* =========================================
-           SCOPED STYLES – ONLY FOR PROPERTY NAVIGATOR
-        ========================================== */
+        .property-navigator {
+            /* Container only styles */
+        }
+
+        /* Buttons */
+        .property-navigator .nav-btn {
+            position: relative;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.75rem;
+            background-color: transparent;
+            text-align: left;
+            color: #212529;
+            /* dark text */
+            transition: background-color 0.2s ease, transform 0.15s ease, color 0.15s ease;
+        }
+
+        /* Remove focus */
         .property-navigator .nav-btn:focus {
             outline: none !important;
             box-shadow: none !important;
         }
 
-        .property-navigator .nav-btn {
-            position: relative;
-            transition: background-color 0.2s ease, transform 0.15s ease;
-        }
-
-        /* Active Tab */
+        /* Active tab */
         .property-navigator .nav-btn.active-tab {
-            background-color: #f8f9fa;
-            position: relative;
-            box-shadow: inset 0 0 0 1px #e9ecef,
-                        0 2px 6px rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+            border: 2px solid #212529;
             transform: translateX(2px);
+            color: #212529;
             animation: tabFadeIn 0.25s ease-in-out;
         }
 
@@ -139,7 +129,7 @@
             border-radius: 2px;
         }
 
-        /* Hover effect ONLY inside property-navigator */
+        /* Hover inactive tabs */
         .property-navigator .nav-btn:not(.active-tab):hover {
             background-color: #f8f9fa;
             transform: translateX(3px);
@@ -156,7 +146,7 @@
             border-radius: 2px;
         }
 
-        /* Spinner styling */
+        /* Spinner wrapper */
         .property-navigator .spinner-wrapper {
             position: absolute;
             right: 1rem;
@@ -169,30 +159,30 @@
             color: #6c757d;
         }
 
-        /* Text sizing */
-        .property-navigator .fw-medium {
+        /* Text inside navigator only */
+        .property-navigator .tab-text .fw-medium,
+        .property-navigator .tab-text small {
             font-size: 0.95rem;
-        }
-
-        .property-navigator small {
-            font-size: 0.8rem;
             color: #6c757d;
         }
 
-        /* Loading State */
+        /* Loading state */
         .property-navigator .loading {
             opacity: 0.7;
         }
 
+        /* Sidebar overflow */
         .property-navigator .col-md-3 {
             overflow: visible;
         }
 
+        /* Animation */
         @keyframes tabFadeIn {
             from {
                 opacity: 0.5;
                 transform: translateX(-5px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -200,7 +190,8 @@
         }
     </style>
 
-     <script>
+
+    <script>
         let map, directionsService, directionsRenderer;
 
         function initMap() {

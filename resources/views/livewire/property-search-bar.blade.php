@@ -1,6 +1,6 @@
 <div class="container">
     <form
-        class="search-bar d-flex align-items-center justify-content-between border border-dark bg-white shadow-sm rounded-pill px-3 py-2"
+        class="search-bar d-flex align-items-center justify-content-between  bg-white shadow rounded-pill px-3 py-2"
         style="max-width: 900px; margin: 0 auto;">
 
         <!-- Property Name -->

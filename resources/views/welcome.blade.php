@@ -8,7 +8,7 @@
 
                 <div class="d-flex gap-2 mt-3">
                     <a href="{{route('signup')}}" class="btn btn-sm btn-dark">Get Started</a>
-                    <a href="" class="btn btn-sm btn-outline-dark">Explore</a>
+                    <a href="{{route('properties')}}" class="btn btn-sm btn-outline-dark">Explore</a>
                 </div>
 
                 <div class="d-flex gap-2 mt-3">
