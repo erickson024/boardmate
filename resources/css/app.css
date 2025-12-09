@@ -1,6 +1,8 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "./home.css";
 @import "./navigation.css";
+@import "./register.css";
+@import "./floatingInputs.css";
 
 body {
     font-family: "Montserrat", sans-serif;   

@@ -11,7 +11,17 @@
 </head>
 
 <body>
-    {{ $slot }}
+    <nav>
+        @if(
+        !Route::is('register')
+        )
+        <x-navigation />
+        @endif
+    </nav>
+
+    <main>
+        {{ $slot }}
+    </main>
 </body>
 
 </html>

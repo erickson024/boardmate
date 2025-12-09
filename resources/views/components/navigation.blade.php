@@ -54,7 +54,7 @@
                     Log In 
                 </x-buttons.small-button>
 
-                <x-buttons.small-button  class="fw-semibold">
+                <x-buttons.small-button  class="fw-semibold" href="{{route('register')}}">
                     Register 
                 </x-buttons.small-button>
             </div>
