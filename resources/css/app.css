@@ -1,1 +1,6 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import "./home.css";
+
+body {
+    font-family: "Montserrat", sans-serif;   
+}
