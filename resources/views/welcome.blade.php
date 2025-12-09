@@ -11,8 +11,10 @@
 </head>
 
 <body>
+    <x-navigation /> <!--including navigation-->
+
     <div class="home-section">
-        <div class="container mt-5 mt-md-0">
+        <div class="container home-margin">
             <div class="row justify-content-center align-items-center vh-100">
 
                 <!--left side-->
@@ -23,13 +25,8 @@
 
                     <p class="fs-6 fw-medium mt-0 text-secondary animate-fade-in" style="animation-delay: 0.2s;">Discover more rental options across our available locations <i class="bi bi-geo-alt"></i>.</p>
 
-                    <div class="d-flex gap-2 animate-fade-in" style="animation-delay: 0.3s;">
-
-
-                    </div>
-
                     <!-- Feature -->
-                    <div class="d-flex flex-wrap gap-2 justify-content-start mt-3">
+                    <div class="d-flex flex-wrap gap-2 justify-content-start">
                         <div class="d-flex flex-column align-items-center justify-content-center text-center bg-white border border-success rounded feature-box shadow-sm animate-float" style="animation-delay: 0.4s;">
                             <i class="bi bi-shield-fill-check feature-icon text-success"></i>
                             <span class="fw-medium feature-label">Safe &amp; Secure</span>
@@ -37,7 +34,7 @@
 
                         <div class="d-flex flex-column align-items-center justify-content-center text-center bg-white border border-primary rounded feature-box shadow-sm animate-float" style="animation-delay: 0.5s;">
                             <i class="bi bi-search feature-icon text-primary"></i>
-                            <span class="fw-medium feature-label">Easy Search</span>
+                            <span class="fw-medium feature-label">Vast Listing Properties</span>
                         </div>
 
                         <div class="d-flex flex-column align-items-center justify-content-center text-center bg-white border border-info rounded feature-box shadow-sm animate-float" style="animation-delay: 0.6s;">
@@ -51,24 +48,18 @@
                         </div>
                     </div>
 
-                    <!-- Platforms -->
-                    <div class="d-flex flex-column gap-2 mt-3 animate-fade-in" style="animation-delay: 0.8s;">
-                        <span class="small fw-medium">Connect with us.</span>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <x-buttons.small-button>
-                                <i class="bi bi-threads"></i> <span class="d-none d-sm-inline">Threads</span>
-                            </x-buttons.small-button>
-                            <x-buttons.small-button>
-                                <i class="bi bi-meta"></i> <span class="d-none d-sm-inline">Meta</span>
-                            </x-buttons.small-button>
-                            <x-buttons.small-button>
-                                <i class="bi bi-twitter-x"></i> <span class="d-none d-sm-inline">Twitter</span>
-                            </x-buttons.small-button>
-                            <x-buttons.small-button>
-                                <i class="bi bi-instagram"></i> <span class="d-none d-sm-inline">Instagram</span>
-                            </x-buttons.small-button>
-                        </div>
+                    <div class="d-flex gap-2 animate-fade-in mt-3" style="animation-delay: 0.3s;">
+                        <x-buttons.small-button variant="outline-dark" class="fw-semibold">
+                            Get Started
+                        </x-buttons.small-button>
+
+                        <x-buttons.small-button class="fw-semibold">
+                            Explore
+                        </x-buttons.small-button>
                     </div>
+
+          
+
                 </div>
 
                 <!--right side-->
@@ -92,6 +83,8 @@
             </div>
         </div>
     </div>
+
+    <x-footer />
 </body>
 
 </html>
