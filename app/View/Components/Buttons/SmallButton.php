@@ -11,10 +11,14 @@ class SmallButton extends Component
     /**
      * Create a new component instance.
      */
-    public $type;
-    public function __construct($type = 'button')
+    public $action;
+    public $href;
+    public $variant;
+    public function __construct($href = null, $action = null, $variant = 'dark')
     {
-         $this->type = $type;
+        $this->href = $href;
+        $this->action = $action;
+        $this->variant = $variant;
     }
 
     /**

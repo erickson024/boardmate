@@ -31,7 +31,7 @@
                     <!-- Feature -->
                     <div class="d-flex flex-wrap gap-2 justify-content-start mt-3">
                         <div class="d-flex flex-column align-items-center justify-content-center text-center bg-white border border-success rounded feature-box shadow-sm animate-float" style="animation-delay: 0.4s;">
-                            <i class="bi bi-shield-check feature-icon text-success"></i>
+                            <i class="bi bi-shield-fill-check feature-icon text-success"></i>
                             <span class="fw-medium feature-label">Safe &amp; Secure</span>
                         </div>
 
@@ -41,13 +41,13 @@
                         </div>
 
                         <div class="d-flex flex-column align-items-center justify-content-center text-center bg-white border border-info rounded feature-box shadow-sm animate-float" style="animation-delay: 0.6s;">
-                            <i class="bi bi-people feature-icon text-info"></i>
+                            <i class="bi bi-people-fill feature-icon text-info"></i>
                             <span class="fw-medium feature-label">Trusted Community</span>
                         </div>
 
                         <div class="d-flex flex-column align-items-center justify-content-center text-center bg-white border border-warning rounded feature-box shadow-sm animate-float" style="animation-delay: 0.7s;">
-                            <i class="bi bi-phone feature-icon text-warning"></i>
-                            <span class="fw-medium feature-label">Tech Support</span>
+                            <i class="bi bi-pin-map-fill feature-icon text-warning"></i>
+                            <span class="fw-medium feature-label">Google Map Interaction</span>
                         </div>
                     </div>
 
