@@ -20,7 +20,7 @@
                         <a class="nav-link {{ request()->routeIs('properties') ? 'active' : '' }} small" href="" wire:navigate>Endorse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('properties-page') ? 'active' : '' }} small" href="">Properties</a>
+                        <a class="nav-link {{ request()->routeIs('propertyList') ? 'active' : '' }} small" href="{{route('propertyList')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }} small" href="" wire:navigate>About & Guide</a>
@@ -34,7 +34,7 @@
                         <a class="nav-link {{ request()->routeIs('endorse-page') ? 'active' : '' }}" href="" wire:navigate>Endorse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('properties-page') ? 'active' : '' }}" href="" wire:navigate>Properties</a>
+                        <a class="nav-link {{ request()->routeIs('propertyList') ? 'active' : '' }} small" href="{{route('propertyList')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="" wire:navigate>Verified Host</a>
@@ -51,18 +51,18 @@
             @guest
             <div class=" gap-2 ">
                 <x-buttons.small-button variant="outline-dark" href="{{route('login')}}" class="fw-semibold">
-                    Log In 
+                    Log In
                 </x-buttons.small-button>
 
-                <x-buttons.small-button  class="fw-semibold" href="{{route('register')}}">
-                    Register 
+                <x-buttons.small-button class="fw-semibold" href="{{route('register')}}">
+                    Register
                 </x-buttons.small-button>
             </div>
             @endguest
 
             @auth
             <div class="gap-2">
-            
+
 
                 <div class="btn-group">
                     <button class="btn btn-sm btn-outline-dark rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -81,17 +81,17 @@
 
                 <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
 
-                  
 
-                        <button
-                            class="btn btn-sm btn-dark border border-secondary"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                            </svg>
-                        </button>
+
+                    <button
+                        class="btn btn-sm btn-dark border border-secondary"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                        </svg>
+                    </button>
                 </div>
             </div>
             @endauth
@@ -111,7 +111,7 @@ $user = auth()->user();
 
         <!-- Top: Profile card and menu buttons -->
         <div class="flex-grow-1">
-           
+
 
             <div class="d-flex flex-column gap-2 mt-3">
                 <a href="" class="btn btn-small btn-light shadow-sm text-start text-secondary" role="button">
@@ -133,7 +133,7 @@ $user = auth()->user();
         </div>
 
         <!-- Bottom: Logout button -->
-      
+
 
     </div>
 </div>
