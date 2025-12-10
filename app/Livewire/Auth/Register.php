@@ -10,40 +10,40 @@ use Illuminate\Auth\Events\Registered;
 class Register extends Component
 {
     //property
-    public        
-    $firstName, 
-    $lastName, 
-    $email, 
-    $password, 
-    $passwordConfirmation, 
-    $terms = false, 
-    $role = 'tenant',
-    $profile_image = null;
+    public
+        $firstName,
+        $lastName,
+        $email,
+        $password,
+        $passwordConfirmation,
+        $terms = false,
+        $role = 'tenant',
+        $profile_image = null;
 
     //validation rule
     protected function rules()
     {
-        return[
-           'firstName' => 'required|string|max:255',
-           'lastName'  => 'required|string|max:255',
-           'email'     => 'required|email|unique:users,email',
-           'password'  => 'required|min:8',
-           'passwordConfirmation' => 'required|same:password',
-           'terms' => 'accepted',
+        return [
+            'firstName' => 'required|string|max:255',
+            'lastName'  => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|min:8',
+            'passwordConfirmation' => 'required|same:password',
+            'terms' => 'accepted',
         ];
     }
-    
+
     //property for password
     public $strengthScore = 0;
 
     // Livewire hook for password updates
-    public function updatedPassword($value) 
+    public function updatedPassword($value)
     {
         $this->checkStrength($value);
-    }  
+    }
 
     // Simple password strength checker
-    private function checkStrength($password) 
+    private function checkStrength($password)
     {
         $score = 0;
 
@@ -59,15 +59,15 @@ class Register extends Component
     public function register()
     {
         //checks all rules
-        $this->validate();  
+        $this->validate();
 
         if ($this->strengthScore < 4) {
             $this->addError('password', 'Add uppercase letters, numbers, or special characters to make it stronger.');
             return;
         }
-        
-         //eloquent
-        $user = User::create([                      
+
+        //eloquent
+        $user = User::create([
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'email' => $this->email,
@@ -76,9 +76,10 @@ class Register extends Component
             'role' => $this->role,
             'profile_image' => $this->profile_image
         ]);
-        
-       
-        return redirect()->route('welcome');
+
+        auth()->login($user);  //create session
+        event(new Registered($user)); //for email verification
+        return redirect()->route('verification.notice');
     }
 
     public function render()

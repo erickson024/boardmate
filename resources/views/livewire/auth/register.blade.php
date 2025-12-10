@@ -78,12 +78,14 @@
                             <div class="form-check">
                                 <input
                                     type="checkbox"
-                                    class="form-check-input shadow-none border-dark"
+                                    class="form-check-input shadow-none border-secondary"
                                     wire:model="terms">
                                 <label>
-                                    <small>I agree to the
+                                    <small>
+                                        <span class="fw-medium text-secondary">I agree to the</span>
                                         <a href=""
-                                            class="link-dark link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-dark fw-medium">terms and conditions</a>.</small>
+                                            class="link-dark link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-dark fw-semibold">terms and conditions</a>.
+                                    </small>
                                 </label>
                             </div>
                             @error('terms')
@@ -92,7 +94,7 @@
                         </div>
 
                     </div>
-
+                    
                     <div class="my-3">
                         <x-buttons.small-button action="register" class="w-25 fw-semibold">
                             Register
