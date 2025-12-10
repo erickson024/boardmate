@@ -77,9 +77,8 @@ class Register extends Component
             'profile_image' => $this->profile_image
         ]);
         
-        auth()->login($user);  //create session
-        event(new Registered($user)); //for email verification
-        return redirect()->route('verification.notice');
+       
+        return redirect()->route('welcome');
     }
 
     public function render()
