@@ -13,7 +13,8 @@
 <body>
     <nav>
         @if(
-        !Route::is('register')
+        !Route::is('register') &&
+        !Route::is('login')
         )
         <x-navigation />
         @endif

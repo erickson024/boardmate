@@ -1,7 +1,8 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="ol-12 col-md-6 col-lg-6 ">
-            <div class="py-1 px-4">
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <!-- Left: Form -->
+        <div class="col-12 col-md-6 col-lg-6 ">
+            <div class="w-100 px-4 px-md-5">
                 <div class="col-12 d-flex justify-content-between my-4">
                     <div>
                         <x-buttons.small-button href="{{route('welcome')}}" class="fw-semibold">
@@ -10,14 +11,14 @@
                         </x-buttons.small-button>
                     </div>
                     <div>
-                        <x-buttons.small-button href="signin" class="fw-semibold">
+                        <x-buttons.small-button href="{{route('login')}}" class="fw-semibold">
                             Log In
                         </x-buttons.small-button>
                     </div>
                 </div>
-
                 <div class="fs-5 fw-semibold my-2">Create an account</div>
-
+                
+                <!--register forms-->
                 <form wire:submit.prevent="register">
                     <div class="row gx-4">
 
@@ -101,6 +102,7 @@
             </div>
         </div>
 
+        <!-- Right: Image (hidden on small screens) -->
         <div class="col-12 col-md-6 col-lg-6 d-flex flex-column bg-dark">
             <div class="flex-column text-center py-4">
                 <img
@@ -122,5 +124,6 @@
                     loading="lazy" />
             </div>
         </div>
+
     </div>
 </div>

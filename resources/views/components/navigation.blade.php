@@ -50,7 +50,7 @@
             <!-- Right side auth buttons -->
             @guest
             <div class=" gap-2 ">
-                <x-buttons.small-button variant="outline-dark" class="fw-semibold">
+                <x-buttons.small-button variant="outline-dark" href="{{route('login')}}" class="fw-semibold">
                     Log In 
                 </x-buttons.small-button>
 
