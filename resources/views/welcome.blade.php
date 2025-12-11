@@ -49,11 +49,11 @@
                     </div>
 
                     <div class="d-flex gap-2 animate-fade-in mt-3" style="animation-delay: 0.3s;">
-                        <x-buttons.small-button variant="outline-dark" class="fw-semibold">
+                        <x-buttons.small-button variant="outline-dark" class="fw-semibold" href="{{route('register')}}">
                             Get Started
                         </x-buttons.small-button>
 
-                        <x-buttons.small-button class="fw-semibold">
+                        <x-buttons.small-button class="fw-semibold" href="{{route('propertyList')}}">
                             Explore
                         </x-buttons.small-button>
                     </div>
