@@ -35,7 +35,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 //logout
-Route::get('/logout', function () {
+Route::post('/logout', function () {
     Auth::logout();
     session()->invalidate();
     session()->regenerateToken();

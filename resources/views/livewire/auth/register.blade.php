@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="row mt-1">
-                        <small class="mb-2">Tip: Add uppercase letters, numbers, or symbols for a stronger password.</small>
+                        <small class="mb-2 text-secondary fw-light">Tip: Add uppercase letters, numbers, or symbols for a stronger password.</small>
                         <div class="col-12">
                             <div class="progress rounded mb-2" style="height: 3px;">
                                 <div class="progress-bar 

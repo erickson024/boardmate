@@ -19,7 +19,7 @@
                 <div class="fs-5 fw-semibold my-2">Sign In your account</div>
 
                 <!--login forms-->
-                <form action="" wire:submit.prevent="signin" wire:loading.attr="disabled">
+                <form action="" wire:submit.prevent="login" wire:loading.attr="disabled">
                     <div class="col-12 mb-3">
                         <x-inputs.floating-input
                             id="email"
@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <x-buttons.small-button action="signin" class="w-25 fw-semibold">
+                    <x-buttons.small-button action="login" class="w-25 fw-semibold">
                         Log In
                     </x-buttons.small-button>
                 </form>
