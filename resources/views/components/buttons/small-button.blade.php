@@ -3,7 +3,7 @@
         <small>{{ $slot }}</small>
     </a>
 @else
-    <button type="submit" {{ $attributes->merge(['class' => "btn btn-sm btn-{$variant}"]) }}>
+    <button type="submit" {{ $attributes->merge(['class' => "btn btn-sm btn-{$variant}"]) }} wire:loading.attr="disabled">
         <span wire:loading.remove wire:target="{{ $action }}">
             <small>{{ $slot }}</small>
         </span>

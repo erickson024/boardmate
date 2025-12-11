@@ -62,7 +62,9 @@
 
             @auth
             <div class="gap-2">
-
+                <x-buttons.small-button variant="outline-dark" class="fw-semibold">
+                    Be a host
+                </x-buttons.small-button>
 
                 <div class="btn-group">
                     <button class="btn btn-sm btn-outline-dark rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,9 +80,12 @@
                         <li><a class="dropdown-item" href="#">Separated link</a></li>
                     </ul>
                 </div>
-
+           
                 <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-
+                    <x-buttons.small-button>
+                        <i class="bi bi-person-fill me-1"></i>
+                        {{ Auth::user()->firstName }}
+                    </x-buttons.small-button>
                     <button
                         class="btn btn-sm btn-dark border border-secondary"
                         type="button"

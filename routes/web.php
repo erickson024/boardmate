@@ -50,7 +50,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 // VERIFIED ROUTES
 // ----------------------
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home',Home::class)->name('home');
+    Route::get('/home', Home::class)->name('home');
 });
 
 
