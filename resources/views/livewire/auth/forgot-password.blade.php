@@ -1,7 +1,7 @@
 <div class="container py-5 mt-5">
     <div class="col-md-5 mx-auto mb-3">
         <div class="text-start">
-            <x-buttons.small-button href="{{ route('login') }}">
+            <x-buttons.small-button href="{{ route('login') }}" class="fw-semibold">
                 <i class="bi bi-arrow-left-short"></i>
                 Log In Boardmate
             </x-buttons.small-button>
@@ -26,13 +26,13 @@
                 type="email"
                 model="email" />
 
-            <button class="btn btn-dark btn-sm w-100">
+            <button class="btn btn-dark btn-sm w-100 fw-semibold">
                 <span wire:loading.remove wire:target="sendResetLink">
-                    send reset link
+                    <small>send reset link</small>
                 </span>
                 <span wire:loading wire:target="sendResetLink">
                     <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                    sending...
+                    <small>sending...</small>
                 </span>
             </button>
         </form>

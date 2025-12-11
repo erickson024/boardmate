@@ -50,11 +50,11 @@
 
             <button class="btn btn-dark btn-sm w-100">
                 <span wire:loading.remove wire:target="resetPassword">
-                    reset password
+                    <small>reset password</small>
                 </span>
                 <span wire:loading wire:target="resetPassword">
                     <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                    changing password...
+                    <small>changing password...</small>
                 </span>
             </button>
         </form>
