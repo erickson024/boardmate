@@ -81,8 +81,6 @@
 
                 <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
 
-
-
                     <button
                         class="btn btn-sm btn-dark border border-secondary"
                         type="button"

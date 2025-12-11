@@ -38,11 +38,11 @@
 
                 <div class="row gx-2">
                     <div class="col-4">
-                        <form method="GET" action="{{route('logout')}}">
+                        <form method="POST" action="{{route('logout')}}">
                             @csrf
                             <x-buttons.small-button class="w-100">
-                                <i class="bi bi-arrow-left-short"></i>
-                                Later
+                                    <span><i class="bi bi-arrow-left-short"></i></span>
+                                    <span>Verify later</span>
                             </x-buttons.small-button>
                         </form>
                     </div>
