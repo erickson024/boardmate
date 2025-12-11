@@ -78,7 +78,7 @@
                             <div class="form-check">
                                 <input
                                     type="checkbox"
-                                    class="form-check-input shadow-none border-secondary"
+                                    class="form-check-input shadow-sm border-secondary"
                                     wire:model="terms">
                                 <label>
                                     <small>

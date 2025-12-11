@@ -37,7 +37,7 @@ class Login extends Component
             RateLimiter::clear($key);
 
             session()->regenerate();
-            return $this->redirect(route('propertyList'), navigate: true);
+            return $this->redirect(route('home'), navigate: true);
         }
 
         RateLimiter::hit($key, 60);

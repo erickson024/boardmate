@@ -20,7 +20,7 @@
 
                 <!--login forms-->
                 <form action="" wire:submit.prevent="login" wire:loading.attr="disabled">
-                    <div class="col-12 mb-3">
+                    <div class="col-12">
                         <x-inputs.floating-input
                             id="email"
                             label="Email Address"
@@ -28,7 +28,7 @@
                             model="email" />
                     </div>
 
-                    <div class="col-12 mb-2">
+                    <div class="col-12 ">
                         <x-inputs.floating-input
                             id="password"
                             label="Enter Password"
@@ -36,22 +36,22 @@
                             model="password" />
                     </div>
 
-                    <div class="row mt-1 mb-3">
+                    <div class="row mb-3">
                         <div class="col-6 d-flex justify-content-start">
                             <div class="form-check">
                                 <input
-                                    class="form-check-input shadow-none border-dark"
+                                    class="form-check-input shadow-sm border-secondary"
                                     type="checkbox"
                                     value=""
                                     id="checkDefault"
                                     wire:model="remember">
-                                <label class="form-check-label fw-medium" for="checkDefault">
+                                <label class="form-check-label fw-medium text-secondary" for="checkDefault">
                                     <small>Remember me</small>
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <a href="" class="link-underline-dark link-underline-opacity-0 link-underline-opacity-100-hover text-dark fw-medium" wire:navigate>
+                            <a href="" class="link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover text-secondary fw-medium" wire:navigate>
                                 <small>Forgot your Password?</small>
                             </a>
                         </div>

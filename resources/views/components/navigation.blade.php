@@ -34,7 +34,7 @@
                         <a class="nav-link {{ request()->routeIs('endorse-page') ? 'active' : '' }}" href="" wire:navigate>Endorse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('propertyList') ? 'active' : '' }} small" href="{{route('propertyList')}}" wire:navigate>Properties</a>
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }} small" href="{{route('home')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="" wire:navigate>Verified Host</a>

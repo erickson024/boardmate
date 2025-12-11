@@ -7,6 +7,7 @@ use App\Livewire\PropertyList;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Livewire\Home;
 
 // ----------------------
 // GUEST ROUTES
@@ -18,14 +19,13 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
+    Route::get('/property/list', PropertyList::class)->name('propertyList');
 });
 
 // ----------------------
 // AUTH ROUTES (NO verified required)
 // ----------------------
-Route::middleware('auth')->group(function () {
-    
-});
+Route::middleware('auth')->group(function () {});
 
 //email verification notice
 Route::get('/email/verify', function () {
@@ -36,7 +36,7 @@ Route::get('/email/verify', function () {
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/property/list');
+    return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // resend email verification link
@@ -50,8 +50,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 // VERIFIED ROUTES
 // ----------------------
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/property/list', PropertyList::class)->name('propertyList');
+    Route::get('/home',Home::class)->name('home');
 });
+
+
+
 
 //logout
 Route::post('/logout', function () {
