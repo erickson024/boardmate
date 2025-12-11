@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <a href="" class="link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover text-secondary fw-medium" wire:navigate>
+                            <a href="{{route('password.request')}}" class="link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover text-secondary fw-medium" wire:navigate>
                                 <small>Forgot your Password?</small>
                             </a>
                         </div>

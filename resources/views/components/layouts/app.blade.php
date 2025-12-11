@@ -14,7 +14,9 @@
     <nav>
         @if(
         !Route::is('register') &&
-        !Route::is('login')
+        !Route::is('login') &&
+        !Route::is('password.request') &&
+        !Route::is('password.reset')
         )
         <x-navigation />
         @endif
