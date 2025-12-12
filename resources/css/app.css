@@ -3,6 +3,7 @@
 @import "./navigation.css";
 @import "./register.css";
 @import "./floatingInputs.css";
+@import "./profileCard.css";
 
 body {
     font-family: "Montserrat", sans-serif;   

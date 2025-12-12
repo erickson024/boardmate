@@ -114,7 +114,7 @@ $user = auth()->user();
 
         <!-- Top: Profile card and menu buttons -->
         <div class="flex-grow-1">
-
+            <x-profile-card />
 
             <div class="d-flex flex-column gap-2 mt-3">
                 <a href="" class="btn btn-small btn-light shadow-sm text-start text-secondary" role="button">
