@@ -4,7 +4,7 @@
 </a>
 @else
 <button
-    type="{{$type}}"
+    type="{{ $type }}"
     {{ $attributes->merge(['class' => "btn btn-sm btn-{$variant}"]) }}
     wire:loading.attr="disabled">
 
