@@ -71,7 +71,7 @@
                         <span
                             wire:loading.remove
                             wire:target="setTab('users')">
-                            0
+                            <small>{{ $this->userCount }}</small>
                         </span>
 
                         {{-- Spinner (loading state) --}}
