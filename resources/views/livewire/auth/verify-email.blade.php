@@ -40,7 +40,7 @@
                     <div class="col-4">
                         <form method="POST" action="{{route('logout')}}">
                             @csrf
-                            <x-buttons.small-button class="w-100">
+                            <x-buttons.small-button type="submit" class="w-100">
                                     <span><i class="bi bi-arrow-left-short"></i></span>
                                     <span>Verify later</span>
                             </x-buttons.small-button>

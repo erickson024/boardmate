@@ -14,11 +14,14 @@ class SmallButton extends Component
     public $action;
     public $href;
     public $variant;
-    public function __construct($href = null, $action = null, $variant = 'dark')
+    public $type;
+
+    public function __construct($href = null, $action = null, $variant = 'dark', $type = 'button')
     {
         $this->href = $href;
         $this->action = $action;
         $this->variant = $variant;
+        $this->type = $type;
     }
 
     /**

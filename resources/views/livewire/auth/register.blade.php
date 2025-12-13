@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="fs-5 fw-semibold my-2">Create an account</div>
-                
+
                 <!--register forms-->
                 <form wire:submit.prevent="register">
                     <div class="row gx-4">
@@ -94,9 +94,12 @@
                         </div>
 
                     </div>
-                    
+
                     <div class="my-3">
-                        <x-buttons.small-button action="register" class="w-25 fw-semibold">
+                        <x-buttons.small-button
+                            type="submit"
+                            action="register"
+                            class="w-25 fw-semibold">
                             Register
                         </x-buttons.small-button>
                     </div>

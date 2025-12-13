@@ -127,7 +127,9 @@ $user = auth()->user();
         <!-- Bottom: Logout button -->
         <form method="POST" action="{{ route('logout') }}" class="mt-auto">
             @csrf
-            <x-buttons.small-button class="w-100 fw-semibold">
+            <x-buttons.small-button 
+            type="submit"
+            class="w-100 fw-semibold">
                 Log Out
             </x-buttons.small-button>
         </form>

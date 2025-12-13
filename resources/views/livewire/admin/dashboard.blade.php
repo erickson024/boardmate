@@ -52,7 +52,9 @@
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-buttons.small-button class="w-100 fw-semibold mt-1">
+                    <x-buttons.small-button 
+                    type="submit"
+                    class="w-100 fw-semibold mt-1">
                         <small>Log Out</small>
                     </x-buttons.small-button>
                 </form>

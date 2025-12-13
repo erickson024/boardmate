@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <x-buttons.small-button action="login" class="w-25 fw-semibold" >
+                    <x-buttons.small-button type="submit" action="login" class="w-25 fw-semibold" >
                         Log In
                     </x-buttons.small-button>
                 </form>
