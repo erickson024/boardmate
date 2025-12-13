@@ -3,8 +3,8 @@
         <div class="container">
             <!-- Brand -->
             <div>
-                <x-logo-dark style="width:40px;" />
-                <span class="fs-6 fw-semibold">Boardmate</span>
+                <x-logo-dark style="width:30px;" />
+                <span class="fs-6 fw-semibold"><small>Boardmate</small></span>
             </div>
 
 
@@ -61,41 +61,30 @@
             @endguest
 
             @auth
-            <div class="gap-2">
-                <x-buttons.small-button variant="outline-dark" class="fw-semibold">
+            <div class="d-flex align-items-center gap-1">
+                <x-buttons.small-button variant="btn btn-secondary" class="shadow-sm  fw-semibold rounded-5">
                     Be a host
                 </x-buttons.small-button>
 
                 <div class="btn-group">
-                    <button class="btn btn-sm btn-outline-dark rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-sm btn-light btn-outline-dark shadow-sm border-1 rounded-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-chat-dots-fill"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+
                     </ul>
                 </div>
-           
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    <x-buttons.small-button>
-                        <i class="bi bi-person-fill me-1"></i>
-                        {{ Auth::user()->firstName }}
-                    </x-buttons.small-button>
-                    <button
-                        class="btn btn-sm btn-dark border border-secondary"
-                        type="button"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                        </svg>
-                    </button>
-                </div>
+                
+                <x-profile-image size="30" />
+
+                <button
+                    class="btn btn-sm btn-dark  rounded-5"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight">
+                    <i class="bi bi-list"></i>
+                </button>
+
             </div>
             @endauth
 
