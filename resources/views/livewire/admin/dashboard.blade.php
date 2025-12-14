@@ -179,7 +179,7 @@
                 <livewire:admin.environment-status />
 
                 @elseif ($active === 'host')
-                <livewire:admin.host-request />
+                <livewire:admin.host-requests />
 
                 @elseif ($active === 'users')
                 <livewire:admin.users />

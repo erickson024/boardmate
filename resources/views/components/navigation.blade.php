@@ -62,7 +62,7 @@
 
             @auth
             <div class="d-flex align-items-center gap-1">
-                <x-buttons.small-button variant="btn btn-secondary" class="shadow-sm  fw-semibold rounded-5">
+                <x-buttons.small-button href="{{route('host.request')}}" variant="btn btn-secondary" class="shadow-sm  fw-semibold rounded-5">
                     Be a host
                 </x-buttons.small-button>
 

@@ -17,7 +17,8 @@
         !Route::is('login') &&
         !Route::is('password.request') &&
         !Route::is('password.reset') &&
-        !Route::is('admin.dashboard')
+        !Route::is('admin.dashboard') &&
+        !Route::is('host.request')
         )
         <x-navigation />
         @endif
@@ -25,6 +26,7 @@
 
     <main>
         {{ $slot }}
+         <x-boardmate-toast />
     </main>
 </body>
 

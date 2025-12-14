@@ -11,6 +11,16 @@ use App\Livewire\Home;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Tenant\HostRequest;
+use App\Livewire\Admin\HostRequests;
+
+Route::middleware(['auth', 'role:tenant'])->group(function () {
+    Route::get('/host-request', HostRequest::class)->name('host.request');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/host-requests', HostRequests::class)->name('admin.host.requests');
+});
 
 // ----------------------
 // GUEST ROUTES
