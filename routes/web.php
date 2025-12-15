@@ -18,9 +18,6 @@ Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/host-requests', HostRequests::class)->name('admin.host.requests');
-});
 
 // ----------------------
 // GUEST ROUTES
@@ -73,6 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //---------------------
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('admin/dashboard', Dashboard::class)->name('admin.dashboard');
+    Route::get('/admin/host-requests', HostRequests::class)->name('admin.host.requests');
 });
 
 //logout

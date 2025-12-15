@@ -62,9 +62,21 @@
 
             @auth
             <div class="d-flex align-items-center gap-1">
-                <x-buttons.small-button href="{{route('host.request')}}" variant="btn btn-secondary" class="shadow-sm  fw-semibold rounded-5">
+                @if(auth()->check() && auth()->user()->role === 'tenant')
+                <x-buttons.small-button
+                    href="{{ route('host.request') }}"
+                    variant="btn btn-light"
+                    class="shadow-sm fw-semibold rounded-5 px-2">
                     Be a host
                 </x-buttons.small-button>
+                @elseif(auth()->check() && auth()->user()->role === 'verified_host')
+                <x-buttons.small-button
+                    href=""
+                    variant="btn btn-light"
+                    class="shadow-sm fw-semibold rounded-5 px-2">
+                    Add Properties
+                </x-buttons.small-button>
+                @endif
 
                 <div class="btn-group">
                     <button class="btn btn-sm btn-light btn-outline-dark shadow-sm border-1 rounded-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,16 +86,24 @@
 
                     </ul>
                 </div>
-                
-                <x-profile-image size="30" />
+
+                <button class="btn btn-sm btn-light btn-outline-dark shadow-sm border-1 rounded-5" type="button">
+                    <i class="bi bi-bell-fill"></i>
+                </button>
 
                 <button
-                    class="btn btn-sm btn-dark  rounded-5"
+                    class="btn btn-sm btn-dark rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 32px; height: 32px;"
                     type="button"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight">
-                    <i class="bi bi-list"></i>
+
+                    <span class="fw-bold small text-uppercase">
+                        {{ substr(auth()->user()->firstName, 0, 1) }}{{ substr(auth()->user()->lastName, 0, 1) }}
+                    </span>
                 </button>
+
+
 
             </div>
             @endauth
@@ -127,9 +147,9 @@ $user = auth()->user();
         <!-- Bottom: Logout button -->
         <form method="POST" action="{{ route('logout') }}" class="mt-auto">
             @csrf
-            <x-buttons.small-button 
-            type="submit"
-            class="w-100 fw-semibold">
+            <x-buttons.small-button
+                type="submit"
+                class="w-100 fw-semibold">
                 Log Out
             </x-buttons.small-button>
         </form>

@@ -1,14 +1,14 @@
-  <div wire:ignore id="boardmateToast" class="toast mb-2 me-2" role="alert" aria-live="assertive" aria-atomic="true" style="z-index:1100;">
-                    <div class="toast-header">
-                        <span class="me-auto fw-semibold small">Admin Boardmate</span>
-                        <small id="toastTime">11 mins ago</small>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        <p id="toastTitle" class="small fw-semibold mb-0">BoardMate</p>
-                        <span id="toastMessage" class="small mt-0">Notification</span>
-                    </div>
-                </div>
+<div wire:ignore id="boardmateToast" class="toast mb-2 me-2" role="alert" aria-live="assertive" aria-atomic="true" style="z-index:1100;">
+    <div class="toast-header">
+        <span class="me-auto fw-semibold small">Admin Boardmate</span>
+        <small id="toastTime">11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        <p id="toastTitle" class="small fw-semibold mb-0">BoardMate</p>
+        <span id="toastMessage" class="small mt-0">Notification</span>
+    </div>
+</div>
 
 <script>
     document.addEventListener('livewire:init', () => {
