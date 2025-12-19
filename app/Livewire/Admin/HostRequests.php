@@ -18,6 +18,8 @@ class HostRequests extends Component
         $user = $request->user;
         $user->role = 'verified_host';
         $user->save();
+
+        $this->emitTo('admin.dashboard', 'hostRequestUpdated');
     }
 
      public function deny($id, $reason = null)
@@ -26,6 +28,8 @@ class HostRequests extends Component
         $request->status = 'denied';
         $request->reason = $reason;
         $request->save();
+
+        $this->emitTo('admin.dashboard', 'hostRequestUpdated');
     }
 
 

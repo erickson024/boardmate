@@ -1,156 +1,82 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 p-0 bg-primary">
-            <nav class="nav flex-column bg-body-tertiary shadow-sm border p-3 vh-100">
-                <div class="d-flex justify-content-center">
-                    <span class=" fw-semibold" style="font-size: 12px;">Boardmate Admin Panel</span>
+
+        {{-- SIDEBAR --}}
+        <div class="col-2 p-0">
+            <nav class="sidebar vh-100 bg-body-tertiary border shadow-sm d-flex flex-column p-2">
+
+                {{-- Logo --}}
+                <div class="text-center rounded shadow-sm p-2 mb-4 fw-medium">
+                    <small>
+                        <x-logo-dark style="width:25px;" />
+                        <span class="nav-label fw-semibold small">Control Panel</span>
+                    </small>
                 </div>
 
-                <div class="d-flex flex-column gap-2 mt-4">
+                {{-- NAV ITEMS --}}
+                <div class="d-flex flex-column gap-2">
 
-                    <!--Environment Status-->
+                    @foreach ($this->navItems as $item)
                     <button
-                        type="button"
-                        wire:click="setTab('environment')"
+                        wire:click="setTab('{{ $item['key'] }}')"
                         wire:loading.attr="disabled"
-                        class="btn btn-sm btn-dark fw-semibold w-100 d-flex justify-content-between align-items-center  {{ $active === 'environment' ? 'active' : '' }}">
+                        class="btn btn-sm btn-dark nav-btn d-flex align-items-center py-2 gap-2 position-relative
+                                   {{ $active === $item['key'] ? 'active' : '' }}">
 
-                        <small><small>Environment Status</small></small>
+                        {{-- Icon --}}
+                        <i class="bi {{ $item['icon'] }}"></i>
 
-                        {{-- Icon (normal state) --}}
-                        <span
-                            wire:loading.remove
-                            wire:target="setTab('environment')">
-                            <i class="bi bi-bar-chart-fill"></i>
+                        {{-- Label --}}
+                        <span class="nav-label fw-medium small">
+                            {{ $item['label'] }}
                         </span>
 
-                        {{-- Spinner (loading state) --}}
+                        {{-- Badge --}}
+                        @if (!is_null($item['badge']))
+                        <span class="badge text-bg-secondary nav-badge">
+                            {{ $item['badge'] }}
+                        </span>
+                        @endif
+
+                        {{-- Spinner --}}
                         <span
                             wire:loading
-                            wire:target="setTab('environment')"
-                            class="spinner-border spinner-border-sm">
+                            wire:target="setTab('{{ $item['key'] }}')"
+                            class="spinner-border spinner-border-sm ms-auto">
                         </span>
                     </button>
-
-                    <!--Host Request-->
-                    <button
-                        type="button"
-                        wire:click="setTab('host')"
-                        wire:loading.attr="disabled"
-                        class="btn btn-sm btn-dark fw-semibold w-100 d-flex justify-content-between align-items-center {{ $active === 'host' ? 'active' : '' }}">
-
-                        <small><small>Host Request</small></small>
-
-
-                        {{-- Icon (normal state) --}}
-                        <span
-                            wire:loading.remove
-                            wire:target="setTab('host')">
-                            0
-                        </span>
-
-                        {{-- Spinner (loading state) --}}
-                        <span
-                            wire:loading
-                            wire:target="setTab('host')"
-                            class="spinner-border spinner-border-sm">
-                        </span>
-                    </button>
-
-                    <!--User List-->
-                    <button
-                        type="button"
-                        wire:click="setTab('users')"
-                        wire:loading.attr="disabled"
-                        class="btn btn-sm btn-dark fw-semibold w-100 d-flex justify-content-between align-items-center {{ $active === 'users' ? 'active' : '' }}">
-
-                        <small><small>Users List</small></small>
-
-
-                        {{-- Icon (normal state) --}}
-                        <span
-                            wire:loading.remove
-                            wire:target="setTab('users')">
-                            <small>{{ $this->userCount }}</small>
-                        </span>
-
-                        {{-- Spinner (loading state) --}}
-                        <span
-                            wire:loading
-                            wire:target="setTab('users')"
-                            class="spinner-border spinner-border-sm">
-                        </span>
-                    </button>
-
-                    <!--Property List-->
-                    <button
-                        type="button"
-                        wire:click="setTab('properties')"
-                        wire:loading.attr="disabled"
-                        class="btn btn-sm btn-dark fw-semibold w-100 d-flex justify-content-between align-items-center {{ $active === 'properties' ? 'active' : '' }}">
-
-                        <small><small>Property List</small></small>
-
-
-                        {{-- Icon (normal state) --}}
-                        <span
-                            wire:loading.remove
-                            wire:target="setTab('properties')">
-                            0
-                        </span>
-
-                        {{-- Spinner (loading state) --}}
-                        <span
-                            wire:loading
-                            wire:target="setTab('properties')"
-                            class="spinner-border spinner-border-sm">
-                        </span>
-                    </button>
-
-                     <!--Messages-->
-                    <button
-                        type="button"
-                        wire:click="setTab('messages')"
-                        wire:loading.attr="disabled"
-                        class="btn btn-sm btn-dark fw-semibold w-100 d-flex justify-content-between align-items-center {{ $active === 'messages' ? 'active' : '' }}">
-
-                        <small><small>Messages</small></small>
-
-
-                        {{-- Icon (normal state) --}}
-                        <span
-                            wire:loading.remove
-                            wire:target="setTab('messages')">
-                            0
-                        </span>
-
-                        {{-- Spinner (loading state) --}}
-                        <span
-                            wire:loading
-                            wire:target="setTab('messages')"
-                            class="spinner-border spinner-border-sm">
-                        </span>
-                    </button>
+                    @endforeach
 
                 </div>
 
+                {{-- Bottom / Settings --}}
                 <div class="mt-auto">
+
+                    {{-- Collapsible content --}}
                     <div class="collapse" id="collapseExample">
-                        <x-buttons.small-button class="fw-semibold w-100">
-                            <small>Settings</small>
+
+                        {{-- Settings button --}}
+                        <x-buttons.small-button
+                            class="fw-semibold w-100 d-flex align-items-center justify-content-center justify-content-lg-start">
+                            <i class="bi bi-gear-fill"></i>
+                            <span class="nav-label d-none d-lg-inline ms-2">Settings</span>
                         </x-buttons.small-button>
 
+                        {{-- Log Out --}}
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-buttons.small-button
                                 type="submit"
-                                class="w-100 fw-semibold mt-1">
-                                <small>Log Out</small>
+                                class="w-100 fw-semibold mt-1 d-flex align-items-center justify-content-center justify-content-lg-start">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span class="nav-label d-none d-lg-inline ms-2">Log Out</span>
                             </x-buttons.small-button>
                         </form>
 
                     </div>
-                    <p class="mt-2">
+
+                    {{-- Toggle button --}}
+                    <div class="mt-2 mb-0">
                         <button
                             class="btn btn-sm btn-outline-dark shadow-sm py-2 w-100"
                             type="button"
@@ -158,40 +84,82 @@
                             data-bs-target="#collapseExample"
                             aria-expanded="false"
                             aria-controls="collapseExample">
+
                             <div class="d-flex justify-content-between align-items-center w-100">
-                                <div class="d-flex flex-column lh-1 text-start">
+                                {{-- User info hidden on small screens --}}
+                                <div class="d-flex flex-column lh-1 text-start nav-label">
                                     <small class="fw-semibold">{{ Auth::user()->firstName }}</small>
                                     <small class="text-secondary">{{ Auth::user()->role }}</small>
                                 </div>
 
-                                <i class="bi bi-gear-fill ms-2"></i>
+                                {{-- Gear icon always visible --}}
+                                <i class="bi bi-person-fill-gear ms-2"></i>
                             </div>
                         </button>
-                    </p>
+                    </div>
+
                 </div>
+
             </nav>
         </div>
 
-        <div class="col-10">
-            <div class="flex-grow-1 p-4">
+        {{-- CONTENT --}}
+        <div class="col-10 p-2 p-lg-4" style="height: 100vh; overflow-y: auto; overflow-x: hidden;">
 
-                @if ($active === 'environment')
-                <livewire:admin.environment-status />
+            @if ($active === 'environment')
+            <livewire:admin.environment-status />
+            @elseif ($active === 'host')
+            <livewire:admin.host-requests />
+            @elseif ($active === 'users')
+            <livewire:admin.users />
+            @elseif ($active === 'properties')
+            <livewire:admin.properties />
+            @elseif ($active === 'messages')
+            <livewire:admin.messages />
+            @endif
 
-                @elseif ($active === 'host')
-                <livewire:admin.host-requests />
-
-                @elseif ($active === 'users')
-                <livewire:admin.users />
-
-                @elseif ($active === 'properties')
-                <livewire:admin.properties />
-
-                @elseif ($active === 'messages')
-                <livewire:admin.messages />
-                @endif
-
-            </div>
         </div>
+
+
     </div>
+
+    <style>
+        .sidebar {
+            width: 220px;
+            transition: width 0.2s ease;
+            overflow-x: hidden;
+        }
+
+        .nav-label {
+            white-space: nowrap;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+        }
+
+
+        @media (max-width: 991px) {
+            .sidebar {
+                width: 64px !important;
+            }
+
+            .sidebar .nav-badge {
+                display: none !important;
+            }
+
+            .sidebar .nav-label {
+                display: none !important;
+            }
+
+            .sidebar .nav-btn {
+                justify-content: center !important;
+            }
+
+            .sidebar .collapse .nav-btn {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+
 </div>

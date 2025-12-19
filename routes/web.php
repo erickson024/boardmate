@@ -30,6 +30,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
     Route::get('/property/list', PropertyList::class)->name('propertyList');
+
+    //password reset routes
     Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
     Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
@@ -37,26 +39,29 @@ Route::middleware('guest')->group(function () {
 // ----------------------
 // AUTH ROUTES (NO verified required)
 // ----------------------
-Route::middleware('auth')->group(function () {});
+Route::middleware('auth')->group(function () {
 
-//email verification notice
-Route::get('/email/verify', function () {
-    return view('livewire.auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    //email verification notice
+    Route::get('/email/verify', function () {
+        return view('livewire.auth.verify-email');
+    })->name('verification.notice');
 
-// email verification handler
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
+    // email verification handler
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
 
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+        return redirect('/home');
+    })->middleware(['signed'])->name('verification.verify');
 
-// resend email verification link
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
+    // resend email verification link
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
 
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['throttle:6,1'])->name('verification.send');
+});
+
+
 
 // ----------------------
 // VERIFIED ROUTES

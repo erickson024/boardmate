@@ -36,7 +36,7 @@ class ResetPassword extends Component
         $this->token = $token;
         $this->email = request('email');
 
-        $this->fill(session()->get('signup', []));
+        $this->fill(session()->get('login', []));
 
         // if password already exists in session, recalc strength
         if (!empty($this->password)) {
