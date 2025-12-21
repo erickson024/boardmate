@@ -69,7 +69,7 @@
                     class="shadow-sm fw-semibold rounded-5 px-2">
                     Be a host
                 </x-buttons.small-button>
-                @elseif(auth()->check() && auth()->user()->role === 'verified_host')
+                @elseif(auth()->check() && auth()->user()->role === 'host')
                 <x-buttons.small-button
                     href=""
                     variant="btn btn-light"

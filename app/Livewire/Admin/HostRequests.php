@@ -16,7 +16,7 @@ class HostRequests extends Component
 
         // Update user role
         $user = $request->user;
-        $user->role = 'verified_host';
+        $user->role = 'host';
         $user->save();
 
         $this->dispatch('hostRequestUpdated')->to('admin.dashboard');

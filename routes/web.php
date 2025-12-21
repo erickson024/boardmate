@@ -19,7 +19,7 @@ Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
 });
 
-Route::middleware(['auth', 'role:verified_host'])->group(function () {
+Route::middleware(['auth', 'role:host'])->group(function () {
     Route::get('/host/welcome', InitialPage::class)->name('host.welcome');
 });
 
