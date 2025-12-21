@@ -13,9 +13,14 @@ use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Tenant\HostRequest;
 use App\Livewire\Admin\HostRequests;
+use App\Livewire\Host\InitialPage;
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
+});
+
+Route::middleware(['auth', 'role:verified_host'])->group(function () {
+    Route::get('/host/welcome', InitialPage::class)->name('host.welcome');
 });
 
 
@@ -80,6 +85,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 //logout
 Route::post('/logout', function () {
+    Auth::user()->markAsOffline();
     Auth::logout();
     session()->invalidate();
     session()->regenerateToken();

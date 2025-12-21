@@ -19,17 +19,17 @@ class HostRequests extends Component
         $user->role = 'verified_host';
         $user->save();
 
-        $this->emitTo('admin.dashboard', 'hostRequestUpdated');
+        $this->dispatch('hostRequestUpdated')->to('admin.dashboard');
     }
 
-     public function deny($id, $reason = null)
+     public function deny($id, $reason = null)  
     {
         $request = HostingRequest::findOrFail($id);
         $request->status = 'denied';
         $request->reason = $reason;
         $request->save();
 
-        $this->emitTo('admin.dashboard', 'hostRequestUpdated');
+        $this->dispatch('hostRequestUpdated')->to('admin.dashboard');
     }
 
 

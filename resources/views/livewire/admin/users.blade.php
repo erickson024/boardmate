@@ -26,7 +26,7 @@
                         border: 1px solid rgba(255,255,255,0.2);
                         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
                         {{ (is_null($role['value']) && is_null($roleFilter)) || $roleFilter === $role['value']
-                            ? 'transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); ' . $role['bgActive']
+                            ? 'transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.12)' . $role['bgActive']
                             : $role['bgInactive'] . ' opacity-70' }}"
                     onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12)'"
                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'">
@@ -37,14 +37,13 @@
                             <h4 class="mb-0 fw-bold mt-1" style="font-size: 1.5rem;">{{ $this->{$role['countProperty']} }}</h4>
                         </div>
                         <div style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; opacity: 0.8; flex-shrink: 0;">
-                            <i class="bi {{ $role['icon'] }} fs-5"></i>
+                            <i class="bi {{ $role['icon'] }} fs-4"></i>
                         </div>
                     </div>
                 </button>
             </div>
             @endforeach
         </div>
-
 
         <!-- Search Section -->
         <div class="mb-4">
@@ -76,7 +75,7 @@
                             <th class="fw-semibold text-secondary py-2" style="font-size: 0.85rem;">
                                 Role
                             </th>
-                            <th class="fw-semibold text-secondary text-center py-2" style="font-size: 0.85rem;">
+                            <th class="fw-semibold text-secondary py-2" style="font-size: 0.85rem;">
                                 Status
                             </th>
                             <th class="fw-semibold text-secondary py-2" style="font-size: 0.85rem;">
@@ -115,17 +114,23 @@
                                     <i class="bi {{ $config['icon'] }} me-1" style="font-size: 0.65rem;"></i>{{ ucfirst($user->role) }}
                                 </span>
                             </td>
-                            <td class="py-2 text-center">
-                                @if(Cache::has('user-is-online-' . $user->id))
+                            <td class="py-2">
+                                @if($user->isOnline())
                                 <span class="badge bg-success rounded-pill px-2 py-1" style="font-size: 0.7rem;">
-                                    <span class="spinner-grow spinner-grow-sm me-1" role="status" style="width: 4px; height: 4px;"></span>
                                     Online
+                                    <span class="spinner-grow spinner-grow-sm" role="status" style="width: 4px; height: 4px;"></span>
+                                </span>
+                                @elseif($user->last_activity && $user->last_activity instanceof \Illuminate\Support\Carbon)
+                                <span class="text-muted small">
+                                    Last seen {{ $user->last_activity->diffForHumans() }}
                                 </span>
                                 @else
-                                <span class="badge bg-secondary rounded-pill px-2 py-1" style="font-size: 0.7rem;">
-                                    <i class="bi bi-circle me-1" style="font-size: 0.5rem;"></i>Offline
+                                <span class="text-secondary fw-semibold" style="font-size: 0.7rem;">
+                                    Offline
                                 </span>
                                 @endif
+
+
                             </td>
                             <td class="py-2">
                                 <small class="text-secondary" style="font-size: 0.8rem;">{{ $user->created_at->format('M d, Y') }}</small>

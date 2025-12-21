@@ -82,6 +82,8 @@ class HostRequest extends Component
                     message: 'Your request has been approved!',
                     type: 'success'
                 );
+
+                return $this->redirect(route('host.welcome'));
             }
 
             if ($latest->status === 'denied') {

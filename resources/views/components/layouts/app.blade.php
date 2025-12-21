@@ -18,7 +18,8 @@
         !Route::is('password.request') &&
         !Route::is('password.reset') &&
         !Route::is('admin.dashboard') &&
-        !Route::is('host.request')
+        !Route::is('host.request') &&
+        !Route::is('host.welcome')
         )
         <x-navigation />
         @endif

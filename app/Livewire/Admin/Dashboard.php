@@ -23,6 +23,7 @@ class Dashboard extends Component
         return User::count();
     }
     
+    
     protected $listeners = ['hostRequestUpdated' => '$refresh'];
     public function getHostRequestsCountProperty()
     {

@@ -6,6 +6,10 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class Users extends Component
 {
@@ -16,7 +20,7 @@ class Users extends Component
 
     protected $queryString = ['roleFilter'];
 
-    // Define role filters configuration
+    // Role filters configuration
     protected $roles = [
         [
             'value' => null,
@@ -37,7 +41,7 @@ class Users extends Component
         [
             'value' => 'host',
             'label' => 'Hosts',
-            'icon' => 'bi-house-door-fill',
+            'icon' => 'bi-person-fill-check',
             'bgActive' => 'bg-success text-light border-success',
             'bgInactive' => 'bg-success bg-opacity-15 text-success-emphasis',
             'countProperty' => 'hostCount',
@@ -54,7 +58,9 @@ class Users extends Component
 
     public function mount()
     {
-        // Initialize any needed data
+        if (Auth::check()) {
+            Auth::user()->updateActivity();
+        }
     }
 
     #[On('user-created')]
@@ -70,18 +76,11 @@ class Users extends Component
         $this->resetPage();
     }
 
-    public function updatedSearch()
-    {
-        $this->resetPage();
-    }
-
     public function filterByRole($role)
     {
         $this->roleFilter = $this->roleFilter === $role ? null : $role;
         $this->resetPage();
     }
-
-    /* ===== Role Counts ===== */
 
     public function getTotalCountProperty()
     {
@@ -105,23 +104,38 @@ class Users extends Component
 
     public function render()
     {
+        // Update current user activity
+        if (Auth::check()) {
+            Auth::user()->updateActivity();
+        }
+
         $users = User::query()
-            ->when(
-                $this->roleFilter,
-                fn($q) =>
-                $q->where('role', $this->roleFilter)
-            )
-            ->when(
-                $this->search,
-                fn($q) =>
-                $q->where(function ($query) {
-                    $query->where('firstName', 'like', "%{$this->search}%")
-                        ->orWhere('lastName', 'like', "%{$this->search}%")
-                        ->orWhere('email', 'like', "%{$this->search}%");
-                })
-            )
+            ->when($this->roleFilter, fn($q) => $q->where('role', $this->roleFilter))
+            ->when($this->search, fn($q) => $q->where(function ($query) {
+                $query->where('firstName', 'like', "%{$this->search}%")
+                    ->orWhere('lastName', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%");
+            }))
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+
+        // Attach last_activity from cache with proper Carbon conversion
+        $users->getCollection()->transform(function ($user) {
+            $lastActivityValue = Cache::get('user-last-activity-' . $user->id);
+            
+            // Convert to Carbon if it exists and is not already a Carbon instance
+            if ($lastActivityValue) {
+                $user->last_activity = $lastActivityValue instanceof Carbon 
+                    ? $lastActivityValue 
+                    : Carbon::parse($lastActivityValue);
+            } else {
+                $user->last_activity = null;
+            }
+            
+            Log::info('User: ' . $user->email . ' | Last Activity: ' . ($user->last_activity ? $user->last_activity->toDateTimeString() : 'null') . ' | Online: ' . ($user->isOnline() ? 'Yes' : 'No'));
+            
+            return $user;
+        });
 
         return view('livewire.admin.users', compact('users'));
     }
