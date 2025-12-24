@@ -1,14 +1,14 @@
 <div class="container py-5">
-    <div class="col-md-5 mx-auto mb-3">
+    <div class="col-md-6 mx-auto mb-3">
         <div class="text-start">
-            <x-buttons.small-button href="{{ route('login') }}">
+            <x-buttons.small-button href="{{ route('login') }}" class="fw-semibold">
                 <i class="bi bi-arrow-left-short"></i>
                 Log In Boardmate
             </x-buttons.small-button>
         </div>
     </div>
 
-    <div class="col-md-5 mx-auto">
+    <div class="col-md-6 border border-dark rounded shadow p-4 mx-auto">
         <h5 class="fw-semibold">Reset your password</h5>
         <p class="text-muted mb-3"><small>We recommend creating a strong password using random letters, numbers, and special characters.</small></p>
 
@@ -48,7 +48,7 @@
                 type="password"
                 model="password_confirmation" />
 
-            <button class="btn btn-dark btn-sm w-100">
+            <button class="btn btn-dark btn-sm w-100 fw-semibold">
                 <span wire:loading.remove wire:target="resetPassword">
                     <small>reset password</small>
                 </span>
