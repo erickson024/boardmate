@@ -6,7 +6,9 @@
 <button
     type="{{ $type }}"
     {{ $attributes->merge(['class' => "btn btn-sm btn-{$variant}"]) }}
-    wire:loading.attr="disabled">
+    wire:loading.attr="disabled"
+    wire:target="{{ $action }}"
+    >
 
     <span
         wire:loading.remove
