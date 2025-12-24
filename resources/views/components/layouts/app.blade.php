@@ -10,7 +10,7 @@
     <title>{{ $title ?? 'Boardmate' }}</title>
 </head>
 
-<body>
+<body>   
     <nav>
         @if(
         !Route::is('register') &&
@@ -19,7 +19,8 @@
         !Route::is('password.reset') &&
         !Route::is('admin.dashboard') &&
         !Route::is('host.request') &&
-        !Route::is('host.welcome')
+        !Route::is('host.welcome') &&
+        !Route::is('property-registration')
         )
         <x-navigation />
         @endif
@@ -27,7 +28,7 @@
 
     <main>
         {{ $slot }}
-         <x-boardmate-toast />
+        <x-boardmate-toast />
     </main>
 </body>
 

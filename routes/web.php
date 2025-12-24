@@ -14,6 +14,7 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Tenant\HostRequest;
 use App\Livewire\Admin\HostRequests;
 use App\Livewire\Host\InitialPage;
+use App\Livewire\Properties\PropertyRegistration;
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
@@ -21,6 +22,7 @@ Route::middleware(['auth', 'role:tenant'])->group(function () {
 
 Route::middleware(['auth', 'role:host'])->group(function () {
     Route::get('/host/welcome', InitialPage::class)->name('host.welcome');
+    Route::get('property/registration', PropertyRegistration::class)->name('property-registration');
 });
 
 

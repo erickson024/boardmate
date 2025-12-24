@@ -71,7 +71,7 @@
                 </x-buttons.small-button>
                 @elseif(auth()->check() && auth()->user()->role === 'host')
                 <x-buttons.small-button
-                    href=""
+                    href="{{route('property-registration')}}"
                     variant="btn btn-light"
                     class="shadow-sm fw-semibold rounded-5 px-2">
                     Add Properties
