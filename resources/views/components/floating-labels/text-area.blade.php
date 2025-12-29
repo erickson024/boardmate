@@ -15,4 +15,10 @@
         </label>
 
     </div>
+
+    @error($id)
+    <div class="text-danger small mt-1">
+        {{ $message }}
+    </div>
+    @enderror
 </div>

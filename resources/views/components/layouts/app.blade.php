@@ -30,6 +30,24 @@
         {{ $slot }}
         <x-boardmate-toast />
     </main>
+
+    <!-- Password toggle script -->
+    <script>
+        function togglePassword(fieldId, btn) {
+            const input = document.getElementById(fieldId);
+            const icon = btn.querySelector('i');
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye-fill");
+                icon.classList.add("bi-eye-slash-fill");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash-fill");
+                icon.classList.add("bi-eye-fill");
+            }
+        }
+    </script>
 </body>
 
 </html>

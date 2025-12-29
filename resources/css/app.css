@@ -4,6 +4,7 @@
 @import "./register.css";
 @import "./floatingInputs.css";
 @import "./profileCard.css";
+@import "./properties/step1-basic-information.css";
 
 body {
     font-family: "Montserrat", sans-serif;   

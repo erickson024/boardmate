@@ -1,0 +1,28 @@
+.step1-basic-information .feature-box {
+    width: 96px;
+    height: 96px;
+    padding: 0.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.step1-basic-information .feature-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.step1-basic-information .feature-box:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.step1-basic-information .feature-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+}
+
+.step1-basic-information .feature-label {
+    font-size: 0.75rem;
+    line-height: 1;
+}
