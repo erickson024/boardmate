@@ -49,7 +49,7 @@ class Step1BasicInformation extends Component
             'propertyDescription' => $this->propertyDescription,
             'propertyType' => $this->propertyType,
         ]);
-
+ 
         session()->put('propertyRegistration', $propertyData);
         $this->dispatch('goToStep', 2);  
     }

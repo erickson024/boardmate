@@ -10,7 +10,12 @@
     <title>{{ $title ?? 'Boardmate' }}</title>
 </head>
 
-<body>   
+<body>
+    <!-- Google Maps API -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=places">
+    </script>
+  
     <nav>
         @if(
         !Route::is('register') &&
@@ -48,6 +53,7 @@
             }
         }
     </script>
+
 </body>
 
 </html>
