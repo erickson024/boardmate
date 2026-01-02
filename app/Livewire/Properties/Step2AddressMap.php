@@ -29,13 +29,6 @@ class Step2AddressMap extends Component
         $this->longitude = $lng;
     }
 
-    public function updatedCurrentStep($step)
-    {
-        if ($step === 2) {
-            $this->dispatch('show-map');
-        }
-    }
-
     public function submit()
     {
         $this->validate();

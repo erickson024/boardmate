@@ -62,9 +62,9 @@
                 @elseif ($currentStep === 2)
                 <livewire:properties.step2-address-map />
                 @elseif ($currentStep === 3)
-                <livewire:auth.signup.step3 />
+                <livewire:properties.step3-features />
                 @elseif ($currentStep === 4)
-                <livewire:auth.signup.step4 />
+                <livewire:properties.step4-restiction />
                 @endif
             </div>
 
