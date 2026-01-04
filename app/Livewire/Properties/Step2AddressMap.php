@@ -6,23 +6,27 @@ use Livewire\Component;
 
 class Step2AddressMap extends Component
 {
-    public $address, $latitude, $longitude;
+    public $address;
+    public $latitude;
+    public $longitude;
 
-    protected $rules = [
-        'address' => 'required|string|max:255',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-    ];
-
-    protected $listeners = ['setAddress' => 'updateMapData'];
+    protected $listeners = ['setAddress'];
 
     public function mount()
     {
-        // Prefill if returning to this step
-        $this->fill(session()->get('propertyRegistration', []));
+        $data = session()->get('propertyRegistration', []);
+
+        $this->address   = $data['address']   ?? '';
+        $this->latitude  = $data['latitude']  ?? 14.5995;
+        $this->longitude = $data['longitude'] ?? 120.9842;
+
+        $this->dispatch('init-step2-map', [
+            'lat' => $this->latitude,
+            'lng' => $this->longitude,
+        ]);
     }
 
-    public function updateMapData($address, $lat, $lng)  //bridge connection between js and php
+    public function setAddress($address, $lat, $lng)
     {
         $this->address = $address;
         $this->latitude = $lat;
@@ -31,17 +35,13 @@ class Step2AddressMap extends Component
 
     public function submit()
     {
-        $this->validate();
-
-        $propertyData = session()->get('propertyRegistration', []);
-        $propertyData = array_merge($propertyData, [
+        session()->put('propertyRegistration', [
+            ...session()->get('propertyRegistration', []),
             'address' => $this->address,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
         ]);
-        session()->put('propertyRegistration', $propertyData);
-        dd(session());
-        // Proceed to the next step or finalize registration
+
         $this->dispatch('goToStep', 3);
     }
 
@@ -55,3 +55,4 @@ class Step2AddressMap extends Component
         return view('livewire.properties.step2-address-map');
     }
 }
+

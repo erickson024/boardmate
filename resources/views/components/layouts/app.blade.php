@@ -13,8 +13,10 @@
 <body>
     <!-- Google Maps API -->
     <script
-        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=places">
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=places"
+        defer>
     </script>
+
 
     <nav>
         @if(
@@ -35,6 +37,7 @@
         {{ $slot }}
         <x-boardmate-toast />
     </main>
+
 
     <!-- Password toggle script -->
     <script>
