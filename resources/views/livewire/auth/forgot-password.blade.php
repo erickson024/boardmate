@@ -20,21 +20,27 @@
         @endif
 
         <form wire:submit.prevent="sendResetLink">
-            <x-inputs.floating-input
-                id="email"
-                label="email address"
-                type="email"
-                model="email" />
-
-            <button class="btn btn-dark btn-sm w-100 fw-semibold">
-                <span wire:loading.remove wire:target="sendResetLink">
-                    <small>send reset link</small>
-                </span>
-                <span wire:loading wire:target="sendResetLink">
-                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                    <small>sending...</small>
-                </span>
-            </button>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <x-floating-labels.input
+                        id="email"
+                        label="email address"
+                        type="email"
+                        wire:model="email" />
+                </div>
+                
+                <div class="col-12">
+                    <button class="btn btn-dark btn-sm w-100 fw-semibold">
+                        <span wire:loading.remove wire:target="sendResetLink">
+                            <small>send reset link</small>
+                        </span>
+                        <span wire:loading wire:target="sendResetLink">
+                            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                            <small>sending...</small>
+                        </span>
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
