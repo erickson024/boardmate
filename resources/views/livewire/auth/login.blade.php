@@ -8,7 +8,7 @@
                         <x-buttons.small-button href="{{route('welcome')}}" class="fw-semibold">
                             <i class="bi bi-arrow-left-short"></i>
                             Boardmate
-                            </x-buttons.small-button>
+                        </x-buttons.small-button>
                     </div>
                     <div>
                         <x-buttons.small-button href="{{route('register')}}" class="fw-semibold">
@@ -20,20 +20,20 @@
 
                 <!--login forms-->
                 <form action="" wire:submit.prevent="login">
-                    <div class="col-12">
-                        <x-inputs.floating-input
+                    <div class="col-12 mb-3">
+                        <x-floating-labels.input
                             id="email"
                             label="Email Address"
                             type="email"
-                            model="email" />
+                            wire:model="email" />
                     </div>
 
-                    <div class="col-12 ">
-                        <x-inputs.floating-input
+                    <div class="col-12 mb-3">
+                        <x-floating-labels.input
                             id="password"
                             label="Enter Password"
                             type="password"
-                            model="password" />
+                            wire:model="password" />
                     </div>
 
                     <div class="row mb-3">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <x-buttons.small-button type="submit" action="login" class="w-25 fw-semibold" >
+                    <x-buttons.small-button type="submit" action="login" class="w-25 fw-semibold">
                         Log In
                     </x-buttons.small-button>
                 </form>

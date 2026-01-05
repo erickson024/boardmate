@@ -1,4 +1,4 @@
-<div>
+<div wire:ignore>
 
     <div class="form-floating position-relative">
         <input
@@ -6,13 +6,13 @@
             class="form-control"
             id="{{ $id }}"
             placeholder="{{ $label }}"
-            {{ $attributes->merge([]) }} > <!--make native HTML attributes work properly-->
-        
+            {{ $attributes->merge([]) }}> <!--make native HTML attributes work properly-->
+
 
         <label
             for="{{ $id }}"
             class="fw-medium small">
-            {{ $label }}
+            <small>{{ $label }}</small>
         </label>
 
         @if($type === 'password')
@@ -24,11 +24,11 @@
             <i class="bi bi-eye-fill"></i>
         </button>
         @endif
-
-        @error($id)
-        <div class="invalid-feedback d-block">
-            {{ $message }}
-        </div>
-        @enderror
     </div>
 </div>
+
+@error($id)
+<div class="text-danger small">
+    <small>{{ $message }}</small>
+</div>
+@enderror

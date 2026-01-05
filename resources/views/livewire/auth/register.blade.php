@@ -11,69 +11,79 @@
                         </x-buttons.small-button>
                     </div>
                     <div>
-                        <x-buttons.small-button href="{{route('login')}}" class="fw-semibold">
-                            Log In
+                        <x-buttons.small-button variant="btn btn-outline-dark" href="{{route('login')}}" class="fw-semibold">
+                            Already have an Account? Log In
                         </x-buttons.small-button>
                     </div>
                 </div>
+
                 <div class="fs-5 fw-semibold my-2">Create an account</div>
 
                 <!--register forms-->
                 <form wire:submit.prevent="register">
-                    <div class="row gx-4">
+                    <!-- name field -->
+                    <div class="row mb-3 gx-4">
 
                         <div class="col-6">
-                            <x-inputs.floating-input
+                            <x-floating-labels.input
                                 id="firstName"
                                 label="First Name"
-                                model="firstName" />
+                                type="text"
+                                wire:model="firstName"
+                                required />
                         </div>
 
                         <div class="col-6">
-                            <x-inputs.floating-input
+                            <x-floating-labels.input
                                 id="lastName"
                                 label="Last Name"
-                                model="lastName" />
-                        </div>
-
-                        <div class="col-12">
-                            <x-inputs.floating-input
-                                id="email"
-                                label="Email Address"
-                                type="email"
-                                model="email" />
+                                type="text"
+                                wire:model="lastName"
+                                required />
                         </div>
                     </div>
 
-                    <div class="row mt-1">
-                        <small class="mb-2 text-secondary fw-light">Tip: Add uppercase letters, numbers, or symbols for a stronger password.</small>
+                    <!-- email field -->
+                    <div class="row mb-3">
                         <div class="col-12">
-                            <div class="progress rounded mb-2" style="height: 3px;">
-                                <div class="progress-bar 
-                                    @if($strengthScore < 2) bg-danger 
-                                    @elseif($strengthScore < 4) bg-warning 
-                                    @else bg-success 
-                                    @endif"
-                                    role="progressbar"
-                                    style="width: {{ ($strengthScore/5) * 100 }}%">
-                                </div>
-                            </div>
+                            <x-floating-labels.input
+                                id="email"
+                                label="Email Address"
+                                type="email"
+                                wire:model="email"
+                                required />
+                        </div>
+                    </div>
 
-                            <x-inputs.floating-input
-                                id="password"
-                                label="Create Password"
-                                type="password"
-                                model="password" />
+                    <!-- password field -->
+                    <div class="row mt-1 mb-3">
+                        <small class="mb-2 text-secondary fw-light">Tip: Add uppercase letters, numbers, or symbols for a stronger password.</small>
+
+                        <div class="col-12">
+                            <x-indicators.password-strength :strength-score="$strengthScore" />
                         </div>
 
-                        <div class="col-12">
-                            <x-inputs.floating-input
-                                id="confirmPassword"
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <x-floating-labels.input
+                                id="password"
+                                label="Set Password"
+                                type="password"
+                                wire:model.live="password"
+                                required />
+
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <x-floating-labels.input
+                                id="passwordConfirmation"
                                 label="Confirm Password"
                                 type="password"
-                                model="passwordConfirmation" />
+                                wire:model="passwordConfirmation"
+                                required />
                         </div>
+                    </div>
 
+                    <div class="row">
                         <div class="col-12">
                             <div class="form-check">
                                 <input
@@ -84,7 +94,25 @@
                                     <small>
                                         <span class="fw-medium text-secondary">I agree to the</span>
                                         <a href=""
-                                            class="link-dark link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-dark fw-semibold">terms and conditions</a>.
+                                            class="link-dark link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-dark fw-semibold"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#terms">
+                                            terms and conditions</a>
+
+                                        <x-modal.backdrop id="terms" title="Terms and Condition">
+
+                                             <x-terms-condition />
+
+                                             <x-slot name="footer">
+                                                <button 
+                                                type="button"
+                                                class="btn btn-sm btn-dark" 
+                                                wire:click="$set('terms', true)"
+                                                data-bs-dismiss="modal">
+                                                    <small>I Agree</small>
+                                                </button>
+                                             </x-slot>
+                                        </x-modal.backdrop>
                                     </small>
                                 </label>
                             </div>
@@ -92,8 +120,8 @@
                             <small class="text-danger ms-1">{{ $message }}</small>
                             @enderror
                         </div>
-
                     </div>
+
 
                     <div class="my-3">
                         <x-buttons.small-button

@@ -20,6 +20,7 @@ class Register extends Component
         $role = 'tenant',
         $profile_image = null;
 
+
     //validation rule
     protected function rules()
     {
@@ -62,7 +63,7 @@ class Register extends Component
         $this->validate();
 
         if ($this->strengthScore < 4) {
-            $this->addError('password', 'Add uppercase letters, numbers, or special characters to make it stronger.');
+            $this->addError('password', 'Your password is weak.');
             return;
         }
 

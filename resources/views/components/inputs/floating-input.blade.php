@@ -1,5 +1,5 @@
 <div class="mb-3">
-    <div class="form-floating">
+    <div class="form-floating" wire:ignore>
         @if($type === 'password')
         <input
             type="{{ $type }}"

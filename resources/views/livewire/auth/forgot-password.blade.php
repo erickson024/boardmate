@@ -7,7 +7,7 @@
             </x-buttons.small-button>
         </div>
     </div>
-    <div class="col-md-6 shadow border border-dark rounded p-4 mx-auto">
+    <div class="col-md-6 shadow rounded p-4 mx-auto">
         <h5 class="fw-semibold mb-3">Forgot your password?</h5>
         <p class="text-muted mb-4"><small>Enter your email address and we’ll send you a link to reset your password.</small></p>
 
