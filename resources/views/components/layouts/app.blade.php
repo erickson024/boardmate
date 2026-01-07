@@ -8,16 +8,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ $title ?? 'Boardmate' }}</title>
+    @livewireStyles
 </head>
 
 <body>
-    <!-- Google Maps API -->
     <script
-        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=places"
-        defer>
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=places&callback=initMap">
     </script>
-
-
+    
     <nav>
         @if(
         !Route::is('register') &&
@@ -56,6 +54,9 @@
             }
         }
     </script>
+
+    @livewireScripts
+    @stack('scripts')
 
 </body>
 

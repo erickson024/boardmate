@@ -16,14 +16,14 @@ class Step1BasicInformation extends Component
         'studio' => 'Studio',
         'dormitory' => 'Dormitory',
     ];
-    
+
     //just icons
     public array $propertyTypeIcons = [
         'apartment'   => 'bi bi-building-fill',
-        'condominium' => 'bi bi-buildings-fill', 
+        'condominium' => 'bi bi-buildings-fill',
         'house'       => 'bi bi-house-fill',
-        'studio'      => 'bi bi-door-closed-fill',  
-        'dormitory'   => 'bi-people-fill',  
+        'studio'      => 'bi bi-door-closed-fill',
+        'dormitory'   => 'bi-people-fill',
     ];
 
     protected $rules = [
@@ -33,15 +33,19 @@ class Step1BasicInformation extends Component
         'propertyType' => 'required|string|in:apartment,condominium,house,studio,dormitory',
     ];
 
+    protected $listeners = [
+        'validateCurrentStep' => 'validateStep',
+    ];
+
     public function mount()
     {
         $this->fill(session()->get('propertyRegistration', []));
     }
 
-    public function submit()
+    public function validateStep()
     {
         $this->validate();
-        
+
         $propertyData = session()->get('propertyRegistration', []);
         $propertyData = array_merge($propertyData, [
             'propertyName' => $this->propertyName,
@@ -49,9 +53,9 @@ class Step1BasicInformation extends Component
             'propertyDescription' => $this->propertyDescription,
             'propertyType' => $this->propertyType,
         ]);
- 
+
         session()->put('propertyRegistration', $propertyData);
-        $this->dispatch('goToStep', 2);  
+        $this->dispatch('goToStep', 2);
     }
 
     public function render()

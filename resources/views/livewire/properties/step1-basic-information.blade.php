@@ -1,14 +1,13 @@
 <div class="step1-basic-information"> <!--for css files-->
-    <form wire:submit.prevent="submit">
+
         <div class="row gx-3 mb-3">
             <div class="col-6">
                 <x-floating-labels.input
                     id="propertyName"
                     label="Property Name"
                     type="text"
-                    wire:model="propertyName" 
-                    required
-                    />
+                    wire:model="propertyName"
+                    required />
             </div>
 
             <div class="col-6">
@@ -16,9 +15,8 @@
                     id="propertyCost"
                     label="Property Cost per Month"
                     type="number"
-                    wire:model="propertyCost" 
-                    required
-                />
+                    wire:model="propertyCost"
+                    required />
             </div>
         </div>
 
@@ -53,9 +51,9 @@
             @endforeach
 
             @error('propertyType')
-                <div class="col-12 mt-2">
-                    <span class="text-danger small">{{ $message }}</span>
-                </div>
+            <div class="col-12 mt-2">
+                <span class="text-danger small">{{ $message }}</span>
+            </div>
             @enderror
         </div>
 
@@ -69,15 +67,5 @@
                     wire:model="propertyDescription" />
             </div>
         </div>
-
-        <div class="mt-3">
-            <button class="btn btn-sm btn-dark" type="submit">
-                <span class="fw-medium">Continue</span>
-                <span wire:loading wire:target="submit">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                </span>
-            </button>
-        </div>
-    </form>
 
 </div>

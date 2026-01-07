@@ -11,7 +11,7 @@
             ]) }}></textarea>
 
         <label for="{{ $id }}" class="small fw-medium">
-            {{ $label }}
+            <small>{{ $label }}</small>
         </label>
 
     </div>

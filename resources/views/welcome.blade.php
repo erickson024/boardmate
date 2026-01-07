@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
     <x-navigation /> <!--including navigation-->
 
     <div class="home-section">
