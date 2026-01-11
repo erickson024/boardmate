@@ -5,6 +5,7 @@
 @import "./floatingInputs.css";
 @import "./profileCard.css";
 @import "./properties/step1-basic-information.css";
+@import "./properties/step3-features.css";
 
 body {
     font-family: "Montserrat", sans-serif;   
