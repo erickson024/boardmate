@@ -4,7 +4,8 @@
             Property Features <span class="text-danger">*</span>
          </p>
          <small class="text-muted">
-            Select the features available in your property. Click on each feature to include it in your listing.
+            These are the house rules that tenants must follow while staying at the property.
+            Please review them carefully before submitting your listing.
          </small>
       </div>
 
