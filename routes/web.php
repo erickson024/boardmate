@@ -94,3 +94,8 @@ Route::post('/logout', function () {
 
     return redirect('/login');
 })->name('logout');
+
+
+Route::get('/test',function(){
+      return view('test');
+});
