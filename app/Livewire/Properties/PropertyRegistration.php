@@ -6,7 +6,6 @@ use Livewire\Component;
 
 class PropertyRegistration extends Component
 {
-  
     public $currentStep = 1;
     public $maxSteps = 5;
     
@@ -14,13 +13,27 @@ class PropertyRegistration extends Component
     protected $listeners = [
         'nextStep',
         'prevStep',
-        'goToStep' => 'setStep',
     ];
 
+    public function mount()
+    {
+        // Clean up old session structure on mount
+        session()->forget('propertyRegistration');
+    }
+    
+     public function continueStep()
+    {
+        // Dispatch validation event to child
+        $this->dispatch('validateStep' . $this->currentStep);
+    }
+    
     public function nextStep()
     {
         if ($this->currentStep < $this->maxSteps) {
             $this->currentStep++;
+
+            // Dispatch step changed event for JavaScript
+            $this->dispatch('stepChanged', step: $this->currentStep);
         }
     }
 
@@ -28,6 +41,9 @@ class PropertyRegistration extends Component
     {
         if ($this->currentStep > 1) {
             $this->currentStep--;
+
+            // Dispatch step changed event for JavaScript
+            $this->dispatch('stepChanged', step: $this->currentStep);
         }
     }
     
@@ -37,10 +53,13 @@ class PropertyRegistration extends Component
         $this->currentStep = $step;
     }
     
-    // Go to Home
     public function goToHome()
     {
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+        session()->forget($sessionKey);
         session()->forget('propertyRegistration');
+        
         return $this->redirect(route('home'), navigate: true);
     }
 
