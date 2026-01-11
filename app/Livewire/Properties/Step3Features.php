@@ -58,7 +58,6 @@ class Step3Features extends Component
         'Near Police Station'  => 'fas fa-shield-alt',
     ];
 
-    // Assign a "color class" for each category
     public array $featureColors = [
         // Utilities & Comfort
         'Wi-Fi' => 'bg-primary',
@@ -109,6 +108,10 @@ class Step3Features extends Component
         'Near Police Station' => 'bg-success',
     ];
 
+    protected $listeners = [
+        'validateStep3' => 'validateCurrentStep'
+    ];
+
     protected $rules = [
         'propertyFeatures' => 'required|array|min:1',
     ];
@@ -117,6 +120,46 @@ class Step3Features extends Component
         'propertyFeatures.required' => 'Please select at least one feature.',
         'propertyFeatures.min' => 'Please select at least one feature.',
     ];
+
+    public function mount()
+    {
+        // Load from session if exists
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+        
+        $saved = session()->get($sessionKey, []);
+        $step3Data = $saved['step3'] ?? [];
+        
+        $this->propertyFeatures = $step3Data['propertyFeatures'] ?? [];
+    }
+
+    public function validateCurrentStep()
+    {
+        $this->validate();
+
+        // Save to session before moving to next step
+        $this->saveToSession();
+        
+        // If validation passes, go to next step
+        $this->dispatch('nextStep');
+    }
+
+    private function saveToSession()
+    {
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+
+        // Get existing session data
+        $data = session()->get($sessionKey, []);
+        
+        // Update with step 3 data
+        $data['step3'] = [
+            'propertyFeatures' => $this->propertyFeatures,
+        ];
+        dd(session());
+        // Save back to session
+        session()->put($sessionKey, $data);
+    }
 
     public function render()
     {
