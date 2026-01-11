@@ -12,10 +12,6 @@
 </head>
 
 <body>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&libraries=places&callback=initMap">
-    </script>
-    
     <nav>
         @if(
         !Route::is('register') &&
@@ -36,6 +32,22 @@
         <x-boardmate-toast />
     </main>
 
+    @livewireScripts
+
+    <script>
+        window.googleMapsReady = false;
+
+        function googleMapsLoaded() {
+            window.googleMapsReady = true;
+            document.dispatchEvent(new Event('google-maps-ready'));
+        }
+    </script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places&callback=googleMapsLoaded"
+        async
+        defer>
+    </script>
 
     <!-- Password toggle script -->
     <script>
@@ -54,9 +66,6 @@
             }
         }
     </script>
-
-    @livewireScripts
-    @stack('scripts')
 
 </body>
 
