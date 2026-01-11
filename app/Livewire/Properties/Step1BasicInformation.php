@@ -17,7 +17,6 @@ class Step1BasicInformation extends Component
         'dormitory' => 'Dormitory',
     ];
 
-    //just icons
     public array $propertyTypeIcons = [
         'apartment'   => 'bi bi-building-fill',
         'condominium' => 'bi bi-buildings-fill',
@@ -34,28 +33,42 @@ class Step1BasicInformation extends Component
     ];
 
     protected $listeners = [
-        'validateCurrentStep' => 'validateStep',
+        'validateStep1' => 'validateCurrentStep',
     ];
 
     public function mount()
     {
-        $this->fill(session()->get('propertyRegistration', []));
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+        $saved = session()->get($sessionKey, []);
+        $step1Data = $saved['step1'] ?? [];
+        
+        $this->propertyName = $step1Data['propertyName'] ?? '';
+        $this->propertyCost = $step1Data['propertyCost'] ?? '';
+        $this->propertyDescription = $step1Data['propertyDescription'] ?? '';
+        $this->propertyType = $step1Data['propertyType'] ?? '';
     }
 
-    public function validateStep()
+    public function validateCurrentStep()
     {
         $this->validate();
 
-        $propertyData = session()->get('propertyRegistration', []);
-        $propertyData = array_merge($propertyData, [
+        // Save to session
+        $user_id = auth()->id();
+        $sessionKey = "property_reg_{$user_id}";
+        $data = session()->get($sessionKey, []);
+        
+        $data['step1'] = [
             'propertyName' => $this->propertyName,
             'propertyCost' => $this->propertyCost,
             'propertyDescription' => $this->propertyDescription,
             'propertyType' => $this->propertyType,
-        ]);
-
-        session()->put('propertyRegistration', $propertyData);
-        $this->dispatch('goToStep', 2);
+        ];
+        
+        session()->put($sessionKey, $data);
+        
+        // Go to next step
+        $this->dispatch('nextStep');
     }
 
     public function render()
