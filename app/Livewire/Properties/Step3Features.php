@@ -113,7 +113,7 @@ class Step3Features extends Component
     ];
 
     protected $rules = [
-        'propertyFeatures' => 'required|array|min:1',
+        'propertyFeatures' => 'array|min:1',
     ];
 
     protected $messages = [
@@ -156,7 +156,7 @@ class Step3Features extends Component
         $data['step3'] = [
             'propertyFeatures' => $this->propertyFeatures,
         ];
-        dd(session());
+    
         // Save back to session
         session()->put($sessionKey, $data);
     }
