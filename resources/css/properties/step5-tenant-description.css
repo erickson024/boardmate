@@ -1,0 +1,55 @@
+.step5-tenant-description .gender-box {
+    width: 96px;
+    height: 96px;
+    padding: 0.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Ripple effect on click */
+    .step5-tenant-description .gender-box::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: translate(-50%, -50%);
+        transition: width 0.5s, height 0.5s, opacity 0.5s;
+        opacity: 0;
+    }
+
+    .step5-tenant-description .gender-box:active::after {
+        width: 200px;
+        height: 200px;
+        opacity: 1;
+    }
+
+    /* Smooth transitions for Alpine.js */
+    .step5-tenant-description [x-cloak] {
+        display: none !important;
+    }
+
+.step5-tenant-description .gender-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.step5-tenant-description .gender-box:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.step5-tenant-description .gender-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+}
+
+.step5-tenant-description .gender-label {
+    font-size: 0.75rem;
+    line-height: 1;
+}
