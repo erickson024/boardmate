@@ -1,33 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<div class="bg-white ">
 
-    <style>
-    #map {
-        width: 100%;
-        height: 400px;
-    }
-</style>
-</head>
-<body>
-    <h3>test google map</h3>
-    <div id="map" class=""></div>
+    {{-- Main Search Row --}}
+    <div style="">
+        <div class="row g-1 align-items-end ">
+            {{-- Property Name --}}
+            <div class="col-6 col-lg-3">
+                <div class="filter-item">
+                    <label for="propertyName" class="filter-label">
+                        <i class="bi bi-search"></i>
+                        Property Name
+                    </label>
+                    <input
+                        type="text"
 
-    <script>
-        function initMap(){
-             let recto = {lat: 14.60491736184604, lng: 120.9783378601992}
+                        id="propertyName"
+                        class="filter-input"
+                        placeholder="Search properties...">
+                </div>
+            </div>
 
-             let map = new google.maps.Map(    //create new googleap object
-                document.getElementById('map'), {zoom: 4, center: recto}  //where to center the map
-             );
 
-             let marker = new google.maps.Marker({position: recto, map: map})
-        }
-    </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps.key') }}&callback=initMap"></script>
-</body>
-</html>
+            {{-- Address --}}
+            <div class="col-12 col-lg-3">
+                <div class="filter-item">
+                    <label for="address" class="filter-label">
+                        <i class="bi bi-geo-alt"></i>
+                        Address
+                    </label>
+                    <input
+                        type="text"
+                        id="address"
+                        class="filter-input"
+                        placeholder="City, area...">
+                </div>
+            </div>
+
+            {{-- Action Button --}}
+            <div class="col-12 col-lg-3 mb-3">
+                <button type="button" class="btn btn-sm btn-outline-secondary fw-semibold"><small>Clear</small></button>
+                <button type="button" class="btn btn-sm btn-dark fw-semibold"><small>Search</small></button>
+            </div>
+        </div>
+    </div>
+
+    {{-- Filter Chips Row --}}
+    <div class="mb-3">
+        <div class="d-flex gap-2">
+
+
+
+        </div>
+    </div>
+        </div>

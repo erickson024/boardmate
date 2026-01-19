@@ -15,27 +15,28 @@ class Property extends Model
     // Fillable fields (mass assignable)
     protected $fillable = [
         'user_id',
-        'name',
-        'cost',
-        'type',
-        'description',
+        'propertyName',
+        'propertyCost',
+        'propertyType',
+        'propertyDescription',
         'address',
         'latitude',
         'longitude',
-        'feature',
-        'images',
-        'tenantType',
+        'propertyFeatures',
+        'propertyRestrictions',
         'tenantGender',
-        'tenantRestriction',
+        'tenantType',
+        'images',
         'terms',
-        'payment',
-        'agree'
     ];
 
     protected $casts = [
-        'amenities' => 'array', // auto converts JSON ↔ PHP array
         'images' => 'array',    // auto converts JSON ↔ PHP array
-        'captions' => 'array'
+        'propertyFeatures' => 'array',    // add this
+        'propertyRestrictions' => 'array', // add this
+        'propertyCost' => 'decimal:2',
+        'latitude' => 'decimal:7',
+        'longitude' => 'decimal:7',
     ];
 
     public function user()

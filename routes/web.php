@@ -15,6 +15,9 @@ use App\Livewire\Tenant\HostRequest;
 use App\Livewire\Admin\HostRequests;
 use App\Livewire\Host\InitialPage;
 use App\Livewire\Properties\PropertyRegistration;
+use App\Livewire\Properties\RegistrationSuccess;
+use App\Livewire\PropertyDetails;
+use App\Livewire\PropertyDetails\Layout;
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
@@ -23,6 +26,7 @@ Route::middleware(['auth', 'role:tenant'])->group(function () {
 Route::middleware(['auth', 'role:host'])->group(function () {
     Route::get('/host/welcome', InitialPage::class)->name('host.welcome');
     Route::get('property/registration', PropertyRegistration::class)->name('property-registration');
+    Route::get('/property/registration/success', RegistrationSuccess::class)->name('property-registration-success');
 });
 
 
@@ -75,6 +79,8 @@ Route::middleware('auth')->group(function () {
 // ----------------------
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', Home::class)->name('home');
+    Route::get('/property/{id}', PropertyDetails::class)->name('property.details');
+    Route::get('/property-layout/{id}', Layout::class)->name('property.layout');
 });
 
 //---------------------

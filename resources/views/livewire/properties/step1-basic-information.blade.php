@@ -2,7 +2,7 @@
 
     <div class="col-12 mb-2">
         <p class="fs-6 fw-semibold text-start mb-1">Basic Information </p>
-        <small class="text-muted"> 
+        <small class="text-muted">
             Provide the essential details of your property, including its name, type, and pricing.
             This information helps tenants quickly understand what your property offers.
         </small>
@@ -28,42 +28,47 @@
         </div>
     </div>
 
-    <!-- Property Type Selection - Use Alphine JS to 0 delay-->
-    <div
-        x-data="{ selected: @entangle('propertyType').live }"
-        class="row justify-content-start mb-3">
-        <small class="fw-medium mb-1 text-secondary">
-            Select your property type.
-        </small>
+    <div class="row">
+        <div class="col-10">
+            <!-- Property Type Selection - Use Alphine JS to 0 delay-->
+            <div
+                x-data="{ selected: @entangle('propertyType').live }"
+                class="row justify-content-start mb-3 g-2">
+                <small class="fw-medium mb-1 text-secondary">
+                    Select your property type.
+                </small>
 
-        @foreach($propertyTypes as $key => $label)
-        <div class="col-3 col-md-2 gap-4" wire:key="property-type-{{ $key }}">
-            <button
-                type="button"
-                @click="selected = '{{ $key }}'"
-                :class="selected === '{{ $key }}'
+                @foreach($propertyTypes as $key => $label)
+                <div class="col-auto" wire:key="property-type-{{ $key }}">
+                    <button
+                        type="button"
+                        @click="selected === '{{ $key }}' ? selected = '' : selected = '{{ $key }}'"
+                        :class="selected === '{{ $key }}'
                     ? 'bg-secondary text-white border-secondary shadow-lg'
                     : 'bg-white text-secondary border-secondary shadow-sm'"
-                class="d-flex flex-column align-items-center justify-content-center text-center border rounded feature-box">
-                <i
-                    class="bi {{ $propertyTypeIcons[$key] ?? 'bi-building' }} feature-icon"
-                    :class="selected === '{{ $key }}'
+                        class="d-flex flex-column align-items-center justify-content-center text-center border rounded feature-box">
+                        <i
+                            class="bi {{ $propertyTypeIcons[$key] ?? 'bi-building' }} feature-icon"
+                            :class="selected === '{{ $key }}'
                         ? 'text-white'
                         : 'text-secondary'"></i>
 
-                <span class="fw-medium feature-label">
-                    {{ $label }}
-                </span>
-            </button>
-        </div>
-        @endforeach
+                        <span class="fw-medium feature-label">
+                            {{ $label }}
+                        </span>
+                    </button>
+                </div>
+                @endforeach
 
-        @error('propertyType')
-        <div class="col-12 mt-2">
-            <span class="text-danger small">{{ $message }}</span>
+                @error('propertyType')
+                <div class="col-12 mt-2">
+                    <span class="text-danger small">{{ $message }}</span>
+                </div>
+                @enderror
+            </div>
         </div>
-        @enderror
     </div>
+
 
     <div class="row">
         <div class="col-12">

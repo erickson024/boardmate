@@ -1,4 +1,4 @@
-<div class="nav-section fixed-top">
+<div class="nav-section fixed-top" style="z-index: 1010">
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-0">
         <div class="container">
             <!-- Brand -->
@@ -72,9 +72,9 @@
                 @elseif(auth()->check() && auth()->user()->role === 'host')
                 <x-buttons.small-button
                     href="{{route('property-registration')}}"
-                    variant="btn btn-light"
-                    class="shadow-sm fw-semibold rounded-5 px-2">
-                    Add Properties
+                    variant="btn btn-dark"
+                    class="shadow-sm fw-semibold rounded-5 px-3">
+                    Properties <i class="bi bi-plus-lg"></i>
                 </x-buttons.small-button>
                 @endif
 
@@ -117,7 +117,7 @@
 $user = auth()->user();
 @endphp
 
-<div class="offcanvas offcanvas-end offcanvas-profile w-25" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<div class="offcanvas offcanvas-end offcanvas-profile w-25" tabindex="2" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 
     <div class="offcanvas-body d-flex flex-column h-100">
 

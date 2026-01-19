@@ -8,7 +8,7 @@
             </label>
             <small class="text-muted d-block mb-2">Select your preferable tenant gender for this property.</small>
 
-            <div x-data="{ selected: @entangle('gender').live }" class="row g-2">
+            <div x-data="{ selected: @entangle('tenantGender').live }" class="row g-2">
                 @foreach($genders as $key => $genderOption)
                 <div class="col-auto" wire:key="gender-{{ $key }}">
                     <button
@@ -38,7 +38,7 @@
                 </div>
                 @endforeach
             </div>
-            @error('gender')
+            @error('tenantGender')
             <div class="alert alert-danger d-flex align-items-center py-2 mt-2">
                 <i class="bi bi-exclamation-circle me-2"></i>
                 <small>{{ $message }}</small>
@@ -53,7 +53,7 @@
             </label>
             <small class="text-muted d-block mb-2">Select the type of tenants allowed to rent this property.</small>
 
-            <div x-data="{ selected: @entangle('type').live }" class="row g-2">
+            <div x-data="{ selected: @entangle('tenantType').live }" class="row g-2">
                 @foreach($types as $key => $type)
                 <div class="col-3 col-md-2 mb-2" wire:key="type-{{ $key }}">
                     <button
@@ -82,7 +82,7 @@
                 </div>
                 @endforeach
             </div>
-            @error('type')
+            @error('tenantType')
             <div class="alert alert-danger d-flex align-items-center py-2 mt-2">
                 <i class="bi bi-exclamation-circle me-2"></i>
                 <small>{{ $message }}</small>

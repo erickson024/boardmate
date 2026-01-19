@@ -99,19 +99,22 @@
                                             data-bs-target="#terms">
                                             terms and conditions</a>
 
-                                        <x-modal.backdrop id="terms" title="Terms and Condition">
+                                        <x-modal.backdrop id="terms"  title="Terms and Condition">
+                                            <x-slot name="header">
+                                               
+                                            </x-slot>
 
-                                             <x-terms-condition />
+                                            <x-terms-condition />
 
-                                             <x-slot name="footer">
-                                                <button 
-                                                type="button"
-                                                class="btn btn-sm btn-dark" 
-                                                wire:click="$set('terms', true)"
-                                                data-bs-dismiss="modal">
+                                            <x-slot name="footer">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-dark"
+                                                    wire:click="$set('terms', true)"
+                                                    data-bs-dismiss="modal">
                                                     <small>I Agree</small>
                                                 </button>
-                                             </x-slot>
+                                            </x-slot>
                                         </x-modal.backdrop>
                                     </small>
                                 </label>

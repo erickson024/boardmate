@@ -15,6 +15,7 @@ class Step1BasicInformation extends Component
         'house' => 'House',
         'studio' => 'Studio',
         'dormitory' => 'Dormitory',
+        'bedspace' => 'Bedspace'
     ];
 
     public array $propertyTypeIcons = [
@@ -23,13 +24,14 @@ class Step1BasicInformation extends Component
         'house'       => 'bi bi-house-fill',
         'studio'      => 'bi bi-door-closed-fill',
         'dormitory'   => 'bi-people-fill',
+        'bedspace'    => 'bi bi-person-standing'
     ];
 
     protected $rules = [
         'propertyName' => 'required|string|max:255',
         'propertyCost' => 'required|numeric|min:0',
         'propertyDescription' => 'nullable|string',
-        'propertyType' => 'required|string|in:apartment,condominium,house,studio,dormitory',
+        'propertyType' => 'required|string|in:apartment,condominium,house,studio,dormitory,bedspace',
     ];
 
     protected $listeners = [

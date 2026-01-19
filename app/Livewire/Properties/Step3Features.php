@@ -113,7 +113,7 @@ class Step3Features extends Component
     ];
 
     protected $rules = [
-        'propertyFeatures' => 'array|min:1',
+        'propertyFeatures' => 'required|array|min:1',
     ];
 
     protected $messages = [
@@ -139,7 +139,7 @@ class Step3Features extends Component
 
         // Save to session before moving to next step
         $this->saveToSession();
-        
+    
         // If validation passes, go to next step
         $this->dispatch('nextStep');
     }

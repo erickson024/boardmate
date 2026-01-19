@@ -11,7 +11,7 @@
                         </x-buttons.small-button>
                     </div>
                     <div>
-                        <x-buttons.small-button href="{{route('register')}}" class="fw-semibold">
+                        <x-buttons.small-button href="{{route('register')}}" variant="btn btn-outline-dark" class="fw-semibold">
                             Create an account
                         </x-buttons.small-button>
                     </div>
@@ -25,7 +25,10 @@
                             id="email"
                             label="Email Address"
                             type="email"
-                            wire:model="email" />
+                            wire:model="email"
+                            wire:loading.attr="disabled"
+                            wire:target="login" 
+                            required/>
                     </div>
 
                     <div class="col-12 mb-3">
@@ -33,7 +36,10 @@
                             id="password"
                             label="Enter Password"
                             type="password"
-                            wire:model="password" />
+                            wire:model="password"
+                            wire:loading.attr="disabled"
+                            wire:target="login" 
+                            required/>
                     </div>
 
                     <div class="row mb-3">
@@ -44,20 +50,30 @@
                                     type="checkbox"
                                     value=""
                                     id="checkDefault"
-                                    wire:model="remember">
+                                    wire:model="remember"
+                                    wire:loading.attr="disabled"
+                                    wire:target="login">
                                 <label class="form-check-label fw-medium text-secondary" for="checkDefault">
                                     <small>Remember me</small>
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <a href="{{route('password.request')}}" class="link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover text-secondary fw-medium" wire:navigate>
+                            <a href="{{route('password.request')}}" class="link-underline-secondary link-underline-opacity-0 link-underline-opacity-100-hover text-secondary fw-medium"
+                                wire:loading.attr="disabled"
+                                wire:target="login"
+                                wire:navigate>
                                 <small>Forgot your Password?</small>
                             </a>
                         </div>
                     </div>
 
-                    <x-buttons.small-button type="submit" action="login" class="w-25 fw-semibold">
+                    <x-buttons.small-button
+                        type="submit"
+                        action="login"
+                        class="w-25 fw-semibold"
+                        wire:loading.attr="disabled"
+                        wire:target="login">
                         Log In
                     </x-buttons.small-button>
                 </form>

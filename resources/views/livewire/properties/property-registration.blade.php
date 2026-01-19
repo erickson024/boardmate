@@ -4,7 +4,10 @@
             <!-- Header with breadcrumb and actions -->
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <button wire:click="goToHome" class="btn btn-dark btn-sm d-flex align-items-center gap-2 fw-semibold">
+                    <button
+                        class="btn btn-dark btn-sm d-flex align-items-center gap-2 fw-semibold"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exitConfirmation">
                         <small>
                             <i class="bi bi-arrow-bar-left"></i>
                             <span class="d-none d-sm-inline">Back to Home</span>
@@ -12,10 +15,52 @@
                         </small>
                     </button>
 
-                    <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-2">
+                    <x-modal.backdrop id="exitConfirmation" title="Reminder" class="modal-sm">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <i class="bi bi-exclamation-triangle-fill text-danger fs-3"></i>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="py-2 text-center">
+                                        <p class="fw-medium fs-6 mb-2">Exit Property Registration?</p>
+                                        <p class="fw-medium text-muted mb-4"><small>All your saved data will be removed.</small></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row gx-2">
+                                <div class="col-6">
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-dark btn-md fw-medium w-100"
+                                        data-bs-dismiss="modal">
+                                        <small>Cancel</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button
+                                        type="button"
+                                        class="btn btn-dark btn-md fw-medium w-100"
+                                        wire:click="goToHome"
+                                        data-bs-dismiss="modal">
+                                        <small>Go home</small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </x-modal.backdrop>
+
+
+                    <button class="btn btn-outline-dark fw-semibold btn-sm d-flex align-items-center gap-2">
                         <small>
-                            <i class="bi bi-question-circle"></i>
-                            <span class="d-none d-sm-inline">Need Help?</span>
+                            <span class="d-none d-sm-inline">Need Help</span>
+                             <i class="bi bi-question-circle-fill"></i>
                         </small>
                     </button>
                 </div>
@@ -40,12 +85,19 @@
                         <livewire:properties.step4-restriction />
                     </div>
 
-                    @if($currentStep === 5)
-                    <div wire:key="step-5">
-                        <!-- Step 5 content here -->
-                        <p class="text-muted">Step 5 content</p>
+                    <div class="{{ $currentStep !== 5 ? 'd-none' : '' }}" wire:key="step-5">
+                        <livewire:properties.step5-tenant-description />
                     </div>
-                    @endif
+
+                    <div class="{{ $currentStep !== 6 ? 'd-none' : '' }}" wire:key="step-6">
+                        <livewire:properties.step6-property-photo />
+                    </div>
+
+                    <div class="{{ $currentStep !== 7 ? 'd-none' : '' }}" wire:key="step-7">
+                        <livewire:properties.step7-terms-condition />
+                    </div>
+
+
                 </div>
             </div>
 
@@ -71,16 +123,18 @@
                                 <small><i class="bi bi-star me-1"></i> Features & Amenities</small>
                                 @elseif($currentStep === 4)
                                 <small><i class="bi bi-shield-check me-1"></i> Rules & Restrictions</small>
+                                @elseif($currentStep === 5)
+                                <small><i class="bi bi-person me-1"></i> Tenant Description</small>
+                                @elseif($currentStep === 6)
+                                <small><i class="bi bi-camera me-1"></i> Property Photos</small>
                                 @else
-                                <small><i class="bi bi-camera me-1"></i> Photos & Final Details</small>
+                                <small><i class="bi bi-file-text me-1"></i>Terms and Condition</small>
                                 @endif
                             </p>
 
-                            <span class="fw-semibold small"><small>{{ round(($currentStep / $maxSteps) * 100) }}% Complete</small></span>
+                            <!--progress % indicator-->
+                            <span class="fw-semibold text-muted small"><small>{{ round(($currentStep / $maxSteps) * 100) }}% Complete</small></span>
                         </div>
-
-
-
 
                         <!-- Progress Bar -->
                         <div class="progress" style="height: 4px;">
@@ -110,8 +164,7 @@
                                 <span wire:loading.remove wire:target="prevStep">previous</span>
                             </small>
                             <span wire:loading wire:target="prevStep">
-                                <small>returning...</small>
-                                <span class="spinner-border spinner-border-sm"></span>
+                                <small>returning <span class="loading-dots"></span></small>
                             </span>
 
                         </button>
@@ -137,14 +190,13 @@
                                 </small>
                             </span>
                             <span wire:loading wire:target="continueStep">
-                                <small>saving...</small>
-                                <span class="spinner-border spinner-border-sm ms-2"></span>
+                                <small>saving<span class="loading-dots"></span></small>
                             </span>
                             </button>
                             @else
                             <button
-                                class="btn btn-primary d-flex align-items-center gap-2 fw-semibold"
-                                wire:click="submitProperty"
+                                class="btn btn-sm btn-primary d-flex align-items-center gap-2 fw-semibold"
+                                wire:click="$dispatch('submitProperty')"
                                 wire:loading.attr="disabled"
                                 wire:target="submitProperty">
                                 <span wire:loading.remove wire:target="submitProperty">
@@ -152,7 +204,7 @@
                                     <small>Submit Property</small>
                                 </span>
                                 <span wire:loading wire:target="submitProperty">
-                                    <small>submitting...</small>
+                                    <small>submitting</small>
                                     <span class="spinner-border spinner-border-sm ms-2"></span>
                                 </span>
                             </button>
@@ -165,6 +217,16 @@
 
     <!-- Spacer for fixed bottom navigation -->
     <div style="height: 80px;"></div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('exit-property-registration', () => {
+                window.location.href = '/'; // or your home route
+            });
+        });
+    </script>
+    @endpush
 
     <style>
         /* Smooth step transitions */
@@ -200,6 +262,11 @@
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
+        }
+
+        .loading-dots::after {
+            content: "";
+            animation: dots 1.5s steps(4, end) infinite;
         }
     </style>
 </div>

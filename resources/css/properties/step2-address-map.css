@@ -1,0 +1,102 @@
+/* Autocomplete dropdown styling */
+.step2-address-map .pac-container {
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    border: none;
+    font-family: inherit;
+    z-index: 9999;
+}
+
+.step2-address-map .pac-item {
+    padding: 12px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.step2-address-map .pac-item:hover {
+    background-color: #f8f9fa;
+}
+
+.step2-address-map .pac-icon {
+    margin-top: 4px;
+}
+
+/* Map container states */
+.step2-address-map .map-container {
+    transition: box-shadow 0.3s, border 0.3s;
+}
+
+.step2-address-map .map-container.has-location {
+    box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2) !important;
+    border: 2px solid rgba(40, 167, 69, 0.3);
+}
+
+.step2-address-map .map-container.validation-error {
+    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2) !important;
+    border: 2px solid rgba(220, 53, 69, 0.3);
+}
+
+/* Input states */
+.step2-address-map #address-input.has-value {
+    border-color: #28a745;
+}
+
+.step2-address-map #address-input.validation-required {
+    border-color: #dc3545;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Helper text states */
+.step2-address-map #address-helper {
+    transition: all 0.3s;
+}
+
+.step2-address-map #address-helper.text-danger {
+    color: #dc3545 !important;
+}
+
+.step2-address-map #address-helper.text-success {
+    color: #28a745 !important;
+}
+
+.step2-address-map #address-helper.text-muted {
+    color: #6c757d !important;
+}
+
+/* Empty state animation */
+.step2-address-map #empty-state {
+    transition: opacity 0.3s;
+}
+
+.step2-address-map #empty-state.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Pulse animation for marker */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}

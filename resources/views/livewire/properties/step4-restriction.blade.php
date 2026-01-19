@@ -1,7 +1,7 @@
    <div class="row step3-features">
       <div class="col-12 mb-3">
          <p class="fs-6 fw-semibold text-start mb-1">
-            Restrictions 
+            Restrictions<span class="text-danger">*</span>
          </p>
          <small class="text-muted">
             Select the features available in your property. Click on each feature to include it in your listing.

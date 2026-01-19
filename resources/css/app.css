@@ -5,7 +5,13 @@
 @import "./floatingInputs.css";
 @import "./profileCard.css";
 @import "./properties/step1-basic-information.css";
+@import "./properties/step2-address-map.css";
 @import "./properties/step3-features.css";
+@import "./properties/step5-tenant-description.css";
+@import "./properties/step6-property-photo.css";
+@import "./propertyFilter.css";
+@import "./propertyList.css";
+
 
 body {
     font-family: "Montserrat", sans-serif;   

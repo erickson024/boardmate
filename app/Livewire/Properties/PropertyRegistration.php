@@ -7,7 +7,7 @@ use Livewire\Component;
 class PropertyRegistration extends Component
 {
     public $currentStep = 1;
-    public $maxSteps = 5;
+    public $maxSteps = 7;
     
     // Listeners
     protected $listeners = [
@@ -68,3 +68,5 @@ class PropertyRegistration extends Component
         return view('livewire.properties.property-registration');
     }
 }
+
+

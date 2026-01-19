@@ -11,8 +11,10 @@ class Login extends Component
 {
     public $email, $password;
     public $remember = false;
+    public $isProcessing = false; 
 
-    protected function rules() //validation method
+    //validation 
+    protected function rules()
     {
         return [
             'email' => 'required|email',
@@ -20,6 +22,7 @@ class Login extends Component
         ];
     }
 
+    //login attempt limits
     private function rateLimitKey()
     {
         return 'login|' . $this->email . '|' . request()->ip();
@@ -35,6 +38,7 @@ class Login extends Component
         return false;
     }
 
+    //admin login
     private function redirectUserBasedOnRole($user)
     {
         return match ($user->role) {
@@ -43,19 +47,20 @@ class Login extends Component
         };
     }
 
+    //login method
     public function login()
     {
         //validate inputs
         $this->validate();
-        
+
         //generate a unique key for rate limiting
         $key = $this->rateLimitKey();
-        
+
         //check if user has too many login attempts
         if ($this->hasTooManyLoginAttempts($key)) {
             return;
         }
-        
+
         //attempt to authenticate the user
         $credentials = ['email' => $this->email, 'password' => $this->password];
         if (Auth::attempt($credentials, $this->remember)) {
@@ -63,14 +68,12 @@ class Login extends Component
             RateLimiter::clear($key);
             session()->regenerate();
 
-          return $this->redirectUserBasedOnRole(Auth::user());
-
+            return $this->redirectUserBasedOnRole(Auth::user());
         }
 
         RateLimiter::hit($key, 300);
         $this->addError('email', 'The provided credentials do not match our records.');
         Log::warning("Failed login attempt for {$this->email} from IP " . request()->ip() . " using " . request()->userAgent());
-
     }
 
     public function render()

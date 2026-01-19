@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="col-6 col-md-4">
-                    <div class=" p-2 h-100 text-center d-flex flex-column">
+                    <div class=" p-2 h-100 text-center d-flex flex-column ">
                         <div class="mb-1 text-primary fs-2">
                             <i class="bi bi-journal-text"></i>
                         </div>

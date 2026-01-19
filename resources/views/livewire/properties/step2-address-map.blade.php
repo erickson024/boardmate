@@ -1,13 +1,14 @@
-<div class="row">
+<div class="row step2-address-map">
 
    <div class="col-12 mb-2">
       <p class="fs-6 fw-semibold text-start mb-1">Property Location <span class="text-danger">*</span></p>
       <small class="text-muted">Enter the full address so tenants can locate it easily. You can drag the marker or use Street View for precise positioning.</small>
    </div>
 
-   <!-- ADDRESS INPUT with search icon -->
+
    <div class="col-12 mb-3" wire:ignore>
       <div class="position-relative">
+         <!-- input field -->
          <x-floating-labels.input
             type="text"
             class="form-control pe-5"
@@ -20,7 +21,7 @@
             <!-- Status indicator will appear here -->
          </div>
       </div>
-      
+
       <!-- Helper text with dynamic state -->
       <div id="address-helper" class="mt-2 small" style="display: none;">
          <i class="bi bi-exclamation-circle me-1"></i>
@@ -85,15 +86,18 @@
       </div>
    </div>
 
-   <!-- Validation errors from Livewire -->
-   @error('address')
-      <div class="col-12">
-         <small class="text-danger">
-            <i class="bi bi-exclamation-circle me-1"></i>
-            {{ $message }}
-         </small>
+   <div class="col-12">
+      <!-- Validation errors from Livewire -->
+      @error('address')
+      <div class="alert alert-danger d-flex align-items-center py-2 mt-2">
+         <i class="bi bi-exclamation-circle me-2"></i>
+         <small>{{ $message }}</small>
       </div>
-   @enderror
+      @enderror
+   </div>
+
+
+
 
    <!-- hidden fields for Livewire binding -->
    <input type="hidden" wire:model="address">
@@ -101,101 +105,7 @@
    <input type="hidden" wire:model="longitude">
 
    <style>
-      /* Autocomplete dropdown styling */
-      .pac-container {
-         border-radius: 12px;
-         margin-top: 8px;
-         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-         border: none;
-         font-family: inherit;
-         z-index: 9999;
-      }
 
-      .pac-item {
-         padding: 12px 16px;
-         border: none;
-         cursor: pointer;
-         transition: background-color 0.2s;
-      }
-
-      .pac-item:hover {
-         background-color: #f8f9fa;
-      }
-
-      .pac-icon {
-         margin-top: 4px;
-      }
-
-      /* Map container states */
-      .map-container {
-         transition: box-shadow 0.3s, border 0.3s;
-      }
-
-      .map-container.has-location {
-         box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2) !important;
-         border: 2px solid rgba(40, 167, 69, 0.3);
-      }
-
-      .map-container.validation-error {
-         box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2) !important;
-         border: 2px solid rgba(220, 53, 69, 0.3);
-      }
-
-      /* Input states */
-      #address-input.has-value {
-         border-color: #28a745;
-      }
-
-      #address-input.validation-required {
-         border-color: #dc3545;
-         animation: shake 0.5s;
-      }
-
-      @keyframes shake {
-         0%, 100% { transform: translateX(0); }
-         25% { transform: translateX(-5px); }
-         75% { transform: translateX(5px); }
-      }
-
-      /* Helper text states */
-      #address-helper {
-         transition: all 0.3s;
-      }
-
-      #address-helper.text-danger {
-         color: #dc3545 !important;
-      }
-
-      #address-helper.text-success {
-         color: #28a745 !important;
-      }
-
-      #address-helper.text-muted {
-         color: #6c757d !important;
-      }
-
-      /* Empty state animation */
-      #empty-state {
-         transition: opacity 0.3s;
-      }
-
-      #empty-state.fade-out {
-         opacity: 0;
-         pointer-events: none;
-      }
-
-      /* Pulse animation for marker */
-      @keyframes pulse {
-         0% {
-            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
-         }
-         70% {
-            box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
-         }
-         100% {
-            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
-         }
-      }
    </style>
 </div>
 
@@ -295,7 +205,7 @@
             setupCustomControls();
             mapInitialized = true;
             updateCoordinatesDisplay(lastLatLng.lat, lastLatLng.lng);
-            
+
             // Load saved data from Livewire component
             loadSavedLocation();
          } else {
@@ -320,9 +230,12 @@
             // If we have saved data, restore it
             if (savedAddress && !isNaN(savedLat) && !isNaN(savedLng)) {
                console.log('Restoring saved location:', savedAddress);
-               
+
                // Update map without dispatching to Livewire (data already there)
-               lastLatLng = { lat: savedLat, lng: savedLng };
+               lastLatLng = {
+                  lat: savedLat,
+                  lng: savedLng
+               };
                hasValidLocation = true;
 
                if (map) {
@@ -338,7 +251,7 @@
 
                updateCoordinatesDisplay(savedLat, savedLng);
                hideEmptyState();
-               
+
                // Show map has location
                const mapContainer = document.getElementById('map-container');
                if (mapContainer) {
@@ -376,7 +289,9 @@
          }
 
          autocomplete = new google.maps.places.Autocomplete(input, {
-            componentRestrictions: { country: 'ph' },
+            componentRestrictions: {
+               country: 'ph'
+            },
             types: ['geocode'],
          });
 
@@ -401,7 +316,9 @@
       function reverseGeocode(latLng) {
          if (!geocoder) return;
 
-         geocoder.geocode({ location: latLng }, (results, status) => {
+         geocoder.geocode({
+            location: latLng
+         }, (results, status) => {
             if (status === 'OK' && results[0]) {
                updateMap(
                   latLng.lat(),
@@ -414,7 +331,10 @@
       }
 
       function updateMap(lat, lng, address, movePegman) {
-         lastLatLng = { lat, lng };
+         lastLatLng = {
+            lat,
+            lng
+         };
          hasValidLocation = true;
 
          if (map) {
@@ -450,7 +370,10 @@
       }
 
       function formatAddress(components = []) {
-         let street = '', city = '', province = '', country = '';
+         let street = '',
+            city = '',
+            province = '',
+            country = '';
 
          components.forEach(c => {
             if (c.types.includes('street_number')) street = c.long_name;
@@ -467,7 +390,7 @@
          const coordsDisplay = document.getElementById('coords-display');
          const latDisplay = document.getElementById('lat-display');
          const lngDisplay = document.getElementById('lng-display');
-         
+
          if (coordsDisplay) coordsDisplay.style.display = 'block';
          if (latDisplay) latDisplay.textContent = lat.toFixed(6);
          if (lngDisplay) lngDisplay.textContent = lng.toFixed(6);
@@ -581,9 +504,9 @@
 
       function clearLocation() {
          console.log('Clearing location data');
-         
+
          hasValidLocation = false;
-         
+
          // Reset to default position
          lastLatLng = {
             lat: 14.5547,
