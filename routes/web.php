@@ -18,6 +18,7 @@ use App\Livewire\Properties\PropertyRegistration;
 use App\Livewire\Properties\RegistrationSuccess;
 use App\Livewire\PropertyDetails;
 use App\Livewire\PropertyDetails\Layout;
+use App\Livewire\Users\Settings\SettingPage;
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
@@ -78,9 +79,10 @@ Route::middleware('auth')->group(function () {
 // VERIFIED ROUTES
 // ----------------------
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', Home::class)->name('home');
     Route::get('/property/{id}', PropertyDetails::class)->name('property.details');
     Route::get('/property-layout/{id}', Layout::class)->name('property.layout');
+    Route::get('/settings', SettingPage::class)->name('user.settings');
+
 });
 
 //---------------------
@@ -105,3 +107,5 @@ Route::post('/logout', function () {
 Route::get('/test',function(){
       return view('test');
 });
+
+Route::get('/home', Home::class)->name('home');
