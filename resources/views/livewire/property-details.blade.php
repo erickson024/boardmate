@@ -661,7 +661,7 @@
                 $colors = $colorMap[$colorClass];
                 @endphp
                 <div class="col-6 col-md-4 col-lg-3">
-                    <div class="feature-card h-100 p-3 rounded-3"
+                    <div class="feature-card shadow-sm h-100 p-3 rounded-3"
                         style="background-color: #ffffff; border: 1px solid #e5e7eb; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; animation: fadeInUp 0.5s ease-out forwards; animation-delay: {{ $index * 0.05 }}s; opacity: 0;">
                         <div class="d-flex align-items-center gap-3">
                             <div class="flex-shrink-0 feature-icon-wrapper"
