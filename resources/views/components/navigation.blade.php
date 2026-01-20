@@ -20,7 +20,7 @@
                         <a class="nav-link {{ request()->routeIs('properties') ? 'active' : '' }} small" href="" wire:navigate>Endorse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('propertyList') ? 'active' : '' }} small" href="{{route('propertyList')}}" wire:navigate>Properties</a>
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }} small" href="{{route('home')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }} small" href="" wire:navigate>About & Guide</a>
@@ -92,17 +92,31 @@
                 </button>
 
                 <button
-                    class="btn btn-sm btn-dark rounded-circle d-flex align-items-center justify-content-center shadow-sm"
-                    style="width: 32px; height: 32px;"
+                    class="btn btn-sm btn-dark rounded-circle d-flex align-items-center justify-content-center shadow-sm p-0"
+                    style="width: 32px; height: 32px; overflow: hidden;"
                     type="button"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight">
 
+                    @if(auth()->user()->profile_image)
+                    <img
+                        src="{{ asset('storage/' . auth()->user()->profile_image) }}"
+                        alt="{{ auth()->user()->first_name }}"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                    @else
+                    @php
+                    $firstInitial = strtoupper(substr(auth()->user()->firstName ?? '', 0, 1));
+                    $lastInitial = strtoupper(substr(auth()->user()->lastName ?? '', 0, 1));
+                    $initials = trim($firstInitial . $lastInitial);
+                    if (empty($initials)) {
+                    $initials = strtoupper(substr(auth()->user()->name ?? auth()->user()->email ?? 'U', 0, 1));
+                    }
+                    @endphp
                     <span class="fw-bold small text-uppercase">
-                        {{ substr(auth()->user()->firstName, 0, 1) }}{{ substr(auth()->user()->lastName, 0, 1) }}
+                        {{ $initials }}
                     </span>
+                    @endif
                 </button>
-
 
 
             </div>

@@ -30,6 +30,8 @@
                                 label="First Name"
                                 type="text"
                                 wire:model="firstName"
+                                wire:loading.attr="disabled"
+                                wire:target="register"
                                 required />
                         </div>
 
@@ -39,6 +41,8 @@
                                 label="Last Name"
                                 type="text"
                                 wire:model="lastName"
+                                wire:loading.attr="disabled"
+                                wire:target="register"
                                 required />
                         </div>
                     </div>
@@ -51,6 +55,8 @@
                                 label="Email Address"
                                 type="email"
                                 wire:model="email"
+                                wire:loading.attr="disabled"
+                                wire:target="register"
                                 required />
                         </div>
                     </div>
@@ -69,6 +75,8 @@
                                 label="Set Password"
                                 type="password"
                                 wire:model.live="password"
+                                wire:loading.attr="disabled"
+                                wire:target="register" 
                                 required />
 
                         </div>
@@ -79,6 +87,8 @@
                                 label="Confirm Password"
                                 type="password"
                                 wire:model="passwordConfirmation"
+                                wire:loading.attr="disabled"
+                                wire:target="register" 
                                 required />
                         </div>
                     </div>
@@ -99,9 +109,9 @@
                                             data-bs-target="#terms">
                                             terms and conditions</a>
 
-                                        <x-modal.backdrop id="terms"  title="Terms and Condition">
+                                        <x-modal.backdrop id="terms" title="Terms and Condition">
                                             <x-slot name="header">
-                                               
+
                                             </x-slot>
 
                                             <x-terms-condition />
@@ -130,7 +140,9 @@
                         <x-buttons.small-button
                             type="submit"
                             action="register"
-                            class="w-25 fw-semibold">
+                            class="w-25 fw-semibold"
+                            wire:loading.attr="disabled"
+                            wire:target="register">
                             Register
                         </x-buttons.small-button>
                     </div>

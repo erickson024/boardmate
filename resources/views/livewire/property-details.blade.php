@@ -975,21 +975,26 @@
                             <!-- Host Profile -->
                             <div class="col-12 col-md-12 text-center">
                                 <div class="mb-3 position-relative d-inline-block">
-                                    @if($property->user->profile_picture)
+                                    @if($property->user->profile_image)
                                     <img src="{{ asset('storage/' . $property->user->profile_image) }}"
-                                        alt="{{ $property->user->name }}"
+                                        alt="{{ $property->user->first_name }} {{ $property->user->last_name }}"
                                         class="rounded-circle"
-                                        style="width: 120px; height: 120px; object-fit: cover; border: 4px solid #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                                        style="width: 130px; height: 130px; object-fit: cover;  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
                                     @else
                                     <div class="rounded-circle d-flex align-items-center justify-content-center"
-                                        style="width: 120px; height: 120px; background: linear-gradient(135deg, #000000, #000000); border: 4px solid #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-
+                                        style="width: 120px; height: 120px; background: #000000; border: 4px solid #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                                        @php
+                                        $firstInitial = strtoupper(substr($property->user->firstName ?? '', 0, 1));
+                                        $lastInitial = strtoupper(substr($property->user->lastName ?? '', 0, 1));
+                                        $initials = trim($firstInitial . $lastInitial);
+                                        if (empty($initials)) {
+                                        $initials = strtoupper(substr($property->user->name ?? $property->user->email ?? 'U', 0, 1));
+                                        }
+                                        @endphp
                                         <span class="fs-2 text-light fw-medium">
-                                            {{ strtoupper(substr($property->user->firstName, 0, 1)) }}{{ strtoupper(substr($property->user->lastName, 0, 1)) }}
+                                            {{ $initials }}
                                         </span>
-
                                     </div>
-
                                     @endif
 
                                 </div>

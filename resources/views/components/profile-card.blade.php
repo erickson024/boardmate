@@ -4,7 +4,7 @@
     <x-buttons.small-button
         class="position-absolute top-0 end-0 m-3 d-flex justify-content-center align-items-center"
         style="z-index: 10;"
-        href="">
+        href="{{ route('user.settings') }}">
         <i class="bi bi-gear"></i>
     </x-buttons.small-button>
 

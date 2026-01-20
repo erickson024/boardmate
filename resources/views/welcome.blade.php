@@ -54,7 +54,7 @@
                             Get Started
                         </x-buttons.small-button>
 
-                        <x-buttons.small-button class="fw-semibold" href="{{route('propertyList')}}">
+                        <x-buttons.small-button class="fw-semibold" href="{{route('home')}}" wire:navigate>
                             Explore
                         </x-buttons.small-button>
                     </div>
