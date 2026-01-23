@@ -25,11 +25,12 @@
     </div>
 
     <!-- Bottom Buttons -->
+    @if (!request()->routeIs('user.dashboard'))
     <div class="row gx-2">
         <div class="col-6">
             <x-buttons.small-button
                 class="w-100 d-flex justify-content-center align-items-center gap-1"
-                href="">
+                href="{{route('user.dashboard')}}">
                 Profile
             </x-buttons.small-button>
         </div>
@@ -42,4 +43,5 @@
             </x-buttons.small-button>
         </div>
     </div>
+    @endif
 </div>

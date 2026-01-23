@@ -22,7 +22,8 @@
         !Route::is('admin.dashboard') &&
         !Route::is('host.request') &&
         !Route::is('host.welcome') &&
-        !Route::is('property-registration')
+        !Route::is('property-registration') &&
+        !Route::is('host-property-details')
         )
         <x-navigation />
         @endif
