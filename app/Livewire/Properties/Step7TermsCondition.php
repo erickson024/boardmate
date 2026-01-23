@@ -94,7 +94,7 @@ class Step7TermsCondition extends Component
         session()->flash('property_registration_success', $property->id);
 
         return $this->redirect(
-            route('property-registration-success'),
+            route('user.dashboard', ['currentTab' => 'property-list']),
             navigate: true
         );
     }
@@ -109,3 +109,4 @@ class Step7TermsCondition extends Component
         return view('livewire.properties.step7-terms-condition');
     }
 }
+
