@@ -1,6 +1,7 @@
 <div class="container-fluid">
 
-    <div class="row">
+    <div class="row gx-3">
+        <!--Profile Card-->
         <div class="col-12">
             <div class="profile-card  position-relative">
                 <div class="d-flex flex-column align-items-center justify-content-center mb-3 mt-3">
@@ -32,8 +33,16 @@
             </div>
         </div>
 
-        <div class="col-12">
+        <div class="col-5 mt-4 ">
+            <div class="p-4 bg-primary">
+                <p>content</p>
+            </div>
+        </div>
 
+        <div class="col-7 mt-4 ">
+            <div class="p-4 bg-primary">
+                <p>endorse content</p>
+            </div>
         </div>
     </div>
 </div>

@@ -9,9 +9,9 @@
     <div class="container-fluid p-4 mb-4">
 
         @if($properties->count() > 0)
-        <div class="row">
+        <div class="row" id="propertyGrid">
             @foreach($properties as $property)
-            <div class="col-12 col-md-4 mb-4">
+            <div class="property-col col-12 col-md-4 mb-4">
                 <a href="{{ route('host-property-details', $property->id) }}" class="text-decoration-none">
                     <div class="card border-0 rounded-4 shadow-sm h-100 overflow-hidden property-card" style="transition: all 0.3s ease; cursor: pointer;">
                         <!-- Property Image -->
@@ -107,5 +107,48 @@
         .property-list .object-fit-cover {
             object-fit: cover;
         }
+
+        /* Smooth transition for grid changes */
+        .property-col {
+            transition: all 0.3s ease;
+        }
     </style>
+
+    <script>
+        // Adjust grid columns based on sidebar state
+        function adjustPropertyGrid(isCollapsed) {
+            const propertyCols = document.querySelectorAll('.property-col');
+            
+            propertyCols.forEach(col => {
+                if (isCollapsed) {
+                    // Sidebar collapsed: show 3 columns (col-md-3)
+                    col.classList.remove('col-md-4');
+                    col.classList.add('col-md-3');
+                } else {
+                    // Sidebar expanded: show 4 columns (col-md-4)
+                    col.classList.remove('col-md-3');
+                    col.classList.add('col-md-4');
+                }
+            });
+        }
+
+        // Listen for sidebar state changes
+        window.addEventListener('sidebarStateChanged', function(e) {
+            adjustPropertyGrid(e.detail.collapsed);
+        });
+
+        // Apply initial state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            adjustPropertyGrid(isCollapsed);
+        });
+
+        // Also check after Livewire updates
+        if (typeof Livewire !== 'undefined') {
+            document.addEventListener('livewire:load', function() {
+                const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+                adjustPropertyGrid(isCollapsed);
+            });
+        }
+    </script>
 </div>
