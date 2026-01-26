@@ -1,0 +1,8 @@
+/*working*/
+
+/*for input field border focus highlights*/
+.form-control:focus { 
+    border-color: #555;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+

@@ -16,11 +16,6 @@ class PropertyDetails extends Component
         $this->property = Property::findOrFail($id);
     }
 
-    public function backHome()
-    {
-        return $this->redirect(route('home'), navigate:true); // change if your home route name differs
-    }
-
     public function render()
     {
         return view('livewire.property-details');

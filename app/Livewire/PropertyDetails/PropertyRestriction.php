@@ -5,18 +5,19 @@ namespace App\Livewire\PropertyDetails;
 use Livewire\Component;
 use App\Models\Property;
 
-class Layout extends Component
+class PropertyRestriction extends Component
 {
-    
     public Property $property;
+    public array $propertyRestrictionIcons = [];
 
     public function mount(Property $property)
     {
         $this->property = $property;
+        $this->propertyRestrictionIcons = config('property-restriction.propertyRestrictionIcons');
     }
 
     public function render()
     {
-        return view('livewire.property-details.layout');
+        return view('livewire.property-details.property-restriction');
     }
 }

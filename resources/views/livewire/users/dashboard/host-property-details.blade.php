@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <!-- Header -->
-    <div class="row mb-3">
+    <div class="row mb-3 sticky-top ">
         <div class="col-12">
-            <div class="bg-white border-bottom sticky-top py-3">
+            <div class="bg-white border-bottom py-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex flex-row gap-2">
                         <a
@@ -19,21 +19,25 @@
                     <div class="d-flex align-items-center gap-2">
                         <button
                             type="button"
-                            class="btn btn-sm btn-outline-danger rounded-3 d-flex align-items-center"
+                            class="btn btn-sm btn-outline-dark rounded-3 d-flex align-items-center"
                             data-bs-toggle="modal"
                             data-bs-target="#deletePropertyModal"
                             aria-label="Delete property">
-                            <i class="fa-solid fa-trash me-1"></i>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <small class="fw-semibold">
+                                <i class="fa-solid fa-trash me-1"></i>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </small>
                         </button>
 
                         <button
                             wire:click="saveChanges"
-                            class="btn btn-sm btn-success rounded-3 d-flex align-items-center"
+                            class="btn btn-sm btn-dark rounded-3 d-flex align-items-center"
                             id="saveChangesBtn"
                             aria-live="polite">
-                            <i class="fa-solid fa-save me-2"></i>
-                            <span>Save Changes</span>
+                            <small class="fw-semibold">
+                                <i class="fa-solid fa-save me-2"></i>
+                                <span>Save Changes</span>
+                            </small>
                         </button>
                     </div>
                 </div>
@@ -351,7 +355,7 @@
                 </div>
             </div>
         </div>
-         
+
         <div class="row mb-5">
             <!-- Property Photos -->
             <div class="col-12" x-data="{ isDragging: false }">
@@ -521,12 +525,6 @@
             <!--Terms and Condition-->
             <div class="col-12">
                 <div class="mb-3">
-                    <h6 class="fw-semibold mb-1">Property Terms and Condition</h6>
-                    <small class="text-muted mb-2 d-block">
-                        Define the terms and conditions that tenants must follow when renting or staying at your property.
-                        These will be shown to tenants before they proceed with a booking or rental.
-                    </small>
-
                     <div class="mb-3">
                         <x-floating-labels.text-area
                             label="Property Terms and Condition"
@@ -540,338 +538,336 @@
     </div>
 
 
-<!-- Hidden inputs for Livewire binding -->
-<input type="hidden" wire:model="address">
-<input type="hidden" wire:model="latitude">
-<input type="hidden" wire:model="longitude">
+    <!-- Hidden inputs for Livewire binding -->
+    <input type="hidden" wire:model="address">
+    <input type="hidden" wire:model="latitude">
+    <input type="hidden" wire:model="longitude">
 
-<!-- Delete Confirmation Modal -->
-<x-modal.backdrop id="deletePropertyModal" title="Delete Property">
-    <x-slot:header></x-slot:header>
+    <!-- Delete Confirmation Modal -->
+    <x-modal.backdrop id="deletePropertyModal">
 
-    <div class="text-center py-3">
-        <div class="mb-3">
-            <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 3rem;"></i>
+        <div class="text-center py-3">
+            <div class="mb-3">
+                <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 3rem;"></i>
+            </div>
+            <h5 class="fw-semibold mb-2">Delete "{{ $propertyName }}"?</h5>
+            <p class="text-muted mb-0">This action cannot be undone. All property data, images, and associated information will be permanently deleted.</p>
         </div>
-        <h5 class="fw-semibold mb-2">Delete "{{ $propertyName }}"?</h5>
-        <p class="text-muted mb-0">This action cannot be undone. All property data, images, and associated information will be permanently deleted.</p>
-    </div>
 
-    <x-slot:footer>
-        <button type="button" class="btn btn-sm btn-secondary rounded-3" data-bs-dismiss="modal">
-            <i class="fa-solid fa-times me-1"></i>
-            <small>Cancel</small>
-        </button>
-        <button
-            type="button"
-            wire:click="deleteProperty"
-            class="btn btn-sm btn-danger rounded-3"
-            data-bs-dismiss="modal">
-            <i class="fa-solid fa-trash me-1"></i>
-            <small>Yes, Delete Property</small>
-        </button>
-    </x-slot:footer>
-</x-modal.backdrop>
+        <x-slot:footer>
+            <button type="button" class="btn btn-sm btn-secondary rounded-3" data-bs-dismiss="modal">
+                <i class="fa-solid fa-times me-1"></i>
+                <small>Cancel</small>
+            </button>
+            <button
+                type="button"
+                wire:click="deleteProperty"
+                class="btn btn-sm btn-danger rounded-3"
+                data-bs-dismiss="modal">
+                <i class="fa-solid fa-trash me-1"></i>
+                <small>Yes, Delete Property</small>
+            </button>
+        </x-slot:footer>
+    </x-modal.backdrop>
 
-<script>
-    (function() {
-        let map, marker, autocomplete, geocoder, streetView;
-        let lastLatLng = {
-            lat: 14.5547,
-            lng: 121.0244
-        };
-        let mapInitialized = false;
-        let isSatellite = false;
-        let hasValidLocation = false;
-
-        const mapStyles = [{
-                featureType: "all",
-                elementType: "geometry",
-                stylers: [{
-                    color: "#f5f5f5"
-                }]
-            },
-            {
-                featureType: "water",
-                elementType: "geometry",
-                stylers: [{
-                    color: "#c9e9f6"
-                }]
-            },
-            {
-                featureType: "road",
-                elementType: "geometry",
-                stylers: [{
-                    color: "#ffffff"
-                }]
-            },
-            {
-                featureType: "poi",
-                elementType: "labels",
-                stylers: [{
-                    visibility: "off"
-                }]
-            }
-        ];
-
-        function initMap() {
-            const mapDiv = document.getElementById('map');
-            const input = document.getElementById('address-input');
-
-            if (!mapDiv || !input || !window.google || !window.google.maps) return;
-
-            if (!mapInitialized) {
-                // Load saved location first
-                loadSavedLocation();
-
-                map = new google.maps.Map(mapDiv, {
-                    center: lastLatLng,
-                    zoom: hasValidLocation ? 15 : 13,
-                    styles: mapStyles,
-                    disableDefaultUI: true,
-                    streetViewControl: true,
-                    zoomControl: false,
-                    mapTypeControl: false,
-                    fullscreenControl: false,
-                    gestureHandling: 'greedy'
-                });
-
-                marker = new google.maps.Marker({
-                    map,
-                    position: lastLatLng,
-                    draggable: true,
-                    animation: google.maps.Animation.DROP,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        scale: 12,
-                        fillColor: "#dc3545",
-                        fillOpacity: 1,
-                        strokeColor: "#ffffff",
-                        strokeWeight: 3
-                    }
-                });
-
-                geocoder = new google.maps.Geocoder();
-                streetView = map.getStreetView();
-
-                marker.addListener('dragend', e => reverseGeocode(e.latLng));
-
-                streetView.addListener('position_changed', () => {
-                    const pos = streetView.getPosition();
-                    if (pos) reverseGeocode(pos);
-                });
-
-                setupCustomControls();
-                mapInitialized = true;
-                updateCoordinatesDisplay(lastLatLng.lat, lastLatLng.lng);
-            }
-
-            initAutocomplete(input);
-        }
-
-        function loadSavedLocation() {
-            const addressInput = document.querySelector('input[wire\\:model="address"]');
-            const latInput = document.querySelector('input[wire\\:model="latitude"]');
-            const lngInput = document.querySelector('input[wire\\:model="longitude"]');
-
-            if (addressInput && latInput && lngInput) {
-                const savedAddress = addressInput.value;
-                const savedLat = parseFloat(latInput.value);
-                const savedLng = parseFloat(lngInput.value);
-
-                if (savedAddress && !isNaN(savedLat) && !isNaN(savedLng)) {
-                    lastLatLng = {
-                        lat: savedLat,
-                        lng: savedLng
-                    };
-                    hasValidLocation = true;
-
-                    const input = document.getElementById('address-input');
-                    if (input) {
-                        input.value = savedAddress;
-                    }
-                }
-            }
-        }
-
-        function setupCustomControls() {
-            const recenterBtn = document.getElementById('recenter-btn');
-            const satelliteBtn = document.getElementById('satellite-toggle');
-
-            if (recenterBtn) {
-                recenterBtn.addEventListener('click', () => {
-                    map.setCenter(lastLatLng);
-                    map.setZoom(15);
-                });
-            }
-
-            if (satelliteBtn) {
-                satelliteBtn.addEventListener('click', () => {
-                    isSatellite = !isSatellite;
-                    map.setMapTypeId(isSatellite ? 'satellite' : 'roadmap');
-                    satelliteBtn.querySelector('i').className = isSatellite ? 'bi bi-map' : 'bi bi-globe';
-                });
-            }
-        }
-
-        function initAutocomplete(input) {
-            if (!input || !window.google || !window.google.maps) return;
-
-            if (autocomplete) {
-                google.maps.event.clearInstanceListeners(autocomplete);
-            }
-
-            autocomplete = new google.maps.places.Autocomplete(input, {
-                componentRestrictions: {
-                    country: 'ph'
-                },
-                types: ['geocode'],
-            });
-
-            autocomplete.addListener('place_changed', () => {
-                const place = autocomplete.getPlace();
-                if (!place.geometry) {
-                    showValidationState('error', 'Please select a valid address from the dropdown');
-                    return;
-                }
-
-                updateMap(
-                    place.geometry.location.lat(),
-                    place.geometry.location.lng(),
-                    formatAddress(place.address_components),
-                    true
-                );
-            });
-        }
-
-        function reverseGeocode(latLng) {
-            if (!geocoder) return;
-
-            geocoder.geocode({
-                location: latLng
-            }, (results, status) => {
-                if (status === 'OK' && results[0]) {
-                    updateMap(
-                        latLng.lat(),
-                        latLng.lng(),
-                        formatAddress(results[0].address_components),
-                        false
-                    );
-                }
-            });
-        }
-
-        function updateMap(lat, lng, address, movePegman) {
-            lastLatLng = {
-                lat,
-                lng
+    <script>
+        (function() {
+            let map, marker, autocomplete, geocoder, streetView;
+            let lastLatLng = {
+                lat: 14.5547,
+                lng: 121.0244
             };
-            hasValidLocation = true;
+            let mapInitialized = false;
+            let isSatellite = false;
+            let hasValidLocation = false;
 
-            if (map) {
-                map.panTo(lastLatLng);
-                marker.setPosition(lastLatLng);
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-                setTimeout(() => marker.setAnimation(null), 1500);
+            const mapStyles = [{
+                    featureType: "all",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#f5f5f5"
+                    }]
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#c9e9f6"
+                    }]
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{
+                        color: "#ffffff"
+                    }]
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [{
+                        visibility: "off"
+                    }]
+                }
+            ];
+
+            function initMap() {
+                const mapDiv = document.getElementById('map');
+                const input = document.getElementById('address-input');
+
+                if (!mapDiv || !input || !window.google || !window.google.maps) return;
+
+                if (!mapInitialized) {
+                    // Load saved location first
+                    loadSavedLocation();
+
+                    map = new google.maps.Map(mapDiv, {
+                        center: lastLatLng,
+                        zoom: hasValidLocation ? 15 : 13,
+                        styles: mapStyles,
+                        disableDefaultUI: true,
+                        streetViewControl: true,
+                        zoomControl: false,
+                        mapTypeControl: false,
+                        fullscreenControl: false,
+                        gestureHandling: 'greedy'
+                    });
+
+                    marker = new google.maps.Marker({
+                        map,
+                        position: lastLatLng,
+                        draggable: true,
+                        animation: google.maps.Animation.DROP,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 12,
+                            fillColor: "#dc3545",
+                            fillOpacity: 1,
+                            strokeColor: "#ffffff",
+                            strokeWeight: 3
+                        }
+                    });
+
+                    geocoder = new google.maps.Geocoder();
+                    streetView = map.getStreetView();
+
+                    marker.addListener('dragend', e => reverseGeocode(e.latLng));
+
+                    streetView.addListener('position_changed', () => {
+                        const pos = streetView.getPosition();
+                        if (pos) reverseGeocode(pos);
+                    });
+
+                    setupCustomControls();
+                    mapInitialized = true;
+                    updateCoordinatesDisplay(lastLatLng.lat, lastLatLng.lng);
+                }
+
+                initAutocomplete(input);
             }
 
-            const input = document.getElementById('address-input');
-            if (input) input.value = address;
+            function loadSavedLocation() {
+                const addressInput = document.querySelector('input[wire\\:model="address"]');
+                const latInput = document.querySelector('input[wire\\:model="latitude"]');
+                const lngInput = document.querySelector('input[wire\\:model="longitude"]');
 
-            if (movePegman && streetView) {
-                streetView.setPosition(lastLatLng);
+                if (addressInput && latInput && lngInput) {
+                    const savedAddress = addressInput.value;
+                    const savedLat = parseFloat(latInput.value);
+                    const savedLng = parseFloat(lngInput.value);
+
+                    if (savedAddress && !isNaN(savedLat) && !isNaN(savedLng)) {
+                        lastLatLng = {
+                            lat: savedLat,
+                            lng: savedLng
+                        };
+                        hasValidLocation = true;
+
+                        const input = document.getElementById('address-input');
+                        if (input) {
+                            input.value = savedAddress;
+                        }
+                    }
+                }
             }
 
-            updateCoordinatesDisplay(lat, lng);
-            showValidationState('success', 'Location updated successfully');
-            showLocationSuccess();
+            function setupCustomControls() {
+                const recenterBtn = document.getElementById('recenter-btn');
+                const satelliteBtn = document.getElementById('satellite-toggle');
 
-            if (window.Livewire) {
-                @this.set('address', address);
-                @this.set('latitude', lat);
-                @this.set('longitude', lng);
+                if (recenterBtn) {
+                    recenterBtn.addEventListener('click', () => {
+                        map.setCenter(lastLatLng);
+                        map.setZoom(15);
+                    });
+                }
+
+                if (satelliteBtn) {
+                    satelliteBtn.addEventListener('click', () => {
+                        isSatellite = !isSatellite;
+                        map.setMapTypeId(isSatellite ? 'satellite' : 'roadmap');
+                        satelliteBtn.querySelector('i').className = isSatellite ? 'bi bi-map' : 'bi bi-globe';
+                    });
+                }
             }
-        }
 
-        function formatAddress(components = []) {
-            let street = '',
-                city = '',
-                province = '',
-                country = '';
+            function initAutocomplete(input) {
+                if (!input || !window.google || !window.google.maps) return;
 
-            components.forEach(c => {
-                if (c.types.includes('street_number')) street = c.long_name;
-                if (c.types.includes('route')) street += ' ' + c.long_name;
-                if (c.types.includes('locality')) city = c.long_name;
-                if (c.types.includes('administrative_area_level_1')) province = c.long_name;
-                if (c.types.includes('country')) country = c.long_name;
-            });
+                if (autocomplete) {
+                    google.maps.event.clearInstanceListeners(autocomplete);
+                }
 
-            return [street.trim(), city, province, country].filter(Boolean).join(', ');
-        }
+                autocomplete = new google.maps.places.Autocomplete(input, {
+                    componentRestrictions: {
+                        country: 'ph'
+                    },
+                    types: ['geocode'],
+                });
 
-        function updateCoordinatesDisplay(lat, lng) {
-            const latDisplay = document.getElementById('lat-display');
-            const lngDisplay = document.getElementById('lng-display');
+                autocomplete.addListener('place_changed', () => {
+                    const place = autocomplete.getPlace();
+                    if (!place.geometry) {
+                        showValidationState('error', 'Please select a valid address from the dropdown');
+                        return;
+                    }
 
-            if (latDisplay) latDisplay.textContent = lat.toFixed(6);
-            if (lngDisplay) lngDisplay.textContent = lng.toFixed(6);
-        }
-
-        function showValidationState(type, message) {
-            const helper = document.getElementById('address-helper');
-            const helperText = document.getElementById('helper-text');
-            const statusEl = document.getElementById('address-status');
-
-            if (!helper || !helperText) return;
-
-            helper.style.display = 'block';
-            helperText.textContent = message;
-            helper.className = 'mt-2 small';
-
-            if (type === 'success') {
-                helper.classList.add('text-success');
-                if (statusEl) statusEl.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i>';
-                setTimeout(() => {
-                    helper.style.display = 'none';
-                    if (statusEl) statusEl.innerHTML = '';
-                }, 3000);
-            } else if (type === 'error') {
-                helper.classList.add('text-danger');
-                if (statusEl) statusEl.innerHTML = '<i class="bi bi-x-circle-fill text-danger"></i>';
+                    updateMap(
+                        place.geometry.location.lat(),
+                        place.geometry.location.lng(),
+                        formatAddress(place.address_components),
+                        true
+                    );
+                });
             }
-        }
 
-        function showLocationSuccess() {
-            const success = document.getElementById('location-success');
-            if (success) {
-                success.style.display = 'block';
-                setTimeout(() => {
-                    success.style.opacity = '0';
-                    success.style.transition = 'opacity 0.3s';
+            function reverseGeocode(latLng) {
+                if (!geocoder) return;
+
+                geocoder.geocode({
+                    location: latLng
+                }, (results, status) => {
+                    if (status === 'OK' && results[0]) {
+                        updateMap(
+                            latLng.lat(),
+                            latLng.lng(),
+                            formatAddress(results[0].address_components),
+                            false
+                        );
+                    }
+                });
+            }
+
+            function updateMap(lat, lng, address, movePegman) {
+                lastLatLng = {
+                    lat,
+                    lng
+                };
+                hasValidLocation = true;
+
+                if (map) {
+                    map.panTo(lastLatLng);
+                    marker.setPosition(lastLatLng);
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    setTimeout(() => marker.setAnimation(null), 1500);
+                }
+
+                const input = document.getElementById('address-input');
+                if (input) input.value = address;
+
+                if (movePegman && streetView) {
+                    streetView.setPosition(lastLatLng);
+                }
+
+                updateCoordinatesDisplay(lat, lng);
+                showValidationState('success', 'Location updated successfully');
+                showLocationSuccess();
+
+                if (window.Livewire) {
+                    @this.set('address', address);
+                    @this.set('latitude', lat);
+                    @this.set('longitude', lng);
+                }
+            }
+
+            function formatAddress(components = []) {
+                let street = '',
+                    city = '',
+                    province = '',
+                    country = '';
+
+                components.forEach(c => {
+                    if (c.types.includes('street_number')) street = c.long_name;
+                    if (c.types.includes('route')) street += ' ' + c.long_name;
+                    if (c.types.includes('locality')) city = c.long_name;
+                    if (c.types.includes('administrative_area_level_1')) province = c.long_name;
+                    if (c.types.includes('country')) country = c.long_name;
+                });
+
+                return [street.trim(), city, province, country].filter(Boolean).join(', ');
+            }
+
+            function updateCoordinatesDisplay(lat, lng) {
+                const latDisplay = document.getElementById('lat-display');
+                const lngDisplay = document.getElementById('lng-display');
+
+                if (latDisplay) latDisplay.textContent = lat.toFixed(6);
+                if (lngDisplay) lngDisplay.textContent = lng.toFixed(6);
+            }
+
+            function showValidationState(type, message) {
+                const helper = document.getElementById('address-helper');
+                const helperText = document.getElementById('helper-text');
+                const statusEl = document.getElementById('address-status');
+
+                if (!helper || !helperText) return;
+
+                helper.style.display = 'block';
+                helperText.textContent = message;
+                helper.className = 'mt-2 small';
+
+                if (type === 'success') {
+                    helper.classList.add('text-success');
+                    if (statusEl) statusEl.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i>';
                     setTimeout(() => {
-                        success.style.display = 'none';
-                        success.style.opacity = '1';
-                    }, 300);
-                }, 2000);
+                        helper.style.display = 'none';
+                        if (statusEl) statusEl.innerHTML = '';
+                    }, 3000);
+                } else if (type === 'error') {
+                    helper.classList.add('text-danger');
+                    if (statusEl) statusEl.innerHTML = '<i class="bi bi-x-circle-fill text-danger"></i>';
+                }
             }
-        }
 
-        function tryInitMap() {
-            if (window.google && window.google.maps) {
-                setTimeout(initMap, 100);
+            function showLocationSuccess() {
+                const success = document.getElementById('location-success');
+                if (success) {
+                    success.style.display = 'block';
+                    setTimeout(() => {
+                        success.style.opacity = '0';
+                        success.style.transition = 'opacity 0.3s';
+                        setTimeout(() => {
+                            success.style.display = 'none';
+                            success.style.opacity = '1';
+                        }, 300);
+                    }, 2000);
+                }
             }
-        }
 
-        document.addEventListener('livewire:initialized', tryInitMap);
-        document.addEventListener('google-maps-ready', tryInitMap);
+            function tryInitMap() {
+                if (window.google && window.google.maps) {
+                    setTimeout(initMap, 100);
+                }
+            }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', tryInitMap);
-        } else {
-            tryInitMap();
-        }
-    })();
-</script>
-</div>
+            document.addEventListener('livewire:initialized', tryInitMap);
+            document.addEventListener('google-maps-ready', tryInitMap);
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', tryInitMap);
+            } else {
+                tryInitMap();
+            }
+        })();
+    </script>
 </div>

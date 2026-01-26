@@ -19,12 +19,12 @@
                             <span
                                 class="me-3 d-inline-flex align-items-center justify-content-center rounded-3 icon-wrapper {{ $currentTab === 'user-stat' ? 'bg-dark text-white' : 'bg-light text-dark' }}"
                                 style="width: 42px; height: 42px; transition: all 0.3s ease;">
-                                <i class="fa-solid fa-chart-column fa-fw"></i>
+                                <i class="fa-solid fa-user fa-fw"></i>
                             </span>
 
                             <div class="flex-grow-1">
                                 <small class="fw-semibold d-block">Profile</small>
-                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">View statistics</small>
+                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">View activities</small>
                             </div>
 
                             <span wire:loading wire:target="setTab('user-stat')" class="ms-2">
@@ -76,6 +76,40 @@
                     </button>
                     @endif
 
+                    <button
+                        type="button"
+                        wire:click="setTab('user-stat')"
+                        wire:loading.attr="disabled"
+                        wire:target="setTab('user-stat')"
+                        class="btn rounded-4 text-start position-relative overflow-hidden {{ $currentTab === 'user-stat' ? 'btn-white text-dark shadow-sm' : 'btn-light border' }}"
+                        style="transition: all 0.3s ease; --bs-btn-hover-bg: transparent; --bs-btn-hover-border-color: var(--bs-border-color);"
+                        onmouseover="if(!'{{ $currentTab === 'user-stat' }}') this.classList.add('shadow-sm')"
+                        onmouseout="if(!'{{ $currentTab === 'user-stat' }}') this.classList.remove('shadow-sm')">
+
+                        <div class="d-flex align-items-center">
+                            <span
+                                class="me-3 d-inline-flex align-items-center justify-content-center rounded-3 icon-wrapper {{ $currentTab === 'user-stat' ? 'bg-dark text-white' : 'bg-light text-dark' }}"
+                                style="width: 42px; height: 42px; transition: all 0.3s ease;">
+                                <i class="fa-solid fa-bookmark fa-fw"></i>
+                            </span>
+
+                            <div class="flex-grow-1">
+                                <small class="fw-semibold d-block">Saved Property</small>
+                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">View saved listings</small>
+                            </div>
+
+                            <span wire:loading wire:target="setTab('user-stat')" class="ms-2">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </span>
+
+                            <span wire:loading.remove wire:target="setTab('user-stat')">
+                                @if($currentTab === 'user-stat')
+                                <i class="fa-solid fa-chevron-right ms-2 text-muted" style="font-size: 0.75rem;"></i>
+                                @endif
+                            </span>
+                        </div>
+                    </button>
+
 
                     <button
                         type="button"
@@ -124,7 +158,7 @@
             @livewire('users.dashboard.connection')
             @endif
 
-           
+
         </div>
     </div>
     <style>

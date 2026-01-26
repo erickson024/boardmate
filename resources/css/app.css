@@ -2,17 +2,65 @@
 @import "./home.css";
 @import "./navigation.css";
 @import "./register.css";
-@import "./floatingInputs.css";
-@import "./profileCard.css";
+@import "./floating-inputs.css";
+@import "./profile-card.css";
 @import "./properties/step1-basic-information.css";
 @import "./properties/step2-address-map.css";
 @import "./properties/step3-features.css";
 @import "./properties/step5-tenant-description.css";
 @import "./properties/step6-property-photo.css";
-@import "./propertyFilter.css";
-@import "./propertyList.css";
-
+@import "./property-filter.css";
+@import "./property-list.css";
+@import "./property-details.css";
+@import "./propertyDetails/property-location.css";
+@import "./propertyDetails/property-feature.css";
+@import "./propertyDetails/property-restriction.css";
+@import "./propertyDetails/property-host.css";
 
 body {
-    font-family: "Montserrat", sans-serif;   
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Panel slide down animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

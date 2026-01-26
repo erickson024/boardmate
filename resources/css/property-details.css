@@ -1,0 +1,13 @@
+.property-details {
+    overflow: hidden !important;
+}
+
+.property-details .scroll-wrapper {
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    height: 600vh;
+    /* 6 sections * 100vh */
+}
+
+.property-details .section {
+    height: 100vh;
+}

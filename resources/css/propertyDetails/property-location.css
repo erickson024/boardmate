@@ -1,0 +1,75 @@
+/* Close button hover effect */
+.location-details .property-map-details #close-custom-panel:hover {
+    background-color: #fee2e2 !important;
+    color: #dc2626 !important;
+    transform: rotate(90deg);
+}
+
+.location-details .property-map-details #close-custom-panel {
+    transition: all 0.3s ease;
+}
+
+/* Input focus effect */
+.location-details .property-map-details #custom-starting-point-input:focus {
+    border-color: #1e40af !important;
+    box-shadow:
+        0 0 0 3px rgba(30, 64, 175, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    outline: none;
+}
+
+/* Button hover effects */
+.location-details .property-map-details #use-current-location-btn:hover {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
+}
+
+.location-details
+    .property-map-details
+    #apply-custom-starting-point:not(:disabled):hover {
+    background-color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+}
+
+.location-details .property-map-details #apply-custom-starting-point:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Reset button hover effect */
+.location-details .property-map-details #reset-to-current-location:hover {
+    background-color: #fee2e2;
+    text-decoration: none !important;
+    transform: translateX(-2px);
+}
+
+/* Input group shadow on focus */
+.location-details .property-map-details .input-group:focus-within {
+    z-index: 1003;
+}
+
+.location-details
+    .property-map-details
+    .input-group:focus-within
+    .input-group-text {
+    border-color: #1e40af;
+    box-shadow:
+        0 0 0 3px rgba(30, 64, 175, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Ensure proper stacking */
+.location-details .property-map-details #custom-starting-point-panel {
+    isolation: isolate;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Smooth transitions for all interactive elements */
+.location-details .property-map-details #custom-starting-point-panel button,
+.location-details .property-map-details #custom-starting-point-panel input {
+    transition: all 0.2s ease;
+}
