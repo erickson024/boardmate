@@ -111,3 +111,7 @@ Route::get('/test',function(){
 });
 
 Route::get('/home', Home::class)->name('home');
+
+Route::get('/notifications', function () {
+    return view('notifications');
+})->middleware('auth')->name('notifications');

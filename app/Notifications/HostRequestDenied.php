@@ -6,7 +6,7 @@ use App\Models\HostingRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-class NewHostRequest extends Notification
+class HostRequestDenied extends Notification
 {
     use Queueable;
 
@@ -21,13 +21,11 @@ class NewHostRequest extends Notification
 
     public function toArray(object $notifiable): array
     {
-        $user = $this->request->user;
-        
         return [
-            'title' => 'New Host Request',
-            'message' => "{$user->firstName} {$user->lastName} has requested to become a host.",
+            'title' => 'Host Request Denied',
+            'message' => $this->request->reason ?? 'Your request was denied.',
             'request_id' => $this->request->id,
-            'type' => 'info',
+            'type' => 'danger',
         ];
     }
 }

@@ -1,5 +1,5 @@
-<div class="nav-section fixed-top" style="z-index: 1010">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-0">
+<div class="nav-section fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-0 transition-all" id="mainNavbar">
         <div class="container">
             <!-- Brand -->
             <div>
@@ -7,6 +7,16 @@
                 <span class="fs-6 fw-semibold"><small>Boardmate</small></span>
             </div>
 
+            <!-- Compact Search Button (shown when scrolled) -->
+            <button
+                class="btn btn-light rounded-pill shadow-sm compact-search-btn d-none align-items-center gap-2 px-3"
+                id="compactSearchBtn"
+                type="button">
+                <i class="bi bi-search"></i>
+                <span class="small fw-medium">Search properties</span>
+                <div class="vr"></div>
+                <i class="bi bi-sliders"></i>
+            </button>
 
             <!-- Navbar content -->
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -39,7 +49,6 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="" wire:navigate>Verified Host</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="" wire:navigate>See Nearby</a>
                     </li>
@@ -49,7 +58,7 @@
 
             <!-- Right side auth buttons -->
             @guest
-            <div class=" gap-2 ">
+            <div class="gap-2">
                 <x-buttons.small-button variant="outline-dark" href="{{route('login')}}" class="fw-semibold">
                     Log In
                 </x-buttons.small-button>
@@ -65,8 +74,8 @@
                 @if(auth()->check() && auth()->user()->role === 'tenant')
                 <x-buttons.small-button
                     href="{{ route('host.request') }}"
-                    variant="btn btn-light"
-                    class="shadow-sm fw-semibold rounded-5 px-2">
+                    variant="btn btn-dark"
+                    class="shadow-sm fw-semibold rounded-5 px-3">
                     Be a host
                 </x-buttons.small-button>
                 @elseif(auth()->check() && auth()->user()->role === 'host')
@@ -83,13 +92,10 @@
                         <i class="bi bi-chat-dots-fill"></i>
                     </button>
                     <ul class="dropdown-menu">
-
                     </ul>
                 </div>
 
-                <button class="btn btn-sm btn-light btn-outline-dark shadow-sm border-1 rounded-5" type="button">
-                    <i class="bi bi-bell-fill"></i>
-                </button>
+                <livewire:notification-bell />
 
                 <button
                     class="btn btn-sm btn-dark rounded-circle d-flex align-items-center justify-content-center shadow-sm p-0"
@@ -117,13 +123,17 @@
                     </span>
                     @endif
                 </button>
-
-
             </div>
             @endauth
-
         </div>
     </nav>
+
+    <!-- Expandable Property Filter (only on /home route) -->
+    @if(request()->routeIs('home'))
+    <div class="property-filter-wrapper" id="propertyFilterWrapper">
+        @livewire('property-filter')
+    </div>
+    @endif
 </div>
 
 @auth
@@ -132,9 +142,7 @@ $user = auth()->user();
 @endphp
 
 <div class="offcanvas offcanvas-end offcanvas-profile w-25" tabindex="2" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-
     <div class="offcanvas-body d-flex flex-column h-100">
-
         <!-- Top: Profile card and menu buttons -->
         <div class="flex-grow-1">
             <x-profile-card />
@@ -167,8 +175,7 @@ $user = auth()->user();
                 Log Out
             </x-buttons.small-button>
         </form>
-
     </div>
 </div>
-</div>
 @endauth
+

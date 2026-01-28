@@ -14,10 +14,7 @@ class HostRequest extends Component
 
     public function mount()
     {
-        $this->request = HostingRequest::where('user_id', auth()->id())
-            ->latest()
-            ->first();
-
+        $this->request = HostingRequest::where('user_id', auth()->id())->latest()->first();
         $this->lastNotifiedStatus = $this->request?->status;
     }
 
@@ -25,17 +22,19 @@ class HostRequest extends Component
     {
         $user = auth()->user();
 
-        // Prevent duplicate pending request
+        // Check if already a host
+        if ($user->role === 'host') {
+            $this->dispatch('toast', title: 'Already a Host', message: 'You are already a host.', type: 'info');
+            return redirect()->route('host.dashboard');
+        }
+
+        // Check for pending request
         if ($this->request && $this->request->status === 'pending') {
-            $this->dispatch(
-                'toast',
-                title: 'Host Request',
-                message: 'You already have a pending host request.',
-                type: 'warning'
-            );
+            $this->dispatch('toast', title: 'Pending Request', message: 'You already have a pending request.', type: 'warning');
             return;
         }
 
+        // Create new request
         $this->request = HostingRequest::create([
             'user_id' => $user->id,
             'status'  => 'pending',
@@ -43,57 +42,32 @@ class HostRequest extends Component
 
         $this->lastNotifiedStatus = 'pending';
 
-        // Notify admins
-        User::where('role', 'admin')->each(
-            fn ($admin) => $admin->notify(new NewHostRequest($this->request))
-        );
+        // Notify all admins
+        User::where('role', 'admin')->each(fn ($admin) => $admin->notify(new NewHostRequest($this->request)));
 
-        $this->dispatch(
-            'toast',
-            title: 'Host Request Sent',
-            message: 'Your request has been submitted and is under review.',
-            type: 'success'
-        );
+        $this->dispatch('toast', title: 'Request Sent', message: 'Your request is under review.', type: 'success');
     }
 
-    /**
-     * Poll every 5s — only react when status CHANGES
-     */
     public function checkRequestStatus()
     {
-        $latest = HostingRequest::where('user_id', auth()->id())
-            ->latest()
-            ->first();
+        $latest = HostingRequest::where('user_id', auth()->id())->latest()->first();
 
-        if (!$latest) {
+        if (!$latest || $this->lastNotifiedStatus === $latest->status) {
             return;
         }
 
-        // Detect real change
-        if ($this->lastNotifiedStatus !== $latest->status) {
+        $this->request = $latest;
+        $this->lastNotifiedStatus = $latest->status;
 
-            $this->request = $latest;
-            $this->lastNotifiedStatus = $latest->status;
+        if ($latest->status === 'approved') {
+            auth()->user()->refresh(); // Refresh user role
+            $this->dispatch('toast', title: 'Approved!', message: 'You are now a host!', type: 'success');
+            return $this->redirect(route('host.welcome'));
+        }
 
-            if ($latest->status === 'approved') {
-                $this->dispatch(
-                    'toast',
-                    title: 'Host Request Approved',
-                    message: 'Your request has been approved!',
-                    type: 'success'
-                );
-
-                return $this->redirect(route('host.welcome'));
-            }
-
-            if ($latest->status === 'denied') {
-                $this->dispatch(
-                    'toast',
-                    title: 'Host Request Denied',
-                    message: 'Your request was denied. Please contact support.',
-                    type: 'danger'
-                );
-            }
+        if ($latest->status === 'denied') {
+            $message = $latest->reason ?? 'Request denied. Contact support.';
+            $this->dispatch('toast', title: 'Request Denied', message: $message, type: 'danger');
         }
     }
 
@@ -102,3 +76,4 @@ class HostRequest extends Component
         return view('livewire.tenant.host-request');
     }
 }
+

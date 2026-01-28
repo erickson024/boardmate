@@ -1,4 +1,4 @@
-<div class="property-filter sticky-top bg-white" style="z-index: 1000;">
+<div class="property-filter sticky-top bg-white" style="z-index: 999 !important;">
     <div class="container py-3">
 
         {{-- Airbnb-style Search Bar --}}

@@ -1,9 +1,9 @@
 <div class="overflow-hidden">
     <div class="vh-100 overflow-auto">
-        <div class="property-list mt-5">
+        <div class="property-list" style="margin-top: 13%">
             <div class="sticky-top mb-3 bg-white" style=" z-index: 1020">
                 <div class="">
-                    @livewire('property-filter')
+                   
                 </div>
             </div>
             <div class="container">

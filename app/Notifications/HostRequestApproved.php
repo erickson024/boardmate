@@ -6,7 +6,7 @@ use App\Models\HostingRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-class NewHostRequest extends Notification
+class HostRequestApproved extends Notification
 {
     use Queueable;
 
@@ -21,13 +21,12 @@ class NewHostRequest extends Notification
 
     public function toArray(object $notifiable): array
     {
-        $user = $this->request->user;
-        
         return [
-            'title' => 'New Host Request',
-            'message' => "{$user->firstName} {$user->lastName} has requested to become a host.",
+            'title' => 'Host Request Approved',
+            'message' => 'Congratulations! You are now a verified host.',
             'request_id' => $this->request->id,
-            'type' => 'info',
+            'type' => 'success',
+            'action_url' => route('host.welcome'),
         ];
     }
 }
