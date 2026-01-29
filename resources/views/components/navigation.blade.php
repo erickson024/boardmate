@@ -94,7 +94,7 @@
                     <ul class="dropdown-menu">
                     </ul>
                 </div>
-
+                
                 <livewire:notification-bell />
 
                 <button
@@ -178,5 +178,6 @@ $user = auth()->user();
     </div>
 </div>
 @endauth
+
 
 
