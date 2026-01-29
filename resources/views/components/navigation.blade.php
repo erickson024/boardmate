@@ -33,7 +33,7 @@
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }} small" href="{{route('home')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }} small" href="" wire:navigate>About & Guide</a>
+                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }} small" href="" wire:navigate>Contacts</a>
                     </li>
                 </ul>
                 @endguest
@@ -76,7 +76,7 @@
                     href="{{ route('host.request') }}"
                     variant="btn btn-dark"
                     class="shadow-sm fw-semibold rounded-5 px-3">
-                    Be a host
+                    <span class="me-1">Be a host </span><i class="bi bi-patch-check-fill"></i>
                 </x-buttons.small-button>
                 @elseif(auth()->check() && auth()->user()->role === 'host')
                 <x-buttons.small-button
@@ -178,4 +178,5 @@ $user = auth()->user();
     </div>
 </div>
 @endauth
+
 

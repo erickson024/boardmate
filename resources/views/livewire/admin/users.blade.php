@@ -88,13 +88,54 @@
                         <tr style="transition: all 0.2s ease; border-bottom: 1px solid #f0f1f3;">
                             <td class="ps-3 py-2">
                                 <div class="d-flex align-items-center gap-2">
-                                    <x-profile-image
-                                        :firstName="$user->firstName"
-                                        :lastName="$user->lastName"
-                                        :image="$user->profileImage"
-                                        :size="30" />
+                                    @php
+                                    $firstInitial = strtoupper(substr($user->firstName ?? '', 0, 1));
+                                    $lastInitial = strtoupper(substr($user->lastName ?? '', 0, 1));
+                                    $initials = trim($firstInitial . $lastInitial);
+                                    if (empty($initials)) {
+                                    $initials = strtoupper(substr($user->email ?? 'U', 0, 1));
+                                    }
+
+                                    // TRY BOTH: profile_image (snake_case) AND profileImage (camelCase)
+                                    $profileImagePath = $user->profile_image ?? $user->profileImage ?? null;
+                                    $hasProfileImage = !empty($profileImagePath);
+
+                                    // Check if file actually exists in storage
+                                    if ($hasProfileImage) {
+                                    $storagePath = storage_path('app/public/' . $profileImagePath);
+                                    $fileExists = file_exists($storagePath);
+                                    } else {
+                                    $fileExists = false;
+                                    }
+
+                                    // Generate the asset URL
+                                    $imageUrl = $hasProfileImage ? asset('storage/' . $profileImagePath) : null;
+                                    @endphp
+
+
+
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                        style="width: 30px; height: 30px; overflow: hidden; 
+               background-color: {{ $fileExists ? '#f0f0f0' : '#212529' }};
+             ">
+
+                                        @if($fileExists)
+                                        <img
+                                            src="{{ $imageUrl }}"
+                                            alt="{{ $user->firstName }}"
+                                            style="width: 100%; height: 100%; object-fit: cover;"
+                                            onerror="console.error('Image load failed:', this.src); this.style.display='none'; this.parentElement.style.backgroundColor='#212529'; this.parentElement.style.border='2px solid red'; this.parentElement.innerHTML='<span class=\'fw-bold text-white\' style=\'font-size: 12px;\'>{{ $initials }}</span>';">
+                                        @else
+                                        <span class="fw-bold text-white" style="font-size: 12px;">
+                                            {{ $initials }}
+                                        </span>
+                                        @endif
+                                    </div>
+
                                     <div style="min-width: 0;">
-                                        <div class="fw-medium" style="font-size: 0.9rem;">{{ substr($user->firstName, 0, 15) }} {{ substr($user->lastName, 0, 15) }}</div>
+                                        <div class="fw-medium" style="font-size: 0.9rem;">
+                                            {{ substr($user->firstName, 0, 15) }} {{ substr($user->lastName, 0, 15) }}
+                                        </div>
                                     </div>
                                 </div>
                             </td>

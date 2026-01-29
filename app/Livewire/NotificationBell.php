@@ -15,6 +15,12 @@ class NotificationBell extends Component
         $this->loadNotifications();
     }
 
+    // This method runs automatically every 10 seconds
+    public function pollNotifications()
+    {
+        $this->loadNotifications();
+    }
+
     #[On('notification-sent')]
     public function loadNotifications()
     {
