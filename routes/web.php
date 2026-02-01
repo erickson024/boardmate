@@ -19,6 +19,8 @@ use App\Livewire\PropertyDetails;
 use App\Livewire\Users\Settings\SettingPage;
 use App\Livewire\Users\Dashboard\DashboardPage;
 use App\Livewire\Users\Dashboard\HostPropertyDetails;
+use App\Livewire\VerifiedHostList\VerifiedHost;
+use App\Livewire\VerifiedHostList\VerifiedHostInfo;
 
 
 
@@ -115,3 +117,8 @@ Route::get('/home', Home::class)->name('home');
 Route::get('/notifications', function () {
     return view('notifications');
 })->middleware('auth')->name('notifications');
+
+
+// routes/web.php
+Route::get('/verified-hosts', VerifiedHost::class)->name('verified-hosts');
+Route::get('/verified-hosts/{id}', VerifiedHostInfo::class)->name('verified-host-info');

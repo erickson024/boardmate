@@ -10,6 +10,8 @@ class HostInfo extends Component
     public Property $property;
     public function render()
     {
-        return view('livewire.property-details.host-info');
+        return view('livewire.property-details.host-info', [
+            'host' => $this->property->host 
+        ]);
     }
 }

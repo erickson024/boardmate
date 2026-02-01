@@ -43,4 +43,10 @@ class Property extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // Alternative naming (if you prefer)
+    public function host()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -37,6 +37,14 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    /**
+     * Get all properties owned by this user (host)
+     */
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'user_id');
+    }
+
     /* ===== Online Status Methods ===== */
 
     public function markAsOnline()
@@ -58,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function updateActivity()
     {
         $now = now();
-        
+
         // Mark user online
         Cache::put('user-is-online-' . $this->id, true, $now->addMinutes(2));
 

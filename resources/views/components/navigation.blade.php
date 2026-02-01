@@ -33,7 +33,7 @@
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }} small" href="{{route('home')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }} small" href="" wire:navigate>Contacts</a>
+                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }} small" href="" wire:navigate>Contact</a>
                     </li>
                 </ul>
                 @endguest
@@ -47,7 +47,7 @@
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }} small" href="{{route('home')}}" wire:navigate>Properties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="" wire:navigate>Verified Host</a>
+                        <a class="nav-link {{ request()->routeIs('verified-hosts') ? 'active' : '' }}" href="{{route('verified-hosts')}}" wire:navigate>Verified Host</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }}" href="" wire:navigate>See Nearby</a>
@@ -76,7 +76,7 @@
                     href="{{ route('host.request') }}"
                     variant="btn btn-dark"
                     class="shadow-sm fw-semibold rounded-5 px-3">
-                    <span class="me-1">Be a host </span><i class="bi bi-patch-check-fill"></i>
+                    <span class="me-1">Be a host</span> <i class="bi bi-patch-check-fill"></i>
                 </x-buttons.small-button>
                 @elseif(auth()->check() && auth()->user()->role === 'host')
                 <x-buttons.small-button
@@ -94,7 +94,7 @@
                     <ul class="dropdown-menu">
                     </ul>
                 </div>
-                
+
                 <livewire:notification-bell />
 
                 <button
@@ -178,6 +178,4 @@ $user = auth()->user();
     </div>
 </div>
 @endauth
-
-
 

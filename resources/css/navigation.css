@@ -6,6 +6,20 @@
 }
 
 
+#scrollSearchBtn.is-active {
+    background-color: #212529;
+    color: #fff;
+    border: 1px solid #212529;
+}
+
+#scrollSearchBtn.is-active i {
+    transform: scale(1.1);
+}
+
+#scrollSearchBtn i {
+    transition: transform 0.15s ease;
+}
+
 @media (max-width: 768px) {
     .home-margin {
         margin-top: 80px !important;

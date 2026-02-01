@@ -73,13 +73,14 @@
                                     </div>
 
                                     <div class="col-4">
-                                        <button
+                                        <a href="{{ route('verified-host-info', $host->id) }}"
+                                            wire:navigate
                                             type="button"
                                             class="btn btn-sm btn-outline-dark w-100">
                                             <span class="fw-semibold">
                                                 <small>profile</small>
                                             </span>
-                                        </button>
+                                        </a>
                                     </div>
 
                                     <div class="col-12 mt-2">

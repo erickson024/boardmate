@@ -1,4 +1,5 @@
 <div class="overflow-hidden">
+    
     <div class="vh-100 overflow-auto">
         <div class="property-list" style="margin-top: 13%">
             <div class="sticky-top mb-3 bg-white" style=" z-index: 1020">
