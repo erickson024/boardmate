@@ -2,13 +2,13 @@
     <div class="vh-100 overflow-auto">
 
         <div class="container">
-            <div class="row mt-5">
+            <div class="row">
                 <div class="col-12">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
                             <p class="fw-medium fs-5 mb-0 mt-3">
-                                <i class="bi bi-envelope-check"></i> My Inquiries
+                                 My Inquiries
                             </p>
                             <p class="text-muted mb-0 mt-0"><small>Track all your property visit requests</small></p>
                         </div>
@@ -18,61 +18,50 @@
                     </div>
 
                     <!-- Filters & Stats -->
-                    <div class="card border-0 shadow-sm rounded-4 mb-3">
-                        <div class="card-body p-4">
-                            <div class="row align-items-center">
-                                <div class="col-md-4 mb-3 mb-md-0">
-                                    <label class="form-label fw-medium fs-6 mb-2">Filter by Status</label>
-                                    <select wire:model.live="statusFilter" class="form-select shadow-none border-dark filter-status">
-                                        <option value="all">All Inquiries</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="accepted">Accepted</option>
-                                        <option value="declined">Declined</option>
-                                        <option value="cancelled">Cancelled</option>
-                                    </select>
+                    <div class="row align-items-center mb-3">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <select wire:model.live="statusFilter" class="form-select shadow-none border-dark filter-status">
+                                <option value="all">All Inquiries</option>
+                                <option value="pending">Pending</option>
+                                <option value="accepted">Accepted</option>
+                                <option value="declined">Declined</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="d-flex flex-wrap gap-2">
+                                <div class="badge bg-warning text-dark px-3 py-2">
+                                    <i class="bi bi-clock"></i> Pending: {{ $counts['pending'] ?? 0 }}
                                 </div>
-                                <div class="col-md-8">
-                                    <label class="form-label fw-medium fs-6 mb-2 d-block">Quick Stats</label>
-                                    <div class="d-flex flex-wrap gap-2">
-                                        <div class="badge bg-warning text-dark px-3 py-2">
-                                            <i class="bi bi-clock"></i> Pending: {{ $counts['pending'] ?? 0 }}
-                                        </div>
-                                        <div class="badge bg-success px-3 py-2">
-                                            <i class="bi bi-check-circle"></i> Accepted: {{ $counts['accepted'] ?? 0 }}
-                                        </div>
-                                        <div class="badge bg-danger px-3 py-2">
-                                            <i class="bi bi-x-circle"></i> Declined: {{ $counts['declined'] ?? 0 }}
-                                        </div>
-                                        <div class="badge bg-secondary px-3 py-2">
-                                            <i class="bi bi-dash-circle"></i> Cancelled: {{ $counts['cancelled'] ?? 0 }}
-                                        </div>
-                                    </div>
+                                <div class="badge bg-success px-3 py-2">
+                                    <i class="bi bi-check-circle"></i> Accepted: {{ $counts['accepted'] ?? 0 }}
+                                </div>
+                                <div class="badge bg-danger px-3 py-2">
+                                    <i class="bi bi-x-circle"></i> Declined: {{ $counts['declined'] ?? 0 }}
+                                </div>
+                                <div class="badge bg-secondary px-3 py-2">
+                                    <i class="bi bi-dash-circle"></i> Cancelled: {{ $counts['cancelled'] ?? 0 }}
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
+
                     <!-- Inquiries List -->
                     @if($inquiries->count() > 0)
-                    <div class="row g-4">
+                    <div class="row gap-4">
                         @foreach($inquiries as $inquiry)
                         <div class="col-12">
                             <div class="card border-0 shadow-sm rounded-4 hover-card">
                                 <div class="card-body p-3">
                                     <div class="row">
-
                                         <!-- Property Image -->
                                         <div class="col-md-3">
                                             @if($inquiry->property && $inquiry->property->images && count($inquiry->property->images) > 0)
                                             <img src="{{ asset('storage/' . $inquiry->property->images[0]) }}"
-                                                class="w-100 rounded-3"
-                                                style="height: 200px; object-fit: cover;"
+                                                class="w-100 img-fluid rounded-3"
                                                 alt="{{ $inquiry->property->propertyName }}">
-                                            @else
-                                            <div class="w-100 bg-light rounded-3 d-flex align-items-center justify-content-center"
-                                                style="height: 200px;">
-                                                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
-                                            </div>
                                             @endif
                                         </div>
 
@@ -80,12 +69,12 @@
                                         <div class="col-md-6 mt-3 mt-md-0">
                                             @if($inquiry->property)
                                             <div class="mb-3">
-                                                <h5 class="fw-medium mb-1">{{ $inquiry->property->propertyName }}</h5>
-                                                <p class="text-muted small mb-2">
-                                                   {{ $inquiry->property->address }}
+                                                <p class="fw-medium fs-6 mb-0">{{ $inquiry->property->propertyName }}</p>
+                                                <p class="text-muted small mb-2 mt-0">
+                                                   <small>{{ $inquiry->property->address }}</small> 
                                                 </p>
                                                 <p class="fw-medium text-dark mb-0">
-                                                    ₱{{ number_format($inquiry->property->propertyCost, 2) }} monthly
+                                                    <small>₱{{ number_format($inquiry->property->propertyCost, 2) }} monthly</small>
                                                 </p>
                                             </div>
 
@@ -123,18 +112,6 @@
                                                 </small>
                                             </div>
                                             @endif
-
-                                            <!-- Message Preview -->
-                                            @if($inquiry->message)
-                                            <div class="mt-2">
-                                                <p class="small text-muted mb-1">
-                                                    <i class="bi bi-chat-dots"></i> Your Message:
-                                                </p>
-                                                <p class="small mb-0 text-muted fst-italic">
-                                                    "{{ Str::limit($inquiry->message, 120) }}"
-                                                </p>
-                                            </div>
-                                            @endif
                                         </div>
 
                                         <!-- Status & Actions -->
@@ -144,19 +121,19 @@
                                                 <div>
                                                     @if($inquiry->status === 'pending')
                                                     <span class="badge bg-warning text-dark w-100 py-2 fw-medium fs-6">
-                                                       <small><i class="bi bi-clock-history"></i> Pending</small> 
+                                                        <small><i class="bi bi-clock-history"></i> Pending</small>
                                                     </span>
                                                     @elseif($inquiry->status === 'accepted')
                                                     <span class="badge bg-success w-100 py-2 fw-medium fs-6">
-                                                       <small><i class="bi bi-check-circle-fill"></i> Accepted</small> 
+                                                        <small><i class="bi bi-check-circle-fill"></i> Accepted</small>
                                                     </span>
                                                     @elseif($inquiry->status === 'declined')
                                                     <span class="badge bg-danger w-100 py-2 fw-medium fs-6">
-                                                       <small><i class="bi bi-x-circle-fill"></i> Declined</small> 
+                                                        <small><i class="bi bi-x-circle-fill"></i> Declined</small>
                                                     </span>
                                                     @else
                                                     <span class="badge bg-secondary w-100 py-2 fw-medium fs-6">
-                                                       <small><i class="bi bi-dash-circle-fill"></i> Cancelled</small>
+                                                        <small><i class="bi bi-dash-circle-fill"></i> Cancelled</small>
                                                     </span>
                                                     @endif
                                                 </div>

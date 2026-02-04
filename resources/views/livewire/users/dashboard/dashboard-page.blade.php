@@ -182,6 +182,41 @@
                             </span>
                         </div>
                     </button>
+
+                    <!-- Tenant Inquiry Request -->
+                    <button
+                        type="button"
+                        wire:click="setTab('tenant-inquiry-request-list')"
+                        wire:loading.attr="disabled"
+                        wire:target="setTab('tenant-inquiry-request-list')"
+                        class="btn rounded-4 text-start position-relative overflow-hidden {{ $currentTab === 'tenant-inquiry-request-list' ? 'btn-white text-dark shadow-sm' : 'btn-light border' }}"
+                        style="transition: all 0.3s ease; --bs-btn-hover-bg: transparent; --bs-btn-hover-border-color: var(--bs-border-color);"
+                        onmouseover="if(!'{{ $currentTab === 'tenant-inquiry-request-list' }}') this.classList.add('shadow-sm')"
+                        onmouseout="if(!'{{ $currentTab === 'tenant-inquiry-request-list' }}') this.classList.remove('shadow-sm')">
+
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span
+                                class="d-inline-flex align-items-center justify-content-center rounded-3 icon-wrapper {{ $currentTab === 'tenant-inquiry-request-list' ? 'bg-dark text-light' : 'bg-light text-dark' }}"
+                                style="width: 42px; height: 42px; min-width: 42px; transition: all 0.3s ease;">
+                                <i class="bi bi-clipboard-fill"></i>
+                            </span>
+
+                            <div class="flex-grow-1 sidebar-text ms-3 text-start">
+                                <small class="fw-semibold d-block">Inquiries</small>
+                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">Property request list</small>
+                            </div>
+
+                            <span wire:loading wire:target="setTab('tenant-inquiry-request-list')" class="ms-2 sidebar-text">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </span>
+
+                            <span wire:loading.remove wire:target="setTab('tenant-inquiry-request-list')" class="sidebar-text">
+                                @if($currentTab === 'tenant-inquiry-request-list')
+                                <i class="fa-solid fa-chevron-right ms-2 text-muted" style="font-size: 0.75rem;"></i>
+                                @endif
+                            </span>
+                        </div>
+                    </button>
                 </div>
             </div>
 
@@ -207,6 +242,8 @@
             @livewire('users.dashboard.messages')
             @elseif ($currentTab === 'connection')
             @livewire('users.dashboard.connection')
+            @elseif ($currentTab === 'tenant-inquiry-request-list')
+            @livewire('users.dashboard.tenant-inquiry-request-list')
             @endif
         </div>
     </div>
