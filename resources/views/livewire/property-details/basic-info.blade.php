@@ -20,9 +20,9 @@
         <p class="lh-lg"><small>{{ $property->propertyDescription }}</small></p>
 
         <div class="">
-            <button class="btn btn-sm btn-dark">
+            <a href="{{ route('property.inquiry', $property->id) }}" class="btn btn-sm btn-dark" wire:navigate>
                 <small class="fw-semibold">Inquire</small>
-            </button>
+            </a>
 
             <button class="btn btn-sm btn-outline-dark">
                 <small class="fw-semibold">Save in list</small>

@@ -73,4 +73,14 @@ class User extends Authenticatable implements MustVerifyEmail
         // Store last activity as Carbon instance
         Cache::put('user-last-activity-' . $this->id, $now, $now->addMinutes(2));
     }
+
+    public function inquiries()
+    {
+        return $this->hasMany(Inquiry::class);
+    }
+
+    public function receivedInquiries()
+    {
+        return $this->hasMany(Inquiry::class, 'host_id');
+    }
 }

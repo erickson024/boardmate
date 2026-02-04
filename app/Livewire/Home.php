@@ -18,8 +18,16 @@ class Home extends Component
     public $propertyType = '';
     public $tenantType = '';
     public $tenantGender = '';
+    public $randomSeed;
 
     protected $listeners = ['filtersUpdated' => 'applyFilters'];
+
+    public function mount()
+    {
+        // Generate a random seed once per session
+        $this->randomSeed = session('random_seed', rand());
+        session(['random_seed' => $this->randomSeed]);
+    }
 
     public function applyFilters($filters)
     {
@@ -29,6 +37,10 @@ class Home extends Component
         $this->propertyType = $filters['propertyType'] ?? '';
         $this->tenantType = $filters['tenantType'] ?? '';
         $this->tenantGender = $filters['tenantGender'] ?? '';
+
+        // Generate new random seed when filters change
+        $this->randomSeed = rand();
+        session(['random_seed' => $this->randomSeed]);
         $this->resetPage();
     }
 
@@ -62,7 +74,8 @@ class Home extends Component
 
         // Changed from inRandomOrder() to latest() for better pagination performance
         // and changed from 16 to 12 items per page for cleaner layout (3 rows of 4)
-        $properties = $query->inRandomOrder()->paginate(12);
+        // Use fixed seed for consistent random order across pages
+        $properties = $query->inRandomOrder($this->randomSeed)->paginate(12);
 
         return view('livewire.home', [
             'properties' => $properties,

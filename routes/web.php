@@ -21,7 +21,8 @@ use App\Livewire\Users\Dashboard\DashboardPage;
 use App\Livewire\Users\Dashboard\HostPropertyDetails;
 use App\Livewire\VerifiedHostList\VerifiedHost;
 use App\Livewire\VerifiedHostList\VerifiedHostInfo;
-
+use App\Livewire\PropertyInquiry;
+use App\Livewire\Tenant\MyInquiries;
 
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
@@ -86,7 +87,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/property/{id}', PropertyDetails::class)->name('property.details');
     Route::get('/settings', SettingPage::class)->name('user.settings');
     Route::get('/user/dashboard', DashboardPage::class)->name('user.dashboard');
+    Route::get('/verified-hosts', VerifiedHost::class)->name('verified-hosts');
+    Route::get('/verified-hosts/{id}', VerifiedHostInfo::class)->name('verified-host-info');
 
+    Route::get('/property/{propertyId}/inquiry', PropertyInquiry::class)
+        ->name('property.inquiry');
+
+    Route::get('/my-inquiries', MyInquiries::class)
+        ->name('tenant.inquiries');
 });
 
 //---------------------
@@ -108,8 +116,8 @@ Route::post('/logout', function () {
 })->name('logout');
 
 
-Route::get('/test',function(){
-      return view('test');
+Route::get('/test', function () {
+    return view('test');
 });
 
 Route::get('/home', Home::class)->name('home');
@@ -117,8 +125,3 @@ Route::get('/home', Home::class)->name('home');
 Route::get('/notifications', function () {
     return view('notifications');
 })->middleware('auth')->name('notifications');
-
-
-// routes/web.php
-Route::get('/verified-hosts', VerifiedHost::class)->name('verified-hosts');
-Route::get('/verified-hosts/{id}', VerifiedHostInfo::class)->name('verified-host-info');
