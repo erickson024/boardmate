@@ -153,23 +153,6 @@
                     @endif
             </div>
 
-            {{-- Helpful Tips --}}
-            @if(count($storedImages) === 0)
-            <div class="col-12 mt-3">
-                <div class="alert alert-light border">
-                    <small class="fw-semibold d-block mb-2">
-                        <i class="bi bi-lightbulb text-warning"></i> Photography Tips:
-                    </small>
-                    <ul class="small mb-0 ps-3">
-                        <li>Use natural lighting when possible</li>
-                        <li>Show the room from multiple angles</li>
-                        <li>Include important features (kitchen, bathroom, etc.)</li>
-                        <li>Keep the space clean and organized</li>
-                    </ul>
-                </div>
-            </div>
-            @endif
-
             {{-- Validation Errors --}}
             @error('images')
             <div class="col-12 mt-3">

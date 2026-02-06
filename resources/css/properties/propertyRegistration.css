@@ -1,0 +1,39 @@
+/* Smooth step transitions */
+.property-registration .step-content > div {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Step indicator line animation */
+.property-registration .position-absolute {
+    transition: background 0.3s ease;
+}
+
+/* Prevent layout shift */
+.property-registration .step-content {
+    transition: min-height 0.3s ease;
+}
+
+/* Better mobile spacing */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+.property-registration .loading-dots::after {
+    content: "";
+    animation: dots 1.5s steps(4, end) infinite;
+}

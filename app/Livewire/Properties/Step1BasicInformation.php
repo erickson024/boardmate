@@ -3,74 +3,96 @@
 namespace App\Livewire\Properties;
 
 use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Livewire\Attributes\On;
+
 
 class Step1BasicInformation extends Component
 {
-    public $propertyName, $propertyCost, $propertyDescription;
+    #[Validate('required|string|max:255')]
+    public $propertyName = '';
 
+    #[Validate('required|numeric|min:0|max:999999999')]
+    public $propertyCost = '';
+
+    #[Validate('required|string|max:1000')]
+    public $propertyDescription = '';
+
+    #[Validate('required|string|in:apartment,condominium,house,studio,dormitory,bedspace')]
     public string $propertyType = '';
-    public array $propertyTypes = [
+
+    public const PROPERTY_TYPES = [
         'apartment' => 'Apartment',
-        'condominium'  => 'Condominium',
+        'condominium' => 'Condominium',
         'house' => 'House',
         'studio' => 'Studio',
         'dormitory' => 'Dormitory',
         'bedspace' => 'Bedspace'
     ];
 
-    public array $propertyTypeIcons = [
-        'apartment'   => 'bi bi-building-fill',
+    public const PROPERTY_TYPE_ICONS = [
+        'apartment' => 'bi bi-building-fill',
         'condominium' => 'bi bi-buildings-fill',
-        'house'       => 'bi bi-house-fill',
-        'studio'      => 'bi bi-door-closed-fill',
-        'dormitory'   => 'bi-people-fill',
-        'bedspace'    => 'bi bi-person-standing'
+        'house' => 'bi bi-house-fill',
+        'studio' => 'bi bi-door-closed-fill',
+        'dormitory' => 'bi-people-fill',
+        'bedspace' => 'bi bi-person-standing'
     ];
 
-    protected $rules = [
-        'propertyName' => 'required|string|max:255',
-        'propertyCost' => 'required|numeric|min:0',
-        'propertyDescription' => 'nullable|string',
-        'propertyType' => 'required|string|in:apartment,condominium,house,studio,dormitory,bedspace',
-    ];
+    private string $sessionKey;
 
-    protected $listeners = [
-        'validateStep1' => 'validateCurrentStep',
-    ];
+    public function boot()
+    {
+        $this->sessionKey = "property_reg_" . auth()->id();
+    }
 
     public function mount()
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-        $saved = session()->get($sessionKey, []);
-        $step1Data = $saved['step1'] ?? [];
-        
-        $this->propertyName = $step1Data['propertyName'] ?? '';
-        $this->propertyCost = $step1Data['propertyCost'] ?? '';
-        $this->propertyDescription = $step1Data['propertyDescription'] ?? '';
-        $this->propertyType = $step1Data['propertyType'] ?? '';
+        $allData = session()->get($this->sessionKey, []);
+        $step1Data = $allData['step1'] ?? [];
+
+        $this->fill([
+            'propertyName' => $step1Data['propertyName'] ?? '',
+            'propertyCost' => $step1Data['propertyCost'] ?? '',
+            'propertyDescription' => $step1Data['propertyDescription'] ?? '',
+            'propertyType' => $step1Data['propertyType'] ?? '',
+        ]);
     }
 
-    public function validateCurrentStep()
+    // FIX: Save on every update (parameter name doesn't matter)
+    public function updated($name, $value)
     {
-        $this->validate();
+        // Validate only the field that changed
+        $this->validateOnly($name);
 
-        // Save to session
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-        $data = session()->get($sessionKey, []);
-        
-        $data['step1'] = [
+        // Save ALL fields to session
+        $this->saveToSession();
+    }
+
+    #[On('validationErrors')]
+    public function handleValidationErrors($step, $errors)
+    {
+        // Only handle errors for this step
+        if ($step !== 1) return;
+
+        // Add errors to this component
+        foreach ($errors as $field => $messages) {
+            $this->addError($field, is_array($messages) ? $messages[0] : $messages);
+        }
+    }
+
+    private function saveToSession(): void
+    {
+        $allData = session()->get($this->sessionKey, []);
+
+        $allData['step1'] = [
             'propertyName' => $this->propertyName,
             'propertyCost' => $this->propertyCost,
             'propertyDescription' => $this->propertyDescription,
             'propertyType' => $this->propertyType,
         ];
-        
-        session()->put($sessionKey, $data);
-        
-        // Go to next step
-        $this->dispatch('nextStep');
+
+        session()->put($this->sessionKey, $allData);
     }
 
     public function render()

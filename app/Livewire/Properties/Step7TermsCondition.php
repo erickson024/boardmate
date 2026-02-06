@@ -3,94 +3,70 @@
 namespace App\Livewire\Properties;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use App\Models\Property;
-use Illuminate\Support\Facades\Auth;
+
 
 class Step7TermsCondition extends Component
 {
     public string $terms = '';
 
-    protected $listeners = [
-        'submitProperty',
-    ];
+    private string $sessionKey;
 
-    protected $rules = [
-        'terms' => 'required|string|max:5000',
-    ];
+    public function boot()
+    {
+        $this->sessionKey = "property_reg_" . auth()->id();
+    }
 
     public function mount()
     {
-        $userId = Auth::id();
-        $sessionKey = "property_reg_{$userId}";
-
-        // Load previously saved data from session
-        $this->fill(
-            data_get(session($sessionKey), 'step7', [])
-        );
+        // FIX: Get all data first, then access step7
+        $allData = session()->get($this->sessionKey, []);
+        $step7Data = $allData['step7'] ?? [];
+        $this->terms = $step7Data['terms'] ?? '';
     }
 
+    public function updatedTerms()
+    {
+        $this->saveToSession();
+    }
+
+    private function saveToSession(): void
+    {
+        // FIX: Get all data, update step7, save back
+        $allData = session()->get($this->sessionKey, []);
+        
+        $allData['step7'] = [
+            'terms' => $this->terms,
+        ];
+        
+        session()->put($this->sessionKey, $allData);
+    }
+
+    #[On('submitProperty')]
     public function submitProperty()
     {
-        $this->validate();
+        $userId = auth()->id();
+        $allData = session()->get($this->sessionKey, []);
 
-        $userId = Auth::id();
-        $sessionKey = "property_reg_{$userId}";
-
-        /*
-        |--------------------------------------------------------------------------
-        | Merge step7 into session
-        |--------------------------------------------------------------------------
-        */
-        $allData = array_merge(session()->get($sessionKey, []), [
-            'step7' => [
-                'terms' => $this->terms,
-            ],
+        $property = Property::create([
+            'user_id' => $userId,
+            'propertyName' => $allData['step1']['propertyName'] ?? null,
+            'propertyCost' => $allData['step1']['propertyCost'] ?? null,
+            'propertyType' => $allData['step1']['propertyType'] ?? null,
+            'propertyDescription' => $allData['step1']['propertyDescription'] ?? null,
+            'address' => $allData['step2']['address'] ?? null,
+            'latitude' => $allData['step2']['latitude'] ?? null,
+            'longitude' => $allData['step2']['longitude'] ?? null,
+            'propertyFeatures' => $allData['step3']['propertyFeatures'] ?? [],
+            'propertyRestrictions' => $allData['step4']['propertyRestrictions'] ?? [],
+            'tenantGender' => $allData['step5']['tenantGender'] ?? null,
+            'tenantType' => $allData['step5']['tenantType'] ?? null,
+            'images' => $allData['step6']['images'] ?? [],
+            'terms' => $allData['step7']['terms'] ?? null,
         ]);
 
-        session()->put($sessionKey, $allData);
-
-        /*
-        |--------------------------------------------------------------------------
-        | Save to database (OLD STYLE)
-        |--------------------------------------------------------------------------
-        */
-        $property = new Property();
-
-        // Ownership
-        $property->user_id = $userId;
-
-        // Step 1
-        $property->propertyName        = $allData['step1']['propertyName']        ?? null;
-        $property->propertyCost        = $allData['step1']['propertyCost']        ?? null;
-        $property->propertyType        = $allData['step1']['propertyType']        ?? null;
-        $property->propertyDescription = $allData['step1']['propertyDescription'] ?? null;
-
-        // Step 2
-        $property->address   = $allData['step2']['address']   ?? null;
-        $property->latitude  = $allData['step2']['latitude']  ?? null;
-        $property->longitude = $allData['step2']['longitude'] ?? null;
-
-        // Step 3–5
-        $property->propertyFeatures      = $allData['step3']['propertyFeatures']      ?? [];
-        $property->propertyRestrictions = $allData['step4']['propertyRestrictions'] ?? null;
-        $property->tenantGender         = $allData['step5']['tenantGender']         ?? null;
-        $property->tenantType           = $allData['step5']['tenantType']           ?? null;
-
-        // Step 6 (JSON cast handles encoding)
-        $property->images = $allData['step6']['images'] ?? [];
-
-        // Step 7
-        $property->terms = $allData['step7']['terms'] ?? null;
-
-        $property->save();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Clear session + redirect
-        |--------------------------------------------------------------------------
-        */
-        session()->forget($sessionKey);
-
+        session()->forget($this->sessionKey);
         session()->flash('property_registration_success', $property->id);
 
         return $this->redirect(
@@ -99,14 +75,8 @@ class Step7TermsCondition extends Component
         );
     }
 
-    public function back()
-    {
-        $this->dispatch('goToStep', 6);
-    }
-
     public function render()
     {
         return view('livewire.properties.step7-terms-condition');
     }
 }
-

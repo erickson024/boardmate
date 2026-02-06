@@ -1,4 +1,4 @@
-<div class="">
+<div wire:ignore>
     <div class="form-floating">
 
         <textarea
@@ -15,10 +15,10 @@
         </label>
 
     </div>
-
-    @error($id)
-    <div class="text-danger small mt-1">
-        {{ $message }}
-    </div>
-    @enderror
 </div>
+
+@error($id)
+<div class="text-danger small mt-1">
+    <small>{{ $message }}</small>
+</div>
+@enderror

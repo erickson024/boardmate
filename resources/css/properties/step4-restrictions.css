@@ -1,0 +1,27 @@
+.step4-restrictions .restriction-box {
+    width: 96px;
+    height: 96px;
+    padding: 0.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.step4-restrictions .restriction-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.step4-restrictions .restriction-box:active {
+    transform: translateY(-1px);
+}
+
+.step4-restrictions .restriction-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+}
+
+.step4-restrictions .restriction-label {
+    font-size: 0.75rem;
+    line-height: 1;
+}

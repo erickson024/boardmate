@@ -3,76 +3,63 @@
 namespace App\Livewire\Properties;
 
 use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Livewire\Attributes\On;
 
 class Step2AddressMap extends Component
 {
+    
+    #[Validate('required|string')]
     public $address = '';
+
+    #[Validate('required|numeric')]
     public $latitude = '';
+
+    #[Validate('required|numeric')]
     public $longitude = '';
 
-    protected $listeners = [
-        'setAddress',
-        'validateStep2' => 'validateCurrentStep'
-    ];
+    private string $sessionKey;
 
+    public function boot()
+    {
+        $this->sessionKey = "property_reg_" . auth()->id();
+    }
+
+    public function mount()
+    {
+        // FIX: Get all data first, then access step2
+        $allData = session()->get($this->sessionKey, []);
+        $step2Data = $allData['step2'] ?? [];
+
+        $this->fill([
+            'address' => $step2Data['address'] ?? '',
+            'latitude' => $step2Data['latitude'] ?? '',
+            'longitude' => $step2Data['longitude'] ?? '',
+        ]);
+    }
+
+    #[On('setAddress')]
     public function setAddress($address, $lat, $lng)
     {
         $this->address = $address;
         $this->latitude = $lat;
         $this->longitude = $lng;
-        
+
         $this->saveToSession();
     }
 
-    public function validateCurrentStep()
+    private function saveToSession(): void
     {
-        $this->validate([
-            'address' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-        ], [
-            'address.required' => 'Please select a valid address from the search',
-            'latitude.required' => 'Please select a location on the map',
-            'longitude.required' => 'Please select a location on the map',
-        ]);
+        // FIX: Get all data, update step2, save everything back
+        $allData = session()->get($this->sessionKey, []);
 
-        // Save to session before moving to next step
-        $this->saveToSession();
-        // If validation passes, go to next step
-        $this->dispatch('nextStep');
-    }
-
-    private function saveToSession()
-    {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-
-        // Get existing session data
-        $data = session()->get($sessionKey, []);
-        
-        // Update with step 2 data
-        $data['step2'] = [
+        $allData['step2'] = [
             'address' => $this->address,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
         ];
-        
-        // Save back to session
-        session()->put($sessionKey, $data);
-    }
 
-    public function mount()
-    {
-        // Load from session if exists
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-        
-        $saved = session()->get($sessionKey, []);
-        $step2Data = $saved['step2'] ?? [];
-        
-        $this->address = $step2Data['address'] ?? '';
-        $this->latitude = $step2Data['latitude'] ?? '';
-        $this->longitude = $step2Data['longitude'] ?? '';
+        session()->put($this->sessionKey, $allData);
     }
 
     public function render()

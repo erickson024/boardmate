@@ -1,7 +1,7 @@
-<div class="step1-basic-information"> <!--for css files-->
+<div class="step1-basic-information">
 
     <div class="col-12 mb-2">
-        <p class="fs-6 fw-semibold text-start mb-1">Basic Information </p>
+        <p class="fs-6 fw-semibold text-start mb-1">Basic Information</p>
         <small class="text-muted">
             Provide the essential details of your property, including its name, type, and pricing.
             This information helps tenants quickly understand what your property offers.
@@ -14,7 +14,7 @@
                 id="propertyName"
                 label="Property Name"
                 type="text"
-                wire:model="propertyName"
+                wire:model.blur="propertyName"
                 required />
         </div>
 
@@ -23,35 +23,31 @@
                 id="propertyCost"
                 label="Property Cost per Month"
                 type="number"
-                wire:model="propertyCost"
+                wire:model.blur="propertyCost"
                 required />
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-10">
-            <!-- Property Type Selection - Use Alphine JS to 0 delay-->
-            <div
-                x-data="{ selected: @entangle('propertyType').live }"
-                class="row justify-content-start mb-3 g-2">
-                <small class="fw-medium mb-1 text-secondary">
-                    Select your property type.
-                </small>
+            <p class="fw-medium mb-1"><small>Select your property type</small></p>
 
-                @foreach($propertyTypes as $key => $label)
+            <!-- Alpine for instant UI + Livewire sync -->
+            <div x-data="{ 
+                selected: $wire.entangle('propertyType').live 
+            }" class="row g-3 mb-2">
+                @foreach(self::PROPERTY_TYPES as $key => $label)
                 <div class="col-auto" wire:key="property-type-{{ $key }}">
                     <button
                         type="button"
-                        @click="selected === '{{ $key }}' ? selected = '' : selected = '{{ $key }}'"
+                        @click="selected = (selected === '{{ $key }}') ? '' : '{{ $key }}'"
                         :class="selected === '{{ $key }}'
-                    ? 'bg-secondary text-white border-secondary shadow-lg'
-                    : 'bg-white text-secondary border-secondary shadow-sm'"
+                            ? 'bg-secondary text-white border-secondary shadow-lg'
+                            : 'bg-white text-secondary border-secondary shadow-sm'"
                         class="d-flex flex-column align-items-center justify-content-center text-center border rounded feature-box">
-                        <i
-                            class="bi {{ $propertyTypeIcons[$key] ?? 'bi-building' }} feature-icon"
-                            :class="selected === '{{ $key }}'
-                        ? 'text-white'
-                        : 'text-secondary'"></i>
+
+                        <i :class="selected === '{{ $key }}' ? 'text-white' : 'text-secondary'"
+                            class="bi {{ self::PROPERTY_TYPE_ICONS[$key] ?? 'bi-building' }} feature-icon"></i>
 
                         <span class="fw-medium feature-label">
                             {{ $label }}
@@ -59,26 +55,27 @@
                     </button>
                 </div>
                 @endforeach
-
-                @error('propertyType')
-                <div class="col-12 mt-2">
-                    <span class="text-danger small">{{ $message }}</span>
-                </div>
-                @enderror
             </div>
+
+            @error('propertyType')
+            <div class="alert alert-danger d-flex align-items-center">
+                <small>
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    {{ $message }}
+                </small>
+            </div>
+            @enderror
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-12">
             <x-floating-labels.text-area
                 id="propertyDescription"
-                label="Property Description  (not required)"
+                label="Property Description"
                 height="200"
                 name="propertyDescription"
-                wire:model="propertyDescription" />
+                wire:model.blur="propertyDescription" />
         </div>
     </div>
-
 </div>

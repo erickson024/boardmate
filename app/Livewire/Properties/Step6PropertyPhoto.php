@@ -5,47 +5,39 @@ namespace App\Livewire\Properties;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+
 class Step6PropertyPhoto extends Component
 {
     use WithFileUploads;
 
     public array $images = [];
     public array $storedImages = [];
-    public $uploadProgress = 0;
-
-    protected $listeners = [
-        'validateStep6' => 'validateCurrentStep'
-    ];
+    public $uploadProgress = 0; // ADD THIS LINE - it was missing!
 
     protected $rules = [
-        'images'   => 'array|max:5',
+        'images' => 'array|max:5',
         'images.*' => 'image|mimes:jpeg,png,webp|max:2048',
     ];
 
-    protected $messages = [
-        'images.max' => 'You can upload up to 5 images only.',
-        'images.*.image' => 'Only image files are allowed.',
-        'images.*.mimes' => 'Images must be JPEG, PNG, or WEBP format.',
-        'images.*.max' => 'Each image must not exceed 2MB.',
-    ];
+    private string $sessionKey;
+
+    public function boot()
+    {
+        $this->sessionKey = "property_reg_" . auth()->id();
+    }
 
     public function mount()
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-
-        $saved = session()->get($sessionKey, []);
-        $this->storedImages = $saved['step6']['images'] ?? [];
+        // FIX: Same pattern as other steps
+        $allData = session()->get($this->sessionKey, []);
+        $step6Data = $allData['step6'] ?? [];
+        $this->storedImages = $step6Data['images'] ?? [];
     }
 
     public function updatedImages()
     {
-        // Validate before processing
-        $this->validate([
-            'images.*' => 'image|mimes:jpeg,png,webp|max:2048'
-        ]);
+        $this->validate(['images.*' => 'image|mimes:jpeg,png,webp|max:2048']);
 
-        // Check if adding these images would exceed limit
         $totalImages = count($this->storedImages) + count($this->images);
         if ($totalImages > 5) {
             $this->addError('images', 'Cannot upload more than 5 images total.');
@@ -60,45 +52,23 @@ class Step6PropertyPhoto extends Component
 
         $this->images = [];
         $this->saveToSession();
-
-        // Clear any previous errors
         $this->resetErrorBag();
-
-        // Dispatch success event (optional - for toast notifications)
-        $this->dispatch('imageUploaded', count: count($this->storedImages));
     }
 
     public function removeImage(int $index)
-{
-    unset($this->storedImages[$index]);
-    $this->storedImages = array_values($this->storedImages);
-    $this->saveToSession();
-    $this->resetErrorBag();
-    // Remove this line: $this->dispatch('image-deleted');
-}
-
-    public function validateCurrentStep()
     {
-        if (count($this->storedImages) < 1) {
-            $this->addError('images', 'Please upload at least one image of your property.');
-            return;
-        }
-
+        unset($this->storedImages[$index]);
+        $this->storedImages = array_values($this->storedImages);
         $this->saveToSession();
-        $this->dispatch('nextStep');
+        $this->resetErrorBag();
     }
 
-    private function saveToSession()
+    private function saveToSession(): void
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-
-        $data = session()->get($sessionKey, []);
-        $data['step6'] = [
-            'images' => $this->storedImages,
-        ];
-
-        session()->put($sessionKey, $data);
+        // FIX: Same pattern as other steps
+        $allData = session()->get($this->sessionKey, []);
+        $allData['step6'] = ['images' => $this->storedImages];
+        session()->put($this->sessionKey, $allData);
     }
 
     public function render()

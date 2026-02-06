@@ -25,7 +25,9 @@
 
 /* Map container states */
 .step2-address-map .map-container {
-    transition: box-shadow 0.3s, border 0.3s;
+    transition:
+        box-shadow 0.3s,
+        border 0.3s;
 }
 
 .step2-address-map .map-container.has-location {
@@ -99,4 +101,18 @@
     100% {
         box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
     }
+}
+
+#address-input.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+#map-container.validation-error {
+    border: 2px solid #dc3545 !important;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }

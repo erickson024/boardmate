@@ -3,10 +3,19 @@
 namespace App\Livewire\Properties;
 
 use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Livewire\Attributes\On;
+
 
 class Step5TenantDescription extends Component
 {
+    #[Validate('required|string|in:male,female,all')]
     public string $tenantGender = '';
+    
+    #[Validate('required|string|in:student,employee,family,single,2person,groups,couple,all')]
+    public string $tenantType = '';
+    
+
     public array $genders = [
         'male' => [
             'label' => 'Male',
@@ -24,8 +33,6 @@ class Step5TenantDescription extends Component
             'color' => 'text-secondary',
         ],
     ];
-
-    public string $tenantType = '';
     public array $types = [
         'student' => [
             'label' => 'Student',
@@ -47,12 +54,12 @@ class Step5TenantDescription extends Component
             'icon'  => 'fas fa-user',
             'color' => 'info',
         ],
-        'duo'        => [
-            'label' => '2 persons',
+        '2person' => [
+            'label' => '2 Person',
             'icon'  => 'fas fa-user-friends',
             'color' => 'success',
         ],
-        'groups'      => [
+        'groups' => [
             'label' => 'Groups',
             'icon'  => 'fas fa-users',
             'color' => 'danger',
@@ -63,60 +70,60 @@ class Step5TenantDescription extends Component
             'color' => 'danger',
         ],
         'all' => [
-            'label' => 'All',
+            'label' => 'All Types',
             'icon'  => 'fas fa-users',
             'color' => 'secondary',
         ],
     ];
 
-    protected $listeners = [
-        'validateStep5' => 'validateCurrentStep'
-    ];
+    private string $sessionKey;
 
-    protected $rules = [
-        'tenantGender' => 'required|string|in:male,female,all',
-        'tenantType'   => 'required|string|in:student,employee,family,single,duo,groups,couple,all'
-    ];
+    public function boot()
+    {
+        $this->sessionKey = "property_reg_" . auth()->id();
+    }
 
     public function mount()
     {
-        // Load from session if exists
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-        
-        $saved = session()->get($sessionKey, []);
-        $step5Data = $saved['step5'] ?? [];
-        
-        $this->tenantDescription = $step5Data['tenantDescription'] ?? [];
+        $step5Data = session()->get("{$this->sessionKey}.step5", []);
+
+        $this->fill([
+            'tenantGender' => $step5Data['tenantGender'] ?? '',
+            'tenantType' => $step5Data['tenantType'] ?? '',
+        ]);
     }
 
-    public function validateCurrentStep()
+    public function updatedTenantGender()
     {
-        $this->validate();
-
-        // Save to session before moving to next step
+        $this->resetValidation('tenantGender');
         $this->saveToSession();
-        
-        // If validation passes, go to next step
-        $this->dispatch('nextStep');
     }
 
-    private function saveToSession()
+    public function updatedTenantType()
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
+        $this->resetValidation('tenantType');
+        $this->saveToSession();
+    }
 
-        // Get existing session data
-        $data = session()->get($sessionKey, []);
-        
-        // Update with step 5 data
-        $data['step5'] = [
+    private function saveToSession(): void
+    {
+        session()->put("{$this->sessionKey}.step5", [
             'tenantGender' => $this->tenantGender,
-            'tenantType' => $this->tenantType
-        ];
-    
-        // Save back to session
-        session()->put($sessionKey, $data);
+            'tenantType' => $this->tenantType,
+        ]);
+    }
+
+    #[On('validationErrors')]
+    public function handleValidationErrors($step, $errors)
+    {
+        if ($step === 5) {
+            if (isset($errors['tenantGender'])) {
+                $this->addError('tenantGender', $errors['tenantGender'][0]);
+            }
+            if (isset($errors['tenantType'])) {
+                $this->addError('tenantType', $errors['tenantType'][0]);
+            }
+        }
     }
 
     public function render()
