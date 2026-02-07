@@ -4,11 +4,13 @@ namespace App\Livewire\Properties;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use App\Models\Property;
-
+use App\Notifications\PropertyCreated; // ADD THIS
 
 class Step7TermsCondition extends Component
 {
+    #[Validate('required|string|max:2000')]
     public string $terms = '';
 
     private string $sessionKey;
@@ -20,20 +22,29 @@ class Step7TermsCondition extends Component
 
     public function mount()
     {
-        // FIX: Get all data first, then access step7
         $allData = session()->get($this->sessionKey, []);
         $step7Data = $allData['step7'] ?? [];
         $this->terms = $step7Data['terms'] ?? '';
     }
 
-    public function updatedTerms()
+    public function updated($name, $value)
     {
+        $this->validateOnly($name);
         $this->saveToSession();
+    }
+
+    #[On('validationErrors')]
+    public function handleValidationErrors($step, $errors)
+    {
+        if ($step !== 7) return;
+
+        foreach ($errors as $field => $messages) {
+            $this->addError($field, is_array($messages) ? $messages[0] : $messages);
+        }
     }
 
     private function saveToSession(): void
     {
-        // FIX: Get all data, update step7, save back
         $allData = session()->get($this->sessionKey, []);
         
         $allData['step7'] = [
@@ -46,8 +57,18 @@ class Step7TermsCondition extends Component
     #[On('submitProperty')]
     public function submitProperty()
     {
+        // Save current state before submitting
+        $this->saveToSession();
+        
         $userId = auth()->id();
         $allData = session()->get($this->sessionKey, []);
+
+        // Validate before creating property
+        if (empty($allData['step7']['terms'])) {
+            $this->addError('terms', 'Terms and conditions are required.');
+            $this->dispatch('validationFailed', step: 7);
+            return;
+        }
 
         $property = Property::create([
             'user_id' => $userId,
@@ -63,8 +84,11 @@ class Step7TermsCondition extends Component
             'tenantGender' => $allData['step5']['tenantGender'] ?? null,
             'tenantType' => $allData['step5']['tenantType'] ?? null,
             'images' => $allData['step6']['images'] ?? [],
-            'terms' => $allData['step7']['terms'] ?? null,
+            'terms' => $allData['step7']['terms'],
         ]);
+
+        // ADD: Send notification to the host
+        auth()->user()->notify(new PropertyCreated($property));
 
         session()->forget($this->sessionKey);
         session()->flash('property_registration_success', $property->id);

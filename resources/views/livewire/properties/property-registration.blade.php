@@ -11,8 +11,7 @@
                             data-bs-target="#exitConfirmation">
                             <small>
                                 <i class="bi bi-arrow-bar-left"></i>
-                                <span class="d-none d-sm-inline">Back to Home</span>
-                                <span class="d-inline d-sm-none">Home</span>
+                                <span class="d-none d-sm-inline">Properties</span>
                             </small>
                         </button>
 
@@ -49,7 +48,7 @@
                                             class="btn btn-dark btn-md fw-medium w-100"
                                             wire:click="goToHome"
                                             data-bs-dismiss="modal">
-                                            <small>Go home</small>
+                                            <small>Yes, exit</small>
                                         </button>
                                     </div>
                                 </div>
@@ -217,15 +216,5 @@
         </div>
         <!-- Spacer for fixed bottom navigation -->
         <div style="height: 50px;"></div>
-
-        @push('scripts')
-        <script>
-            document.addEventListener('livewire:initialized', () => {
-                Livewire.on('exit-property-registration', () => {
-                    window.location.href = '/'; // or your home route
-                });
-            });
-        </script>
-        @endpush
     </div>
 </div>

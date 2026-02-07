@@ -34,7 +34,8 @@
     </main>
 
     @livewireScripts
-
+    
+    <!--helper to coordinate when your Google Maps API has fully loades-->
     <script>
         window.googleMapsReady = false;
 
@@ -43,7 +44,8 @@
             document.dispatchEvent(new Event('google-maps-ready'));
         }
     </script>
-
+    
+    <!-- google console API connection -->
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places&callback=googleMapsLoaded"
         async
