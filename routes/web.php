@@ -35,7 +35,6 @@ Route::middleware(['auth', 'role:host'])->group(function () {
     Route::get('/properties/{propertyId}', HostPropertyDetails::class)->name('host-property-details');
 });
 
-
 // ----------------------
 // GUEST ROUTES
 // ----------------------

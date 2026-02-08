@@ -8,7 +8,7 @@ use Livewire\Attributes\On;
 
 class Step2AddressMap extends Component
 {
-    
+
     #[Validate('required|string')]
     public $address = '';
 

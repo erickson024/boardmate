@@ -15,45 +15,69 @@
                             </small>
                         </button>
 
-                        <x-modal.backdrop id="exitConfirmation" title="Reminder" class="modal-sm">
+                        <x-modal.backdrop id="exitConfirmation" title="Exit Registration?" class="modal-dialog-centered">
                             <div class="container">
-
                                 <div class="row">
-                                    <div class="col-12 text-center">
-                                        <i class="bi bi-exclamation-triangle-fill text-danger fs-3"></i>
+                                    <div class="col-12 text-center mb-3">
+                                        <i class="bi bi-save text-dark fs-1"></i>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="py-2 text-center">
-                                            <p class="fw-medium fs-6 mb-2">Exit Property Registration?</p>
-                                            <p class="fw-medium text-muted mb-4"><small>All your saved data will be removed.</small></p>
-                                        </div>
+                                    <div class="col-12 text-center mb-4">
+                                        <p class="fw-semibold fs-6 mb-2">What would you like to do?</p>
+                                        @if($hasExistingData)
+                                        <p class="text-muted small">You can save your progress and continue later, or delete the draft.</p>
+                                        @else
+                                        <p class="text-muted small">You haven't entered any data yet.</p>
+                                        @endif
                                     </div>
                                 </div>
 
-                                <div class="row gx-2">
+                                <div class="row g-2">
+                                    <!-- Keep Draft (disabled if no data) -->
                                     <div class="col-6">
                                         <button
                                             type="button"
-                                            class="btn btn-outline-dark btn-md fw-medium w-100"
+                                            class="btn btn-sm btn-dark fw-medium w-100"
+                                            wire:click="keepDraftAndExit"
+                                            data-bs-dismiss="modal"
+                                            @if(!$hasExistingData) disabled @endif>
+                                            <small>
+                                                @if(!$hasExistingData)
+                                                <span>No data to save</span>
+                                                @else
+                                                <i class="bi bi-save"></i>
+                                                <span>Keep Draft & Exit</span>
+                                                @endif
+                                            </small>
+                                        </button>
+                                    </div>
+
+                                    <!-- Delete/Exit -->
+                                    <div class="col-6">
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-danger fw-medium w-100"
+                                            wire:click="deleteDraftAndExit"
+                                            data-bs-dismiss="modal">
+                                            <small>
+                                                <span>{{ $hasExistingData ? 'Delete Draft &' : '' }} Exit</span>
+                                            </small>
+                                        </button>
+                                    </div>
+
+                                    <!-- Cancel -->
+                                    <div class="col-12">
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-dark fw-medium w-100"
                                             data-bs-dismiss="modal">
                                             <small>Cancel</small>
                                         </button>
                                     </div>
-                                    <div class="col-6">
-                                        <button
-                                            type="button"
-                                            class="btn btn-dark btn-md fw-medium w-100"
-                                            wire:click="goToHome"
-                                            data-bs-dismiss="modal">
-                                            <small>Yes, exit</small>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
-
                         </x-modal.backdrop>
 
 
@@ -102,7 +126,7 @@
                 </div>
             </div>
         </div>
-      
+
         <!-- Fixed Bottom Navigation -->
         <div class="position-fixed bottom-0 start-0 w-100 bg-white border-top shadow-lg" style="z-index: 1030;">
             <div class="container">

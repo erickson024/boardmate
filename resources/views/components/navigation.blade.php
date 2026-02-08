@@ -79,12 +79,7 @@
                     <span class="me-1">Be a host</span> <i class="bi bi-patch-check-fill"></i>
                 </x-buttons.small-button>
                 @elseif(auth()->check() && auth()->user()->role === 'host')
-                <x-buttons.small-button
-                    href="{{route('property-registration')}}"
-                    variant="btn btn-dark"
-                    class="shadow-sm fw-semibold rounded-5 px-3">
-                    Properties <i class="bi bi-plus-lg"></i>
-                </x-buttons.small-button>
+                <livewire:property-registration-button />
                 @endif
 
                 <div class="btn-group">
@@ -178,4 +173,3 @@ $user = auth()->user();
     </div>
 </div>
 @endauth
-

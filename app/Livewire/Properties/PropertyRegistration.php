@@ -9,24 +9,80 @@ class PropertyRegistration extends Component
 {
     public $currentStep = 1;
     public $maxSteps = 7;
+    public $hasExistingData = false; // ADD THIS
+    
+    private string $sessionKey;
+    private string $draftStatusKey;
+
+    public function boot()
+    {
+        $this->sessionKey = "property_reg_" . auth()->id();
+        $this->draftStatusKey = "property_draft_status_" . auth()->id();
+    }
 
     public function mount()
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-        $savedData = session()->get($sessionKey);
+        $savedData = session()->get($this->sessionKey);
 
         if ($savedData && isset($savedData['current_step'])) {
             $this->currentStep = $savedData['current_step'];
+        }
+        
+        // Check if there's actual data to save
+        $this->checkExistingData();
+    }
+
+    // ADD: Check if there's any meaningful data in the session
+    private function checkExistingData()
+    {
+        $allData = session()->get($this->sessionKey, []);
+        
+        // Remove 'current_step' from check
+        unset($allData['current_step']);
+        
+        // Check if any step has data
+        $hasData = false;
+        foreach ($allData as $stepKey => $stepData) {
+            if (!empty($stepData)) {
+                $hasData = true;
+                break;
+            }
+        }
+        
+        $this->hasExistingData = $hasData;
+    }
+
+    // ADD: Update check after each step
+    public function nextStep()
+    {
+        if ($this->currentStep < $this->maxSteps) {
+            $this->currentStep++;
+
+            $allData = session()->get($this->sessionKey, []);
+            $allData['current_step'] = $this->currentStep;
+            session()->put($this->sessionKey, $allData);
+
+            $this->checkExistingData(); // ADD THIS
+            $this->dispatch('stepChanged', step: $this->currentStep);
+        }
+    }
+
+    public function prevStep()
+    {
+        if ($this->currentStep > 1) {
+            $this->currentStep--;
+
+            $allData = session()->get($this->sessionKey, []);
+            $allData['current_step'] = $this->currentStep;
+            session()->put($this->sessionKey, $allData);
+
+            $this->dispatch('stepChanged', step: $this->currentStep);
         }
     }
 
     public function continueStep()
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-
-        $allData = session()->get($sessionKey, []);
+        $allData = session()->get($this->sessionKey, []);
         $data = $allData["step{$this->currentStep}"] ?? [];
 
         $rules = $this->getStepValidationRules($this->currentStep);
@@ -35,7 +91,6 @@ class PropertyRegistration extends Component
             $validator = validator($data, $rules);
 
             if ($validator->fails()) {
-                // Dispatch errors to the child component
                 $this->dispatch(
                     'validationErrors',
                     step: $this->currentStep,
@@ -84,44 +139,36 @@ class PropertyRegistration extends Component
         };
     }
 
-    public function nextStep()
+    // UPDATED: Keep draft only if there's data
+    public function keepDraftAndExit()
     {
-        if ($this->currentStep < $this->maxSteps) {
-            $this->currentStep++;
-
-            $user_id = auth()->id();
-            $sessionKey = "property_reg_{$user_id}";
-
-            $allData = session()->get($sessionKey, []);
-            $allData['current_step'] = $this->currentStep;
-            session()->put($sessionKey, $allData);
-
-            $this->dispatch('stepChanged', step: $this->currentStep);
+        $this->checkExistingData();
+        
+        if (!$this->hasExistingData) {
+            session()->flash('error', 'No data to save. Please fill out at least one field.');
+            return;
         }
+        
+        session()->put($this->draftStatusKey, true);
+        $this->dispatch('draft-status-changed');
+        session()->flash('message', 'Draft saved! You can continue later.');
+        
+        return $this->redirect(route('home'), navigate: true);
     }
 
-    public function prevStep()
+    // UPDATED: Always allow delete (even if no data)
+    public function deleteDraftAndExit()
     {
-        if ($this->currentStep > 1) {
-            $this->currentStep--;
-
-            $user_id = auth()->id();
-            $sessionKey = "property_reg_{$user_id}";
-
-            $allData = session()->get($sessionKey, []);
-            $allData['current_step'] = $this->currentStep;
-            session()->put($sessionKey, $allData);
-
-            $this->dispatch('stepChanged', step: $this->currentStep);
-        }
+        session()->forget([$this->sessionKey, $this->draftStatusKey]);
+        $this->dispatch('draft-status-changed');
+        session()->flash('message', 'Registration cancelled.');
+        
+        return $this->redirect(route('home'), navigate: true);
     }
 
     public function goToHome()
     {
-        $user_id = auth()->id();
-        $sessionKey = "property_reg_{$user_id}";
-        session()->forget([$sessionKey, 'propertyRegistration']);
-
+        session()->forget([$this->sessionKey, $this->draftStatusKey]);
         return $this->redirect(route('home'), navigate: true);
     }
 

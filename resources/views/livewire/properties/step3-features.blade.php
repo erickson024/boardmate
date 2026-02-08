@@ -23,7 +23,7 @@
    <div class="col-12">
       <!-- Alpine for instant UI, wire:model for sync -->
       <div
-         x-data="{ selected: $wire.entangle('propertyFeatures').live}"
+         x-data="{ selected: $wire.entangle('propertyFeatures').live }"
          class="row justify-content-start g-2 mb-3">
 
          @foreach($propertyFeatureIcons as $key => $icon)
@@ -36,15 +36,15 @@
             <button
                type="button"
                @click="
-                        if(selected.includes('{{ $key }}')){
-                            selected = selected.filter(f => f !== '{{ $key }}')
-                        } else {
-                            selected = [...selected, '{{ $key }}']
-                        }
-                    "
+                  if(selected.includes('{{ $key }}')){
+                     selected = selected.filter(f => f !== '{{ $key }}')
+                  } else {
+                     selected = [...selected, '{{ $key }}']
+                  }
+               "
                :class="selected.includes('{{ $key }}')
-                        ? '{{ $colorClass }} text-white {{ $borderColorClass }} shadow-sm'
-                        : 'bg-white text-dark {{ $borderColorClass }} shadow-sm'"
+                  ? '{{ $colorClass }} text-white {{ $borderColorClass }} shadow-sm'
+                  : 'bg-white text-dark {{ $borderColorClass }} shadow-sm'"
                class="d-flex flex-column align-items-center justify-content-center text-center border rounded feature-box">
 
                <!-- Icon -->
