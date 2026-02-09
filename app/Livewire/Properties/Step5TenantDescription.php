@@ -9,11 +9,11 @@ use Livewire\Attributes\On;
 
 class Step5TenantDescription extends Component
 {
-    #[Validate('required|string|in:male,female,all')]
-    public string $tenantGender = '';
+    #[Validate('nullable|string|in:male,female,all')]
+    public ?string $tenantGender = null;
     
-    #[Validate('required|string|in:student,employee,family,single,2person,groups,couple,all')]
-    public string $tenantType = '';
+    #[Validate('nullable|string|in:student,employee,family,single,2person,groups,couple,all')]
+    public ?string $tenantType = null;
     
 
     public array $genders = [
@@ -88,8 +88,8 @@ class Step5TenantDescription extends Component
         $step5Data = session()->get("{$this->sessionKey}.step5", []);
 
         $this->fill([
-            'tenantGender' => $step5Data['tenantGender'] ?? '',
-            'tenantType' => $step5Data['tenantType'] ?? '',
+            'tenantGender' => $step5Data['tenantGender'] ?? null,
+            'tenantType' => $step5Data['tenantType'] ?? null,
         ]);
     }
 

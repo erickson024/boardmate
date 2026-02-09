@@ -10,7 +10,7 @@ class PropertyRegistration extends Component
     public $currentStep = 1;
     public $maxSteps = 7;
     public $hasExistingData = false; // ADD THIS
-    
+
     private string $sessionKey;
     private string $draftStatusKey;
 
@@ -27,7 +27,7 @@ class PropertyRegistration extends Component
         if ($savedData && isset($savedData['current_step'])) {
             $this->currentStep = $savedData['current_step'];
         }
-        
+
         // Check if there's actual data to save
         $this->checkExistingData();
     }
@@ -36,10 +36,10 @@ class PropertyRegistration extends Component
     private function checkExistingData()
     {
         $allData = session()->get($this->sessionKey, []);
-        
+
         // Remove 'current_step' from check
         unset($allData['current_step']);
-        
+
         // Check if any step has data
         $hasData = false;
         foreach ($allData as $stepKey => $stepData) {
@@ -48,7 +48,7 @@ class PropertyRegistration extends Component
                 break;
             }
         }
-        
+
         $this->hasExistingData = $hasData;
     }
 
@@ -139,30 +139,36 @@ class PropertyRegistration extends Component
         };
     }
 
-    // UPDATED: Keep draft only if there's data
     public function keepDraftAndExit()
     {
         $this->checkExistingData();
-        
+
         if (!$this->hasExistingData) {
             session()->flash('error', 'No data to save. Please fill out at least one field.');
             return;
         }
-        
+
         session()->put($this->draftStatusKey, true);
         $this->dispatch('draft-status-changed');
+
+        // Dispatch browser event for JavaScript
+        $this->dispatch('exitRegistration');
+
         session()->flash('message', 'Draft saved! You can continue later.');
-        
+
         return $this->redirect(route('home'), navigate: true);
     }
 
-    // UPDATED: Always allow delete (even if no data)
     public function deleteDraftAndExit()
     {
         session()->forget([$this->sessionKey, $this->draftStatusKey]);
         $this->dispatch('draft-status-changed');
+
+        // Dispatch browser event for JavaScript
+        $this->dispatch('exitRegistration');
+
         session()->flash('message', 'Registration cancelled.');
-        
+
         return $this->redirect(route('home'), navigate: true);
     }
 

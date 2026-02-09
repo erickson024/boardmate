@@ -46,11 +46,11 @@ class Step7TermsCondition extends Component
     private function saveToSession(): void
     {
         $allData = session()->get($this->sessionKey, []);
-        
+
         $allData['step7'] = [
             'terms' => $this->terms,
         ];
-        
+
         session()->put($this->sessionKey, $allData);
     }
 
@@ -59,7 +59,7 @@ class Step7TermsCondition extends Component
     {
         // Save current state before submitting
         $this->saveToSession();
-        
+
         $userId = auth()->id();
         $allData = session()->get($this->sessionKey, []);
 
@@ -87,10 +87,16 @@ class Step7TermsCondition extends Component
             'terms' => $allData['step7']['terms'],
         ]);
 
-        // ADD: Send notification to the host
+        // Send notification to the host
         auth()->user()->notify(new PropertyCreated($property));
 
+        // ✅ CLEAR BOTH SESSION KEYS
         session()->forget($this->sessionKey);
+        session()->forget('property_draft_status_' . $userId); // ADD THIS LINE
+
+        // ✅ DISPATCH EVENT TO UPDATE THE BADGE
+        $this->dispatch('draft-status-changed'); // ADD THIS LINE
+
         session()->flash('property_registration_success', $property->id);
 
         return $this->redirect(

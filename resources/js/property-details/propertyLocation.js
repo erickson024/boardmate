@@ -169,10 +169,11 @@
                     directionsRenderer.setDirections(result);
                     showUserRouteInfo(result);
 
-                    const bounds = new google.maps.LatLngBounds();
-                    bounds.extend(startLocation);
-                    bounds.extend(propertyLocation);
-                    map.fitBounds(bounds, 50);
+                    // Automatic zoom disabled - user can manually zoom with Ctrl+scroll
+                    // const bounds = new google.maps.LatLngBounds();
+                    // bounds.extend(startLocation);
+                    // bounds.extend(propertyLocation);
+                    // map.fitBounds(bounds, 50);
                 }
             },
         );
