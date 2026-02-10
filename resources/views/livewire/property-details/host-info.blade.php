@@ -84,7 +84,7 @@
                                     </div>
 
                                     <div class="col-12 mt-2">
-                                        <a href="{{ route('property.inquiry', $property->id) }}"
+                                        <a href=""
                                             type="button"
                                             class="btn btn-sm btn-dark w-100">
                                             <span class="fw-semibold">

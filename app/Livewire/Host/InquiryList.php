@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Livewire\Tenant;
+namespace App\Livewire\Host;
 
 use App\Models\Inquiry;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class MyInquiries extends Component
+class InquiryList extends Component
 {
     public $filter = 'all'; // all, pending, replied, closed
 
     public function render()
     {
-        $query = Inquiry::where('tenant_id', Auth::id())
-            ->with(['property', 'host'])
+        $query = Inquiry::where('host_id', Auth::id())
+            ->with(['property', 'tenant'])
             ->latest();
 
         if ($this->filter !== 'all') {
@@ -21,9 +21,14 @@ class MyInquiries extends Component
         }
 
         $inquiries = $query->get();
+        
+        $unreadCount = Inquiry::where('host_id', Auth::id())
+            ->where('read_by_host', false)
+            ->count();
 
-        return view('livewire.tenant.my-inquiries', [
+        return view('livewire.host.inquiry-list', [
             'inquiries' => $inquiries,
+            'unreadCount' => $unreadCount,
         ]);
     }
 }

@@ -21,18 +21,44 @@ use App\Livewire\Users\Dashboard\DashboardPage;
 use App\Livewire\Users\Dashboard\HostPropertyDetails;
 use App\Livewire\VerifiedHostList\VerifiedHost;
 use App\Livewire\VerifiedHostList\VerifiedHostInfo;
-use App\Livewire\PropertyInquiry;
+use App\Livewire\Tenant\CreateInquiry;
 use App\Livewire\Tenant\MyInquiries;
+use App\Livewire\Host\InquiryList;
+use App\Livewire\Host\InquiryDetails;
+use App\Livewire\InquiryChat;
 
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
     Route::get('/host-request', HostRequest::class)->name('host.request');
+
+    Route::get('/inquiry/create/{property}', CreateInquiry::class)
+        ->name('tenant.inquiry.create');
+
+    // Tenant views their inquiries
+    Route::get('/my-inquiries', MyInquiries::class)
+        ->name('tenant.inquiries');
+
+    // Tenant chat with host
+    Route::get('/inquiry/{inquiry}/chat', InquiryChat::class)
+        ->name('tenant.inquiry.chat');
 });
 
 Route::middleware(['auth', 'role:host'])->group(function () {
     Route::get('/host/welcome', InitialPage::class)->name('host.welcome');
     Route::get('property/registration', PropertyRegistration::class)->name('property-registration');
     Route::get('/properties/{propertyId}', HostPropertyDetails::class)->name('host-property-details');
+
+    // Host views received inquiries
+    Route::get('/host/inquiries', InquiryList::class)
+        ->name('host.inquiries');
+
+    // Host views specific inquiry details (we'll create this next)
+    Route::get('/host/inquiries/{inquiry}/chat', InquiryDetails::class)
+        ->name('host.inquiry.details');
+
+         // Host chat with tenant (same component, different route name)
+    Route::get('/host/inquiry/{inquiry}/chat', InquiryChat::class)
+        ->name('host.inquiry.chat');
 });
 
 // ----------------------
@@ -88,12 +114,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user/dashboard', DashboardPage::class)->name('user.dashboard');
     Route::get('/verified-hosts', VerifiedHost::class)->name('verified-hosts');
     Route::get('/verified-hosts/{id}', VerifiedHostInfo::class)->name('verified-host-info');
-
-    Route::get('/property/{propertyId}/inquiry', PropertyInquiry::class)
-        ->name('property.inquiry');
-
-    Route::get('/my-inquiries', MyInquiries::class)
-        ->name('tenant.inquiries');
 });
 
 //---------------------

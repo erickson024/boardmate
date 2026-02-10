@@ -20,8 +20,8 @@
         <p class="lh-lg"><small>{{ $property->propertyDescription }}</small></p>
 
         <div class="">
-            <a href="{{ route('property.inquiry', $property->id) }}" class="btn btn-sm btn-dark" wire:navigate>
-                <small class="fw-semibold">Inquire</small>
+            <a href="{{route('tenant.inquiry.create', $property)}}" class="btn btn-sm btn-dark" wire:navigate>
+                <small class="fw-semibold">Send Inquire</small>
             </a>
 
             <button class="btn btn-sm btn-outline-dark">
