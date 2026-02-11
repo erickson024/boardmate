@@ -24,7 +24,6 @@ use App\Livewire\VerifiedHostList\VerifiedHostInfo;
 use App\Livewire\Tenant\CreateInquiry;
 use App\Livewire\Tenant\MyInquiries;
 use App\Livewire\Host\InquiryList;
-use App\Livewire\Host\InquiryDetails;
 use App\Livewire\InquiryChat;
 
 
@@ -51,10 +50,6 @@ Route::middleware(['auth', 'role:host'])->group(function () {
     // Host views received inquiries
     Route::get('/host/inquiries', InquiryList::class)
         ->name('host.inquiries');
-
-    // Host views specific inquiry details (we'll create this next)
-    Route::get('/host/inquiries/{inquiry}/chat', InquiryDetails::class)
-        ->name('host.inquiry.details');
 
          // Host chat with tenant (same component, different route name)
     Route::get('/host/inquiry/{inquiry}/chat', InquiryChat::class)

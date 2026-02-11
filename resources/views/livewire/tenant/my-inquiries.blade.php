@@ -6,27 +6,27 @@
             </div>
 
             {{-- Filter Tabs --}}
-            <ul class="nav nav-pills mb-4">
+            <ul class="nav nav-pills mb-4 gap-2">
                 <li class="nav-item">
-                    <button class="nav-link {{ $filter === 'all' ? 'active' : '' }}"
+                    <button class="nav-link  {{ $filter === 'all' ? 'active' : '' }}"
                         wire:click="$set('filter', 'all')">
                         <small>All</small>
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link {{ $filter === 'pending' ? 'active' : '' }}"
+                    <button class="nav-link  {{ $filter === 'pending' ? 'active' : '' }}"
                         wire:click="$set('filter', 'pending')">
                         <small>Pending</small>
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link {{ $filter === 'replied' ? 'active' : '' }}"
+                    <button class="nav-link  {{ $filter === 'replied' ? 'active' : '' }}"
                         wire:click="$set('filter', 'replied')">
                         <small>Replied</small>
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link {{ $filter === 'closed' ? 'active' : '' }}"
+                    <button class="nav-link  {{ $filter === 'closed' ? 'active' : '' }}"
                         wire:click="$set('filter', 'closed')">
                         <small>Closed</small>
                     </button>
@@ -73,13 +73,7 @@
                             <a href="{{ route('tenant.inquiry.chat', $inquiry) }}"
                                 class="btn btn-sm btn-dark"
                                 wire:navigate>
-                                <small>View Chat</small>
-                            </a>
-
-                            <a href="{{ route('property.details', $inquiry->property) }}"
-                                class="btn btn-sm btn-outline-dark"
-                                wire:navigate>
-                                <small>View Property</small>
+                                <small>Message</small>
                             </a>
                         </div>
                     </div>
@@ -92,4 +86,25 @@
             @endforelse
         </div>
     </div>
+
+    <style>
+        .nav-pills .nav-link {
+            background-color: #fff;
+            /* Bootstrap black */
+            color: #000;
+            transition: 0.3s;
+        }
+
+        .nav-pills .nav-link:hover {
+            background-color: #000;
+            /* Pure black on hover */
+            color: #fff;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #000;
+            /* Active tab pure black */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </div>

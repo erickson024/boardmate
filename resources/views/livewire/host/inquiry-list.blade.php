@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h4 class="mb-0">Inquiries</h4>
+                    <h4 class="mb-0">Tenant Inquiries</h4>
                     @if($unreadCount > 0)
                     <span class="badge bg-danger mt-1">{{ $unreadCount }} new</span>
                     @endif
@@ -83,12 +83,6 @@
                                 class="btn btn-sm btn-dark"
                                 wire:navigate>
                                 <small>Message</small>
-                            </a>
-
-                            <a href="{{ route('host.inquiry.details', $inquiry) }}"
-                                class="btn btn-sm btn-dark"
-                                wire:navigate>
-                                <small>View Details</small>
                             </a>
                         </div>
                     </div>

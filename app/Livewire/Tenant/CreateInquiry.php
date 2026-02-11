@@ -18,7 +18,7 @@ class CreateInquiry extends Component
 
     protected $rules = [
         'subject' => 'required|string|max:255',
-        'message' => 'required|string|min:10',
+        'message' => 'required|string',
     ];
 
     public function mount(Property $property)

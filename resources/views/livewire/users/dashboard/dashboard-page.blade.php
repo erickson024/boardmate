@@ -76,6 +76,41 @@
                             </span>
                         </div>
                     </button>
+                    
+                    <!-- Tenant Inquiry Request -->
+                    <button
+                        type="button"
+                        wire:click="setTab('inquiry-list')"
+                        wire:loading.attr="disabled"
+                        wire:target="setTab('inquiry-list)"
+                        class="btn rounded-4 text-start position-relative overflow-hidden {{ $currentTab === 'inquiry-list' ? 'btn-white text-dark shadow-sm' : 'btn-light border' }}"
+                        style="transition: all 0.3s ease; --bs-btn-hover-bg: transparent; --bs-btn-hover-border-color: var(--bs-border-color);"
+                        onmouseover="if(!'{{ $currentTab === 'inquiry-list' }}') this.classList.add('shadow-sm')"
+                        onmouseout="if(!'{{ $currentTab === 'inquiry-list' }}') this.classList.remove('shadow-sm')">
+
+                        <div class="d-flex align-items-center justify-content-center">
+                            <span
+                                class="d-inline-flex align-items-center justify-content-center rounded-3 icon-wrapper {{ $currentTab === 'inquiry-list' ? 'bg-dark text-light' : 'bg-light text-dark' }}"
+                                style="width: 42px; height: 42px; min-width: 42px; transition: all 0.3s ease;">
+                                <i class="bi bi-send-fill"></i>
+                            </span>
+
+                            <div class="flex-grow-1 sidebar-text ms-3 text-start">
+                                <small class="fw-semibold d-block">Tenant Inquiries</small>
+                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">Tenant inquiries</small>
+                            </div>
+
+                            <span wire:loading wire:target="setTab('inquiry-list')" class="ms-2 sidebar-text">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </span>
+
+                            <span wire:loading.remove wire:target="setTab('inquiry-list')" class="sidebar-text">
+                                @if($currentTab === 'inquiry-list')
+                                <i class="fa-solid fa-chevron-right ms-2 text-muted" style="font-size: 0.75rem;"></i>
+                                @endif
+                            </span>
+                        </div>
+                    </button>
                     @endif
 
                     <!-- Saved property Section -->
@@ -112,77 +147,7 @@
                             </span>
                         </div>
                     </button>
-
-                    <!-- Messages Section -->
-                    <button
-                        type="button"
-                        wire:click="setTab('messages')"
-                        wire:loading.attr="disabled"
-                        wire:target="setTab('messages')"
-                        class="btn rounded-4 text-start position-relative overflow-hidden {{ $currentTab === 'messages' ? 'btn-white text-dark shadow-sm' : 'btn-light border' }}"
-                        style="transition: all 0.3s ease; --bs-btn-hover-bg: transparent; --bs-btn-hover-border-color: var(--bs-border-color);"
-                        onmouseover="if(!'{{ $currentTab === 'messages' }}') this.classList.add('shadow-sm')"
-                        onmouseout="if(!'{{ $currentTab === 'messages' }}') this.classList.remove('shadow-sm')">
-
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span
-                                class="d-inline-flex align-items-center justify-content-center rounded-3 icon-wrapper {{ $currentTab === 'messages' ? 'bg-dark text-white' : 'bg-light text-dark' }}"
-                                style="width: 42px; height: 42px; min-width: 42px; transition: all 0.3s ease;">
-                                <i class="bi bi-chat-dots-fill"></i>
-                            </span>
-
-                            <div class="flex-grow-1 sidebar-text ms-3 text-start">
-                                <small class="fw-semibold d-block">Messages</small>
-                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">View conversations</small>
-                            </div>
-
-                            <span wire:loading wire:target="setTab('messages')" class="ms-2 sidebar-text">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </span>
-
-                            <span wire:loading.remove wire:target="setTab('messages')" class="sidebar-text">
-                                @if($currentTab === 'messages')
-                                <i class="fa-solid fa-chevron-right ms-2 text-muted" style="font-size: 0.75rem;"></i>
-                                @endif
-                            </span>
-                        </div>
-                    </button>
-
-                    <!-- Connection Section -->
-                    <button
-                        type="button"
-                        wire:click="setTab('connection')"
-                        wire:loading.attr="disabled"
-                        wire:target="setTab('connection')"
-                        class="btn rounded-4 text-start position-relative overflow-hidden {{ $currentTab === 'connection' ? 'btn-white text-dark shadow-sm' : 'btn-light border' }}"
-                        style="transition: all 0.3s ease; --bs-btn-hover-bg: transparent; --bs-btn-hover-border-color: var(--bs-border-color);"
-                        onmouseover="if(!'{{ $currentTab === 'connection' }}') this.classList.add('shadow-sm')"
-                        onmouseout="if(!'{{ $currentTab === 'connection' }}') this.classList.remove('shadow-sm')">
-
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span
-                                class="d-inline-flex align-items-center justify-content-center rounded-3 icon-wrapper {{ $currentTab === 'connection' ? 'bg-dark text-light' : 'bg-light text-dark' }}"
-                                style="width: 42px; height: 42px; min-width: 42px; transition: all 0.3s ease;">
-                                <i class="fa-solid fa-user-group fa-fw"></i>
-                            </span>
-
-                            <div class="flex-grow-1 sidebar-text ms-3 text-start">
-                                <small class="fw-semibold d-block">Connection</small>
-                                <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">Your network</small>
-                            </div>
-
-                            <span wire:loading wire:target="setTab('connection')" class="ms-2 sidebar-text">
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </span>
-
-                            <span wire:loading.remove wire:target="setTab('connection')" class="sidebar-text">
-                                @if($currentTab === 'connection')
-                                <i class="fa-solid fa-chevron-right ms-2 text-muted" style="font-size: 0.75rem;"></i>
-                                @endif
-                            </span>
-                        </div>
-                    </button>
-
+                
                     <!-- Tenant Inquiry Request -->
                     <button
                         type="button"
@@ -202,7 +167,7 @@
                             </span>
 
                             <div class="flex-grow-1 sidebar-text ms-3 text-start">
-                                <small class="fw-semibold d-block">Inquiries</small>
+                                <small class="fw-semibold d-block">Property Inquiries</small>
                                 <small class="text-muted d-block" style="font-size: 0.75rem; margin-top: 2px;">Property request list</small>
                             </div>
 
@@ -238,10 +203,8 @@
             @livewire('users.dashboard.user-stat')
             @elseif ($currentTab === 'property-list')
             @livewire('users.dashboard.property-list')
-            @elseif ($currentTab === 'messages')
-            @livewire('users.dashboard.messages')
-            @elseif ($currentTab === 'connection')
-            @livewire('users.dashboard.connection')
+            @elseif ($currentTab === 'inquiry-list')
+            @livewire('host.inquiry-list')
             @elseif ($currentTab === 'tenant-inquiry-request-list')
             @livewire('users.dashboard.tenant-inquiry-request-list')
             @endif
