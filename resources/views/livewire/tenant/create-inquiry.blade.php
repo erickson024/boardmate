@@ -62,9 +62,6 @@
                                     id="message"
                                     wire:model="message"
                                     type="text" />
-                                @error('message')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
                             </div>
 
                             {{-- Buttons --}}

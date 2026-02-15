@@ -37,10 +37,15 @@ class Inquiry extends Model
         return $this->belongsTo(User::class, 'host_id');
     }
 
-    // NEW: Relationship to messages
     public function messages()
     {
         return $this->hasMany(InquiryMessage::class)->orderBy('created_at', 'asc');
+    }
+
+    // ⭐⭐⭐ ADD THIS METHOD ⭐⭐⭐
+    public function visit()
+    {
+        return $this->hasOne(PropertyVisit::class);
     }
 
     public function markAsRead()
@@ -48,7 +53,6 @@ class Inquiry extends Model
         $this->update(['read_by_host' => true]);
     }
 
-    // NEW: Get unread messages count for a specific user
     public function unreadMessagesCount($userId)
     {
         return $this->messages()
@@ -57,7 +61,11 @@ class Inquiry extends Model
             ->count();
     }
 
-    // NEW: Get the last message
+    public function leaseAgreement()
+    {
+        return $this->hasOne(LeaseAgreement::class);
+    }
+
     public function lastMessage()
     {
         return $this->messages()->latest()->first();

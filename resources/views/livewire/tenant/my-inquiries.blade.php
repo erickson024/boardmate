@@ -8,25 +8,31 @@
             {{-- Filter Tabs --}}
             <ul class="nav nav-pills mb-4 gap-2">
                 <li class="nav-item">
-                    <button class="nav-link  {{ $filter === 'all' ? 'active' : '' }}"
+                    <button class="nav-link {{ $filter === 'all' ? 'active' : '' }}"
                         wire:click="$set('filter', 'all')">
                         <small>All</small>
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link  {{ $filter === 'pending' ? 'active' : '' }}"
+                    <button class="nav-link {{ $filter === 'pending' ? 'active' : '' }}"
                         wire:click="$set('filter', 'pending')">
                         <small>Pending</small>
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link  {{ $filter === 'replied' ? 'active' : '' }}"
+                    <button class="nav-link {{ $filter === 'replied' ? 'active' : '' }}"
                         wire:click="$set('filter', 'replied')">
                         <small>Replied</small>
                     </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link  {{ $filter === 'closed' ? 'active' : '' }}"
+                    <button class="nav-link {{ $filter === 'accepted' ? 'active' : '' }}"
+                        wire:click="$set('filter', 'accepted')">
+                        <small>Accepted</small>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link {{ $filter === 'closed' ? 'active' : '' }}"
                         wire:click="$set('filter', 'closed')">
                         <small>Closed</small>
                     </button>
@@ -35,21 +41,26 @@
 
             {{-- Inquiry List --}}
             @forelse($inquiries as $inquiry)
-            <div class="card mb-3">
+            <div class="card mb-3 shadow-sm border-0">
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-md-2">
                             @if(!empty($inquiry->property->images))
                             <img src="{{ asset('storage/' . $inquiry->property->images[0]) }}"
                                 class="w-100 rounded"
-                                style="height: 80px; object-fit: cover;"
+                                style="height: 100px; object-fit: cover;"
                                 alt="{{ $inquiry->property->propertyName }}">
                             @endif
                         </div>
                         <div class="col-md-7">
                             <div class="d-flex align-items-center mb-2">
                                 <h6 class="mb-0 me-2">{{ $inquiry->subject }}</h6>
-                                <span class="badge bg-{{ $inquiry->status === 'pending' ? 'warning' : ($inquiry->status === 'replied' ? 'success' : 'secondary') }}">
+                                <span class="badge bg-{{ 
+                                    $inquiry->status === 'pending' ? 'warning' : 
+                                    ($inquiry->status === 'replied' ? 'info' : 
+                                    ($inquiry->status === 'accepted' ? 'success' : 
+                                    ($inquiry->status === 'rejected' ? 'danger' : 'secondary'))) 
+                                }}">
                                     {{ ucfirst($inquiry->status) }}
                                 </span>
                             </div>
@@ -60,20 +71,52 @@
                             </p>
                             <p class="text-muted mb-1">
                                 <small>
+                                    <i class="bi bi-geo-alt"></i> {{ $inquiry->property->address }}
+                                </small>
+                            </p>
+                            <p class="text-muted mb-0">
+                                <small>
                                     <i class="bi bi-person"></i> Host: {{ $inquiry->host->firstName }} {{ $inquiry->host->lastName }}
                                 </small>
                             </p>
-                            <p class="mb-0"><small>{{ Str::limit($inquiry->message, 100) }}</small></p>
+                            
+                            {{-- Last message preview --}}
+                            @if($inquiry->lastMessage())
+                                <p class="mb-0 mt-2">
+                                    <small class="text-muted fst-italic">
+                                        "{{ Str::limit($inquiry->lastMessage()->message, 80) }}"
+                                    </small>
+                                </p>
+                            @endif
                         </div>
                         <div class="col-md-3 text-end">
                             <p class="text-muted mb-2">
                                 <small>{{ $inquiry->created_at->diffForHumans() }}</small>
                             </p>
+                            
+                            {{-- Visit status badge --}}
+                            @if($inquiry->visit)
+                                <div class="mb-2">
+                                    @if($inquiry->visit->status === 'pending')
+                                        <span class="badge bg-warning text-dark">
+                                            <small>📅 Visit Pending</small>
+                                        </span>
+                                    @elseif($inquiry->visit->status === 'confirmed')
+                                        <span class="badge bg-success">
+                                            <small>✅ Visit Confirmed</small>
+                                        </span>
+                                    @elseif($inquiry->visit->status === 'completed')
+                                        <span class="badge bg-info">
+                                            <small>✅ Visit Done</small>
+                                        </span>
+                                    @endif
+                                </div>
+                            @endif
 
                             <a href="{{ route('tenant.inquiry.chat', $inquiry) }}"
                                 class="btn btn-sm btn-dark"
                                 wire:navigate>
-                                <small>Message</small>
+                                <small>Open Chat</small>
                             </a>
                         </div>
                     </div>
@@ -81,7 +124,13 @@
             </div>
             @empty
             <div class="alert alert-info">
-                <small>You haven't sent any inquiries yet.</small>
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox fs-1 text-muted"></i>
+                    <p class="mt-3 mb-0">You haven't sent any inquiries yet.</p>
+                    <a href="{{ route('propertyList') }}" class="btn btn-primary btn-sm mt-3" wire:navigate>
+                        <small>Browse Properties</small>
+                    </a>
+                </div>
             </div>
             @endforelse
         </div>
@@ -90,20 +139,17 @@
     <style>
         .nav-pills .nav-link {
             background-color: #fff;
-            /* Bootstrap black */
             color: #000;
             transition: 0.3s;
         }
 
         .nav-pills .nav-link:hover {
             background-color: #000;
-            /* Pure black on hover */
             color: #fff;
         }
 
         .nav-pills .nav-link.active {
             background-color: #000;
-            /* Active tab pure black */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
     </style>

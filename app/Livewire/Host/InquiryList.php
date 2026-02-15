@@ -13,7 +13,7 @@ class InquiryList extends Component
     public function render()
     {
         $query = Inquiry::where('host_id', Auth::id())
-            ->with(['property', 'tenant'])
+            ->with(['property', 'tenant', 'visit']) // ← Add 'visit'
             ->latest();
 
         if ($this->filter !== 'all') {
@@ -21,7 +21,7 @@ class InquiryList extends Component
         }
 
         $inquiries = $query->get();
-        
+
         $unreadCount = Inquiry::where('host_id', Auth::id())
             ->where('read_by_host', false)
             ->count();
