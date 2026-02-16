@@ -4,7 +4,7 @@
 
             {{-- Header --}}
             <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-9 col-md-6">
                     <div class="d-flex flex-row">
                         <a href="{{ $userRole === 'tenant' ? route('tenant.inquiries') : route('host.inquiries') }}"
                             type="button"
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 text-end">
+                <div class="col-3 col-md-6 text-end">
                     <span class="badge bg-{{ $inquiry->status === 'pending' ? 'warning' : ($inquiry->status === 'replied' ? 'info' : ($inquiry->status === 'accepted' ? 'success' : ($inquiry->status === 'rejected' ? 'danger' : 'secondary'))) }}">
                         <span class="fw-medium p-3" style="font-size: 13px;">{{ ucfirst($inquiry->status) }}</span>
                     </span>
@@ -471,12 +471,17 @@
                             @elseif($lease->status === 'signed')
                             <div class="mb-3">
                                 <div class="card border-success" style="max-width: 85%;">
-                                    <div class="card-body bg-success bg-opacity-10">
-                                        <h6 class="mb-2">
-                                            <i class="bi bi-check-circle-fill text-success"></i>
-                                            Lease Agreement Signed!
-                                        </h6>
-                                        <p class="mb-0"><small>Congratulations! Your lease has been signed.</small></p>
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row mb-2">
+                                            <div class="bg-success p-3 d-flex align-items-center text-light me-2 rounded mb-2">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            </div>
+                                            <div class="">
+                                                <p class="mb-0 fw-medium">Lease Agreement Signed! </p>
+                                                <p class="mb-0 mt-0"><small>Congratulations! Your lease has been signed.</small></p>
+                                            </div>
+                                        </div>
+
                                         <div class="alert alert-info mb-0 mt-2 py-2">
                                             <small><strong>Move-in Date:</strong> {{ $lease->start_date->format('F j, Y') }}</small>
                                         </div>
@@ -503,13 +508,18 @@
                             @elseif($lease->status === 'signed')
                             <div class="mb-3 text-end">
                                 <div class="card border-success d-inline-block" style="max-width: 85%;">
-                                    <div class="card-body bg-success bg-opacity-10 text-start">
-                                        <h6 class="mb-2">
-                                            <i class="bi bi-check-circle-fill text-success"></i>
-                                            Lease Signed!
-                                        </h6>
-                                        <p class="mb-0"><small>Tenant has signed the lease agreement.</small></p>
-                                        <div class="alert alert-primary mb-0 mt-2 py-2">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row mb-2">
+                                            <div class="bg-success p-3 d-flex align-items-center text-light me-2 rounded">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            </div>
+                                            <div class="text-start">
+                                                <p class="mb-0 fw-medium">Lease Agreement Signed!</p>
+                                                <p class="mb-0 mt-0 fw-light"><small>Tenant has signed the lease agreement.</small></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="alert alert-primary text-center mb-0 mt-2 py-2">
                                             <small><strong>Move-in Date:</strong> {{ $lease->start_date->format('F j, Y') }}</small>
                                         </div>
                                     </div>

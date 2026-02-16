@@ -10,6 +10,13 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
+// Import notifications
+use App\Notifications\InquiryAccepted;
+use App\Notifications\VisitRequested;
+use App\Notifications\VisitConfirmed;
+use App\Notifications\LeaseAgreementSent;
+use App\Notifications\LeaseAgreementSigned;
+
 class InquiryChat extends Component
 {
     public Inquiry $inquiry;
@@ -163,6 +170,12 @@ class InquiryChat extends Component
             ]);
 
             $this->lastMessageId = $message->id;
+
+            // Send notification when accepted
+            if ($status === 'accepted') {
+                $this->inquiry->tenant->notify(new InquiryAccepted($this->inquiry));
+                $this->dispatch('notification-sent');
+            }
         }
 
         $this->inquiry->refresh();
@@ -194,7 +207,6 @@ class InquiryChat extends Component
             'visitNotes' => 'nullable|string|max:500',
         ]);
 
-        // Check if visit already exists
         if ($this->inquiry->visit) {
             session()->flash('error', 'A visit has already been scheduled for this inquiry.');
             return;
@@ -210,13 +222,16 @@ class InquiryChat extends Component
             'status' => 'pending',
         ]);
 
-        // Send system message
         $message = InquiryMessage::create([
             'inquiry_id' => $this->inquiry->id,
             'sender_id' => Auth::id(),
             'sender_type' => 'tenant',
             'message' => "Property visit requested for " . \Carbon\Carbon::parse($this->proposedDate)->format('F j, Y \a\t g:i A') . ($this->visitNotes ? "\n\nNotes: " . $this->visitNotes : ''),
         ]);
+
+        // 🔔 Notify host
+        $this->inquiry->host->notify(new VisitRequested($visit));
+        $this->dispatch('notification-sent');
 
         $this->showVisitForm = false;
         $this->proposedDate = '';
@@ -227,6 +242,7 @@ class InquiryChat extends Component
         session()->flash('success', 'Visit request sent to host!');
         $this->dispatch('message-sent');
     }
+
 
     public function confirmVisit($visitId)
     {
@@ -241,13 +257,16 @@ class InquiryChat extends Component
             'confirmed_date' => $visit->proposed_date,
         ]);
 
-        // Send system message
         $message = InquiryMessage::create([
             'inquiry_id' => $this->inquiry->id,
             'sender_id' => Auth::id(),
             'sender_type' => 'host',
             'message' => "Property visit confirmed for " . $visit->confirmed_date->format('F j, Y \a\t g:i A'),
         ]);
+
+        // 🔔 Notify tenant
+        $visit->tenant->notify(new VisitConfirmed($visit));
+        $this->dispatch('notification-sent');
 
         $this->lastMessageId = $message->id;
         $this->inquiry->refresh();
@@ -305,7 +324,6 @@ class InquiryChat extends Component
             'specialConditions' => 'nullable|string|max:2000',
         ]);
 
-        // Get property terms
         $propertyTerms = $this->inquiry->property->terms ?? 'Standard lease terms apply.';
 
         $lease = LeaseAgreement::create([
@@ -323,13 +341,16 @@ class InquiryChat extends Component
             'sent_at' => now(),
         ]);
 
-        // Send system message
         $message = InquiryMessage::create([
             'inquiry_id' => $this->inquiry->id,
             'sender_id' => Auth::id(),
             'sender_type' => 'host',
-            'message' => "📄 Lease agreement sent!\n\nStart Date: " . \Carbon\Carbon::parse($this->leaseStartDate)->format('M j, Y') . "\nEnd Date: " . \Carbon\Carbon::parse($this->leaseEndDate)->format('M j, Y') . "\nMonthly Rent: ₱" . number_format($this->inquiry->property->propertyCost, 2) . "\nSecurity Deposit: ₱" . number_format($this->securityDeposit, 2),
+            'message' => "Lease agreement sent!\n\nStart Date: " . \Carbon\Carbon::parse($this->leaseStartDate)->format('M j, Y') . "\nEnd Date: " . \Carbon\Carbon::parse($this->leaseEndDate)->format('M j, Y') . "\nMonthly Rent: ₱" . number_format($this->inquiry->property->propertyCost, 2) . "\nSecurity Deposit: ₱" . number_format($this->securityDeposit, 2),
         ]);
+
+        // Notify tenant
+        $this->inquiry->tenant->notify(new LeaseAgreementSent($lease));
+        $this->dispatch('notification-sent');
 
         $this->showLeaseForm = false;
         $this->leaseStartDate = '';
@@ -342,6 +363,7 @@ class InquiryChat extends Component
         session()->flash('success', 'Lease agreement sent to tenant!');
         $this->dispatch('message-sent');
     }
+
 
     // Tenant signs lease
     public function signLease($leaseId)
@@ -359,22 +381,23 @@ class InquiryChat extends Component
             'signed_from_ip' => request()->ip(),
         ]);
 
-        // ✅ REMOVED - No need to change inquiry status
-        // The lease table already tracks the status
-
-        // Send system message
         $message = InquiryMessage::create([
             'inquiry_id' => $this->inquiry->id,
             'sender_id' => Auth::id(),
             'sender_type' => 'tenant',
-            'message' => "✍️ Lease agreement signed! Waiting for move-in date.",
+            'message' => "Lease agreement signed! Waiting for move-in date.",
         ]);
+
+        // 🔔 Notify host
+        $lease->host->notify(new LeaseAgreementSigned($lease));
+        $this->dispatch('notification-sent');
 
         $this->lastMessageId = $message->id;
         $this->inquiry->refresh();
         session()->flash('success', 'Lease agreement signed!');
         $this->dispatch('message-sent');
     }
+
 
     public function render()
     {
