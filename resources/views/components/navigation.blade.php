@@ -2,9 +2,29 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-0 transition-all" id="mainNavbar">
         <div class="container">
             <!-- Brand -->
-            <div>
-                <x-logo-dark style="width:30px;" />
-                <span class="fs-6 fw-semibold"><small>Boardmate</small></span>
+
+            <div class="d-flex flex-row gap-2">
+                <div>
+                    <x-logo-dark style="width:30px;" />
+                    <span class="fs-6 fw-semibold"><small>Boardmate</small></span>
+                </div>
+                @auth
+                <button class="btn btn-sm btn-light border-dark">
+                    <i class="bi bi-sun"></i>
+                </button>
+                <button
+                    class="btn btn-sm btn-dark shadow-sm d-flex align-items-center justify-content-center filter-toggle-btn rounded active {{ !request()->routeIs('home') ? 'd-none' : '' }}"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#propertyFilterWrapper"
+                    aria-expanded="true"
+                    aria-controls="propertyFilterWrapper"
+                    id="filterToggleBtn">
+                    <small>
+                        <i class="bi bi-search"></i> search
+                    </small>
+                </button>
+                @endauth
             </div>
 
             <!-- Compact Search Button (shown when scrolled) -->
@@ -70,12 +90,13 @@
             @endguest
 
             @auth
-            <div class="d-flex align-items-center gap-1">
+            <div class="d-flex align-items-center gap-2">
+
                 @if(auth()->check() && auth()->user()->role === 'tenant')
                 <x-buttons.small-button
                     href="{{ route('host.request') }}"
                     variant="btn btn-dark"
-                    class="shadow-sm fw-semibold rounded-5 px-3">
+                    class="shadow-sm fw-semibold rounded px-3">
                     <span class="me-1">Be a host</span> <i class="bi bi-patch-check-fill"></i>
                 </x-buttons.small-button>
                 @elseif(auth()->check() && auth()->user()->role === 'host')
@@ -125,8 +146,10 @@
 
     <!-- Expandable Property Filter (only on /home route) -->
     @if(request()->routeIs('home'))
-    <div class="property-filter-wrapper" id="propertyFilterWrapper">
-        @livewire('property-filter')
+    <div class="collapse show" id="propertyFilterWrapper">
+        <div class="property-filter-wrapper">
+            @livewire('property-filter')
+        </div>
     </div>
     @endif
 </div>
@@ -173,3 +196,6 @@ $user = auth()->user();
     </div>
 </div>
 @endauth
+
+
+

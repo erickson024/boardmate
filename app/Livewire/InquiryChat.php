@@ -25,7 +25,7 @@ class InquiryChat extends Component
     public $lastMessageId = 0;
     public $otherUserTyping = false;
     public $currentStatus;
-
+    
     // Visit scheduling properties
     public $showVisitForm = false;
     public $proposedDate;
@@ -157,7 +157,7 @@ class InquiryChat extends Component
 
         $systemMessages = [
             'accepted' => "Great news! {$this->inquiry->host->firstName} has accepted your inquiry. They're interested in renting to you!",
-            'rejected' => "Thank you for your interest. Unfortunately, this property is no longer available or we've chosen another tenant.",
+            'rejected' => "Thank you for your interest. Unfortunately, this property is no longer available.",
             'closed' => "This inquiry has been closed.",
         ];
 

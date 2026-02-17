@@ -1,12 +1,7 @@
 <div class="overflow-hidden">
     
-    <div class="vh-100 overflow-auto">
-        <div class="property-list" style="margin-top: 13%">
-            <div class="sticky-top mb-3 bg-white" style=" z-index: 1020">
-                <div class="">
-                   
-                </div>
-            </div>
+    <div class="vh-100 overflow-auto" style="padding-top: var(--nav-height, 160px);">
+        <div class="property-list pt-3">
             <div class="container">
 
                 @if($properties->isEmpty())

@@ -40,8 +40,13 @@
             <div class="col-12 col-md-5">
                 <img src="{{ asset('storage/' . $images[0]) }}"
                     class="w-100 rounded-3"
-                    style="height: 350px; object-fit: cover;"
-                    alt="{{ $property->propertyName }}">
+                    style="height: 350px; object-fit: cover; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                    onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.2)';"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+                    alt="{{ $property->propertyName }}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#imageModal"
+                    onclick="showImage('{{ asset('storage/' . $images[0]) }}', 0, {{ count($images) }})">
             </div>
 
             {{-- Side Images --}}
@@ -51,18 +56,16 @@
                     <div class="col-6">
                         <img src="{{ asset('storage/' . $image) }}"
                             class="w-100 rounded-3"
-                            style="height: {{ $index < 2 ? '169px' : '169px' }}; object-fit: cover;"
-                            alt="{{ $property->propertyName }}">
+                            style="height: 169px; object-fit: cover; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                            onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.2)';"
+                            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+                            alt="{{ $property->propertyName }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#imageModal"
+                            onclick="showImage('{{ asset('storage/' . $image) }}', {{ $index + 1 }}, {{ count($images) }})">
                     </div>
                     @endforeach
                 </div>
-            </div>
-            @else
-            <div class="col-12">
-                <img src="{{ asset('images/no-image.jpg') }}"
-                    class="w-100 rounded-3"
-                    style="height: 400px; object-fit: cover;"
-                    alt="No Image Available">
             </div>
             @endif
         </div>

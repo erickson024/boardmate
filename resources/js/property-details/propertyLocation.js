@@ -1,6 +1,4 @@
 (function () {
-    const propertyLocationPage = document.querySelector(".location-details"); // Check if we're on the location details page first
-    if (!propertyLocationPage) return; // Exit early if not on this page
     let map,
         propertyMarker,
         userMarker,
@@ -14,6 +12,25 @@
     let propertyLocation;
     let currentUserLocation = null;
     let isUsingCustomStartingPoint = false;
+
+    function isPropertyDetailsPage() {
+        return document.querySelector(".location-details") !== null;
+    }
+
+    function resetMapState() {
+        map = null;
+        propertyMarker = null;
+        userMarker = null;
+        customMarker = null;
+        geocoder = null;
+        directionsService = null;
+        directionsRenderer = null;
+        customStartingPointAutocomplete = null;
+        mapInitialized = false;
+        propertyLocation = null;
+        currentUserLocation = null;
+        isUsingCustomStartingPoint = false;
+    }
 
     const mapStyles = [
         {
@@ -55,6 +72,8 @@
     ];
 
     function initializeMap() {
+        if (!isPropertyDetailsPage()) return;
+
         const mapDiv = document.getElementById("map");
         if (!mapDiv || !window.google || !window.google.maps) return;
 
@@ -356,9 +375,24 @@
         if (loadingState) loadingState.style.display = "none";
     }
 
+    function handleNavigation() {
+        resetMapState();
+        setTimeout(() => initializeMap(), 100); // Small delay to ensure DOM is ready
+    }
+
     if (window.googleMapsReady) {
         initializeMap();
     } else {
         document.addEventListener("google-maps-ready", initializeMap);
     }
+
+    // Handle Livewire navigation
+    document.addEventListener('livewire:navigated', handleNavigation);
+    
+    // Also handle page load/reload
+    document.addEventListener('DOMContentLoaded', () => {
+        if (isPropertyDetailsPage() && !mapInitialized) {
+            initializeMap();
+        }
+    });
 })();

@@ -1,0 +1,79 @@
+ /* Prevent body scroll when modal is open */
+    .property-image-modal body.modal-open {
+        overflow: hidden;
+        padding-right: 0 !important;
+    }
+
+    /* Modal animations */
+    .property-image-modal #imageModal .modal-dialog {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .property-image-modal #imageModal.show .modal-dialog {
+        transform: scale(1);
+    }
+
+    /* Enhanced backdrop */
+    .property-image-modal #imageModal .modal-backdrop {
+        backdrop-filter: blur(20px);
+        background-color: rgba(0, 0, 0, 0.92);
+    }
+
+    /* Close button hover */
+    .property-image-modal #imageCloseBtn:hover {
+        transform: scale(1.15);
+        background: #f3f4f6 !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .property-image-modal #imageCloseBtn:active {
+        transform: scale(0.95);
+        background: #e5e7eb !important;
+    }
+
+    /* Close button fade in */
+    .property-image-modal #imageCloseBtn.show {
+        display: flex !important;
+        animation: fadeInScale 0.3s ease forwards;
+    }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Image loaded state */
+    .property-image-modal #modalImage.loaded {
+        opacity: 1 !important;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+        .property-image-modal #imageModal .modal-body {
+            height: 80vh !important;
+            max-height: 80vh !important;
+        }
+
+        .property-image-modal #imageCloseBtn {
+            width: 40px !important;
+            height: 40px !important;
+            top: 5px !important;
+            right: 5px !important;
+        }
+
+        .property-image-modal #imageCloseBtn svg {
+            width: 18px !important;
+            height: 18px !important;
+        }
+
+        .property-image-modal #modalImage {
+            max-height: 75vh !important;
+        }
+    }

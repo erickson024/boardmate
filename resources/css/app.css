@@ -18,6 +18,7 @@
 @import "./propertyDetails/property-feature.css";
 @import "./propertyDetails/property-restriction.css";
 @import "./propertyDetails/property-host.css";
+@import "./components/modal/image-modal.css";
 
 body {
     font-family: "Montserrat", sans-serif;

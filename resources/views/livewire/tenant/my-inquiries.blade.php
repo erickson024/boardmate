@@ -99,15 +99,15 @@
                                 <div class="mb-2">
                                     @if($inquiry->visit->status === 'pending')
                                         <span class="badge bg-warning text-dark">
-                                            <small>📅 Visit Pending</small>
+                                            <small><i class="bi bi-clock-history me-1"></i>Visit Pending</small>
                                         </span>
                                     @elseif($inquiry->visit->status === 'confirmed')
                                         <span class="badge bg-success">
-                                            <small>✅ Visit Confirmed</small>
+                                            <small><i class="bi bi-check-all"></i> Visit Confirmed</small>
                                         </span>
                                     @elseif($inquiry->visit->status === 'completed')
                                         <span class="badge bg-info">
-                                            <small>✅ Visit Done</small>
+                                            <small><i class="bi bi-house-check-fill"></i> Visit Done</small>
                                         </span>
                                     @endif
                                 </div>
